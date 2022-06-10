@@ -27,6 +27,7 @@ const ManageCategory = () => {
               category: e.currentTarget.category.value,
               uri: "category",
             };
+
             console.log(body);
 
             try {
@@ -37,13 +38,13 @@ const ManageCategory = () => {
               });
               router.replace("/dashboard/category");
             } catch (error) {
-              if (error instanceof FetchError) {
-                globalAct.setErrorMsg(error.data.message);
-              } else {
-                globalAct.setErrorMsg("An unexpected error happened");
-              }
+              // if (error instanceof FetchError) {
+              //   globalAct.setErrorMsg(error.data.message);
+              // } else {
+              //   globalAct.setErrorMsg("An unexpected error happened");
+              // }
+              console.log("error", error);
             }
-
             globalAct.setIsFetch(false);
           }}
         />
