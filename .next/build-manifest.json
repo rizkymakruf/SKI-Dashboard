@@ -35,10 +35,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/dashboard/category.js"
     ],
-    "/dashboard/history": [
+    "/dashboard/order": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/history.js"
+      "static/chunks/pages/dashboard/order.js"
     ]
   },
   "ampFirstPages": []
