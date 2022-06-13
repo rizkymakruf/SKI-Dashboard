@@ -1,5 +1,5 @@
-import { useContext, useState, useEffect, useRef } from "react";
-import Router, { useRouter } from "next/router";
+import { useContext, useEffect } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
@@ -13,38 +13,45 @@ import { redirect, retObject, checkerToken } from "lib/listFunct";
 
 import FormLogin from "components/form/FormLogin";
 
-// export const getServerSideProps = withIronSessionSsr(async function ({req, res, query}) {
+export const getServerSideProps = withIronSessionSsr(async function ({
+  req,
+  res,
+  query,
+}) {
+  var user = await req.session.user;
+  if (!user || !user.access_token) {
+    return retObject({ isLogin: false });
+  }
 
-//   var user = await req.session.user;
-//   if (!user || !user.access_token) {
-//     return retObject({isLogin: false})
-//   }
+  const validationToken = await checkerToken(user);
+  if (validationToken.error) {
+    await req.session.destroy();
+    return redirect("/dashboard");
+  }
 
-//   const validationToken = await checkerToken( user )
-//   if (validationToken.error) {
-//     await req.session.destroy();
-//     return redirect("/dashboard")
-//   }
+  if (validationToken.status === "refresh") {
+    user = {
+      isLoggedIn: true,
+      access_token: validationToken.access_token,
+      refresh_token: validationToken.refresh_token,
+    };
+    req.session.user = user;
+    await req.session.save();
+  }
 
-//   if ( validationToken.status === "refresh" ) {
-//     user = { isLoggedIn: true, access_token: validationToken.access_token, refresh_token: validationToken.refresh_token };
-//     req.session.user = user;
-//     await req.session.save();
-//   }
+  const uid = JSON.parse(atob(user.access_token.split(".")[1]));
+  const checkUids = await checkUid(uid.user_id);
 
-//   const uid = JSON.parse(atob(user.access_token.split('.')[1]));
-//   const checkUids = await checkUid(uid.user_id);
+  if (checkUids.length < 1) {
+    return redirect("/");
+  }
 
-//   if (checkUids.length < 1 || checkUids[0].blocked || checkUids[0].group !== "admin") {
-//     return redirect("/")
-//   }
-
-//   return retObject({
-//     isLogin: true,
-//     fullName: checkUids[0].fullname
-//   })
-
-// },sessionOptions);
+  return retObject({
+    isLogin: true,
+    fullName: checkUids[0].fullname,
+  });
+},
+sessionOptions);
 
 const Administration = (props) => {
   const router = useRouter();
@@ -55,7 +62,7 @@ const Administration = (props) => {
   useEffect(() => {
     globalAct.setIsFetch(false);
     globalAct.setErrorMsg("");
-    router.prefetch("/config/dashboard");
+    // router.prefetch("/config/dashboard");
   }, []);
   {
     /* Default */
@@ -118,11 +125,6 @@ const Administration = (props) => {
             </div>
           ) : (
             <>
-              <Link href={"/dashboard"} passHref>
-                <button className="bg-green-500 rounded-md p-2">
-                  Masuk lewat sini
-                </button>
-              </Link>
               <FormLogin
                 // Default Form
                 globalCtx={globalCtx}
@@ -134,7 +136,7 @@ const Administration = (props) => {
                   const body = {
                     username: e.currentTarget.username.value,
                     password: e.currentTarget.password.value,
-                    uri: "login_office",
+                    uri: "login",
                   };
 
                   try {
@@ -143,8 +145,9 @@ const Administration = (props) => {
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify(body),
                     });
-                    router.replace("/config/dashboard");
+                    router.push("/dashboard");
                   } catch (error) {
+                    alert("error");
                     if (error instanceof FetchError) {
                       globalAct.setErrorMsg(error.data.message);
                     } else {
