@@ -51,9 +51,9 @@ const ManageCategory = () => {
           }}
         />
       </div>
-      {/* <div>
+      <div>
         <SearchCategory />
-      </div> */}
+      </div>
       <div>
         <CategoryTable />
       </div>
