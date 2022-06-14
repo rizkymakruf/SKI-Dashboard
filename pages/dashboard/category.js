@@ -6,11 +6,13 @@ import FormCategory from "components/form/FormCategory";
 import SearchCategory from "components/search/Category";
 import CategoryTable from "components/table/Category";
 
-import { FetchError } from "lib/listFunct";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
 
 const ManageCategory = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const [inputValue, setInputValue] = useState("");
+  const router = useRouter();
   return (
     <div className="w-full p-2 flex flex-col gap-y-2">
       <div>
@@ -25,7 +27,7 @@ const ManageCategory = () => {
             const body = {
               method: "add",
               category: e.currentTarget.category.value,
-              uri: "category",
+              uri: "cat/addcategory",
             };
 
             console.log(body);
@@ -38,12 +40,12 @@ const ManageCategory = () => {
               });
               router.replace("/dashboard/category");
             } catch (error) {
-              // if (error instanceof FetchError) {
-              //   globalAct.setErrorMsg(error.data.message);
-              // } else {
-              //   globalAct.setErrorMsg("An unexpected error happened");
-              // }
-              console.log("error", error);
+              if (error instanceof FetchError) {
+                globalAct.setErrorMsg(error.data.message);
+              } else {
+                console.log(error);
+                globalAct.setErrorMsg("An unexpected error happened");
+              }
             }
             globalAct.setIsFetch(false);
           }}

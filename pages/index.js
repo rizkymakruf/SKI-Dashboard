@@ -116,6 +116,7 @@ const Administration = (props) => {
                   </Link>
                   <button
                     onClick={() => logout()}
+                    disabled={globalCtx.isFetch ? "disabled" : ""}
                     className="w-full h-auto bg-red-50 py-2 overflow-hidden rounded border-2 border-white shadow-lg"
                   >
                     Logout

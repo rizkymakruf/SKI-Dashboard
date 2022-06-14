@@ -38,7 +38,7 @@ export default function FormLogin({ myRef, globalCtx, globalAct, onSubmit }) {
               </div>
               <input
                 name="password"
-                type="text"
+                type="password"
                 className="placeholder-gray-300 form-input mt-1 rounded-md border w-full"
                 placeholder="Password"
                 disabled={globalCtx.isFetch ? "disabled" : ""}

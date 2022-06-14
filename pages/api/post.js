@@ -17,7 +17,7 @@ export default withIronSessionApiRoute(async (req, res) => {
       }
     );
 
-    if (req.body.uri === "login_office") {
+    if (req.body.uri === "login") {
       const user = {
         isLoggedIn: true,
         access_token: resx.access_token,
