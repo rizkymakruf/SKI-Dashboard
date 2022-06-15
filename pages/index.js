@@ -88,6 +88,11 @@ const Administration = (props) => {
     }
     await router.push("/");
   };
+
+  useEffect(() => {
+    console.log("fetch data status : ", globalCtx.isFetch);
+  }, [globalCtx]);
+
   return (
     <div className="w-full min-h-screen relative bg-white flex flex-row overflow-hidden">
       <div className="w-full min-h-screen flex items-center justify-center">

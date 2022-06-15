@@ -3,7 +3,7 @@ import Image from "next/image";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { GlobalContext } from "context/global";
 import Modal from "./Modal";
@@ -58,6 +58,10 @@ const Item = ({ q, a, r }) => (
 
 const SideNav = ({ children }) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
+
+  useEffect(() => {
+    console.log("fetch data status : ", globalCtx.isFetch);
+  }, [globalCtx]);
 
   const router = useRouter();
   const { query } = router;
@@ -141,6 +145,7 @@ const SideNav = ({ children }) => {
               <p className="text-white">{globalCtx.fullname}</p>
               <div
                 onClick={() => globalAct.setModal("userProfile")}
+                disabled={globalCtx.isFetch ? "disabled" : ""}
                 className="w-6 h-6 rounded-full bg-amber-500  flex justify-center items-center border-2 border-white shadow"
               >
                 <svg

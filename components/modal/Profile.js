@@ -1,5 +1,5 @@
 import FormProduct from "components/form/FormProduct";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { GlobalContext } from "context/global";
 import Link from "next/link";
@@ -7,6 +7,10 @@ import { useRouter } from "next/router";
 const Profile = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
+
+  useEffect(() => {
+    console.log("fetch data status : ", globalCtx.isFetch);
+  }, [globalCtx]);
 
   const logout = async () => {
     const body = {
@@ -82,6 +86,7 @@ const Profile = () => {
           </Link>
           <button
             onClick={() => logout()}
+            // onSubmit={() => globalAct.setModal({ modal: "", type: "" })}
             disabled={globalCtx.isFetch ? "disabled" : ""}
             className="p-2 text-left bg-red-500/30 rounded-md text-red-500 hover:bg-red-500/50 flex flex-row items-center justify-between"
           >

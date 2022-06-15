@@ -4,10 +4,17 @@ import DeleteProductModal from "components/modal/DeleteProduct";
 
 import UserOrderModal from "components/modal/UserOrder";
 import Profile from "components/modal/Profile";
+import { useContext, useEffect } from "react";
+import { GlobalContext } from "context/global";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
   const { setModal } = props.globalAct;
+
+  const { globalCtx, globalAct } = useContext(GlobalContext);
+  useEffect(() => {
+    console.log("fetch data status : ", globalCtx.isFetch);
+  }, [globalCtx]);
 
   return (
     <div className="">

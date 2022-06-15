@@ -65,6 +65,9 @@ const Dashboard = (props) => {
     globalAct.setErrorMsg("");
     // router.prefetch("/config/dashboard");
   }, []);
+  useEffect(() => {
+    console.log("fetch data status : ", globalCtx.isFetch);
+  }, [globalCtx]);
   {
     /* Default */
   }
