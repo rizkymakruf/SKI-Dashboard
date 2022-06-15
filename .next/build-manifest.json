@@ -25,15 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboard": [
+    "/dashboard/profile": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard.js"
-    ],
-    "/dashboard/category": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboard/category.js"
+      "static/chunks/pages/dashboard/profile.js"
     ]
   },
   "ampFirstPages": []

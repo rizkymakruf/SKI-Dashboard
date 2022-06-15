@@ -12,6 +12,7 @@ import { checkUid } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 
 import FormLogin from "components/form/FormLogin";
+import { route } from "next/dist/server/router";
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -69,7 +70,7 @@ const Administration = (props) => {
   }
   const logout = async () => {
     const body = {
-      uri: "bo/logout",
+      uri: "logout",
     };
     try {
       const lg = await fetchJson("/api/prot/post", {
@@ -85,6 +86,7 @@ const Administration = (props) => {
         globalAct.setErrorMsg("An unexpected error happened");
       }
     }
+    route.replace("/");
   };
   return (
     <div className="w-full min-h-screen relative bg-white flex flex-row overflow-hidden">
