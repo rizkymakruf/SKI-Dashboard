@@ -27,7 +27,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   const validationToken = await checkerToken(user);
   if (validationToken.error) {
     await req.session.destroy();
-    return redirect("/dashboard");
+    return redirect("/");
   }
 
   if (validationToken.status === "refresh") {
@@ -78,7 +78,6 @@ const Administration = (props) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      router.push("/administration");
     } catch (error) {
       if (error instanceof FetchError) {
         globalAct.setErrorMsg(error.data.message);
@@ -86,7 +85,7 @@ const Administration = (props) => {
         globalAct.setErrorMsg("An unexpected error happened");
       }
     }
-    route.replace("/");
+    await router.push("/");
   };
   return (
     <div className="w-full min-h-screen relative bg-white flex flex-row overflow-hidden">

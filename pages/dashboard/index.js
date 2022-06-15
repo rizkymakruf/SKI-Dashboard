@@ -1,9 +1,18 @@
 import { getLayout } from "components/layout/Navbar";
 
 import DashboardCard from "components/card/DashboardCard";
+import { withIronSessionSsr } from "iron-session/next";
+import { sessionOptions } from "lib/session";
+import { useContext, useEffect } from "react";
+import { checkUid } from "lib/arangoDb";
+import { useRouter } from "next/router";
+import { redirect, retObject, checkerToken } from "lib/listFunct";
 import OrderCard from "components/card/OrderCard";
 import History from "components/table/History";
 import Line from "components/chart/line";
+import fetchJson, { FetchError } from "lib/fetchJson";
+
+import { GlobalContext } from "context/global";
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -18,7 +27,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   const validationToken = await checkerToken(user);
   if (validationToken.error) {
     await req.session.destroy();
-    return redirect("/dashboard");
+    return redirect("/");
   }
 
   if (validationToken.status === "refresh") {

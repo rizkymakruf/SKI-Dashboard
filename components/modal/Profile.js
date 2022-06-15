@@ -1,10 +1,32 @@
 import FormProduct from "components/form/FormProduct";
 import { useContext } from "react";
+import fetchJson, { FetchError } from "lib/fetchJson";
 import { GlobalContext } from "context/global";
 import Link from "next/link";
+import { useRouter } from "next/router";
 const Profile = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
+  const router = useRouter();
 
+  const Loggedout = async () => {
+    const body = {
+      uri: "logout",
+    };
+    try {
+      const out = fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    } catch (error) {
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+    await router.push("/");
+  };
   return (
     <div
       className="bg-white w-full h-auto rounded-md shadow-sm shadow-black"
@@ -58,7 +80,7 @@ const Profile = () => {
             </button>
           </Link>
           <button
-            onClick={() => logout()}
+            onClick={() => Loggedout()}
             disabled={globalCtx.isFetch ? "disabled" : ""}
             className="p-2 text-left bg-red-500/30 rounded-md text-red-500 hover:bg-red-500/50 flex flex-row items-center justify-between"
           >

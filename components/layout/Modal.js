@@ -10,7 +10,7 @@ const Modal = (props) => {
   const { setModal } = props.globalAct;
 
   return (
-    <div className=''>
+    <div className="">
       <div
         onClick={() => setModal("")}
         className={`bg-black/60 fixed w-full h-screen z-40 ${

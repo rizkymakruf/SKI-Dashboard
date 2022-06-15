@@ -93,26 +93,6 @@ const SideNav = ({ children }) => {
     },
   ];
 
-  const logout = async () => {
-    const body = {
-      uri: "bo/logout",
-    };
-    try {
-      const lg = await fetchJson("/api/prot/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      router.push("/");
-    } catch (error) {
-      if (error instanceof FetchError) {
-        globalAct.setErrorMsg(error.data.message);
-      } else {
-        globalAct.setErrorMsg("An unexpected error happened");
-      }
-    }
-  };
-
   return (
     <>
       <Modal globalCtx={globalCtx} globalAct={globalAct} />
