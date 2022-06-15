@@ -8,12 +8,12 @@ const Profile = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
 
-  const Loggedout = async () => {
+  const logout = async () => {
     const body = {
       uri: "logout",
     };
     try {
-      const out = fetchJson("/api/prot/post", {
+      const lg = await fetchJson("/api/prot/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -21,9 +21,10 @@ const Profile = () => {
     } catch (error) {
       if (error instanceof FetchError) {
         globalAct.setErrorMsg(error.data.message);
-      } else {
-        globalAct.setErrorMsg("An unexpected error happened");
       }
+      // else {
+      //   globalAct.setErrorMsg("An unexpected error happened");
+      // }
     }
     await router.push("/");
   };
@@ -80,7 +81,7 @@ const Profile = () => {
             </button>
           </Link>
           <button
-            onClick={() => Loggedout()}
+            onClick={() => logout()}
             disabled={globalCtx.isFetch ? "disabled" : ""}
             className="p-2 text-left bg-red-500/30 rounded-md text-red-500 hover:bg-red-500/50 flex flex-row items-center justify-between"
           >

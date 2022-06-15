@@ -81,9 +81,10 @@ const Administration = (props) => {
     } catch (error) {
       if (error instanceof FetchError) {
         globalAct.setErrorMsg(error.data.message);
-      } else {
-        globalAct.setErrorMsg("An unexpected error happened");
       }
+      // else {
+      //   globalAct.setErrorMsg("An unexpected error happened");
+      // }
     }
     await router.push("/");
   };

@@ -68,26 +68,26 @@ const Dashboard = (props) => {
   {
     /* Default */
   }
-  const logout = async () => {
-    const body = {
-      uri: "logout",
-    };
-    try {
-      const lg = await fetchJson("/api/prot/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      router.push("/administration");
-    } catch (error) {
-      if (error instanceof FetchError) {
-        globalAct.setErrorMsg(error.data.message);
-      } else {
-        globalAct.setErrorMsg("An unexpected error happened");
-      }
-    }
-    route.replace("/");
-  };
+  // const logout = async () => {
+  //   const body = {
+  //     uri: "logout",
+  //   };
+  //   try {
+  //     const lg = await fetchJson("/api/prot/post", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(body),
+  //     });
+  //     router.push("/administration");
+  //   } catch (error) {
+  //     if (error instanceof FetchError) {
+  //       globalAct.setErrorMsg(error.data.message);
+  //     } else {
+  //       globalAct.setErrorMsg("An unexpected error happened");
+  //     }
+  //   }
+  //   route.replace("/");
+  // };
   return (
     <div className="w-full p-2 flex flex-col gap-y-4">
       <div>
