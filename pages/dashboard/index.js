@@ -11,6 +11,7 @@ import Line from "components/chart/line";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import History from "components/table/History";
+import Link from "next/link";
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,

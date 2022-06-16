@@ -1,0 +1,62 @@
+import Link from "next/link";
+
+const DashboardCardSKI = (props) => {
+  return (
+    <>
+      <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-full h-44 rounded-md p-4 flex flex-col justify-between hover:shadow-red-500 hover:scale-95">
+        <div>
+          <p className="font-bold text-gray-800 ">{props.otlet}</p>
+          <hr />
+          <div className="flex items-center gap-x-2">
+            <span className="text-red-500 font-bold text-sm">
+              {props.order}
+            </span>
+            <span className="text-gray-600 font-semibold text-sm">Orders</span>
+          </div>
+          <div className="flex items-center gap-x-2">
+            <span className="text-red-500 font-bold text-sm">
+              {props.products}
+            </span>
+            <span className="text-gray-600 font-semibold text-sm">
+              Products
+            </span>
+          </div>
+          <div className="flex items-center gap-x-2">
+            <span className="text-red-500 font-bold text-sm">
+              {props.subCategory}
+            </span>
+            <span className="text-gray-600 font-semibold text-sm">
+              Sub Category
+            </span>
+          </div>
+        </div>
+
+        <div className="flex flex-row items-center justify-between">
+          <p className="text-sm font-bold">{props.title}</p>
+          {/* <Link href={props.routes} passHref> */}
+          <button
+            className={
+              "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-orange/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:after:content-['See_all'] "
+            }
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-orange-500"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+          {/* </Link> */}
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default DashboardCardSKI;

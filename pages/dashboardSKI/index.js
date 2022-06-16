@@ -1,5 +1,5 @@
 import { getLayout } from "components/layout/Navbar";
-import DashboardCard from "components/card/DashboardCard";
+import DashboardCardSKI from "components/card/DashboardCardSKI";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { useContext, useEffect } from "react";
@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import OrderCard from "components/card/OrderCard";
 import Line from "components/chart/line";
+import Line1 from "components/chart/line1";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import History from "components/table/History";
@@ -77,7 +78,7 @@ const DashboardSKI = (props) => {
       </div>
       <div className="flex items-center gap-x-4">
         <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-2/4 h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
-          <Line />
+          <Line1 />
         </div>
         <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-2/4 h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
           <Line />
@@ -86,29 +87,33 @@ const DashboardSKI = (props) => {
       <div>
         <hr />
       </div>
+
       <div className="w-full flex flex-row items-center gap-x-4">
         <div className="w-full">
-          <DashboardCard
-            title={"Total Categorys"}
-            content={"Categorys"}
-            qty={"99"}
-            routes={"/dashboard/category"}
+          <DashboardCardSKI
+            otlet={"Red White Coffee"}
+            order={"180"}
+            products={"1100"}
+            subCategory={"11"}
+            route={"/outlet/redwhite"}
           />
         </div>
         <div className="w-full">
-          <DashboardCard
-            title={"Total Products"}
-            content={"Products"}
-            qty={"1009"}
-            routes={"/dashboard/product"}
+          <DashboardCardSKI
+            otlet={"Blue Green Coffee"}
+            order={"280"}
+            products={"100"}
+            subCategory={"18"}
+            route={"/outlet/redwhite"}
           />
         </div>
         <div className="w-full">
-          <DashboardCard
-            title={"Total Outlite"}
-            content={"Outlets"}
-            qty={"18"}
-            routes={"/dashboardSKI/outlets"}
+          <DashboardCardSKI
+            otlet={"White Black Coffee"}
+            order={"208"}
+            products={"900"}
+            subCategory={"8"}
+            route={"/outlet/redwhite"}
           />
         </div>
       </div>
