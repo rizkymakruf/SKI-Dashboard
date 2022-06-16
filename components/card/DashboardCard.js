@@ -6,7 +6,7 @@ const DashboardCard = (props) => {
       <div>
         <p className="text-sm">Currently we have :</p>
         <div className="flex items-center gap-x-2">
-          <p className="text-red-500 font-bold underline">900</p>
+          <p className="text-red-500 font-bold underline">{props.qty}</p>
           <p className="text-gray-600 text-sm font-semibold">{props.content}</p>
         </div>
       </div>

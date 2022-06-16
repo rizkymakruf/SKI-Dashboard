@@ -1,5 +1,4 @@
 import { getLayout } from "components/layout/Navbar";
-
 import DashboardCard from "components/card/DashboardCard";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
@@ -8,11 +7,10 @@ import { checkUid } from "lib/arangoDb";
 import { useRouter } from "next/router";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import OrderCard from "components/card/OrderCard";
-import History from "components/table/History";
 import Line from "components/chart/line";
-import fetchJson, { FetchError } from "lib/fetchJson";
-
 import { GlobalContext } from "context/global";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import History from "components/table/History";
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -71,26 +69,7 @@ const Dashboard = (props) => {
   {
     /* Default */
   }
-  // const logout = async () => {
-  //   const body = {
-  //     uri: "logout",
-  //   };
-  //   try {
-  //     const lg = await fetchJson("/api/prot/post", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(body),
-  //     });
-  //     router.push("/administration");
-  //   } catch (error) {
-  //     if (error instanceof FetchError) {
-  //       globalAct.setErrorMsg(error.data.message);
-  //     } else {
-  //       globalAct.setErrorMsg("An unexpected error happened");
-  //     }
-  //   }
-  //   route.replace("/");
-  // };
+
   return (
     <div className="w-full p-2 flex flex-col gap-y-4">
       <div>

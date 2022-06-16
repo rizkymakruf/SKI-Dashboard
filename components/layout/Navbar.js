@@ -11,7 +11,7 @@ import Modal from "./Modal";
 const ChildMenu = ({ q, a, r }) => (
   <Link href={q}>
     <button
-      className={`duration-500 w-full h-10 flex items-center border-b pl-8  text-xs ${
+      className={`duration-300 w-full h-10 flex items-center border-b pl-8  text-xs ${
         r === q
           ? "border-red-600 bg-red-500 text-white"
           : "text-gray-700 border-gray-300 bg-white hover:scale-105 hover:bg-red-500 hover:text-white"
@@ -32,7 +32,7 @@ const Item = ({ q, a, r }) => (
     <div className="h-12 w-full pl-5 flex items-center text-red-500 font-semibold">
       {q}
     </div>
-    <div className="absolute top-3 right-3 transition-transform duration-500 rotate-0 peer-checked:-rotate-90">
+    <div className="absolute top-3 right-3 transition-transform duration-300 rotate-0 peer-checked:-rotate-90">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-5 w-5 text-blue-500"
@@ -48,7 +48,7 @@ const Item = ({ q, a, r }) => (
         />
       </svg>
     </div>
-    <div className="overflow-hidden bg-white transition-all duration-500 max-h-0 peer-checked:max-h-64 ">
+    <div className="overflow-hidden bg-white transition-all duration-300 max-h-0 peer-checked:max-h-full ">
       {a.map((item, key) => (
         <ChildMenu q={item.link} a={item.name} r={r} key={key} />
       ))}
@@ -67,7 +67,48 @@ const SideNav = ({ children }) => {
   const { query } = router;
   const faqs = [
     {
-      name: "Manage",
+      name: "Manage SKI",
+      menu: [
+        {
+          link: "/dashboardSKI",
+          name: "Dashboard",
+        },
+        {
+          link: "/dashboardSKI/outlets",
+          name: "Outlets",
+        },
+        {
+          link: "/dashboardSKI/users",
+          name: "Users",
+        },
+        {
+          link: "/dashboardSKI/categorys",
+          name: "Categorys",
+        },
+        {
+          link: "/dashboardSKI/content",
+          name: "Content",
+        },
+        {
+          link: "/dashboardSKI/productRecomendation",
+          name: "Product Recomendation",
+        },
+        {
+          link: "/dashboardSKI/topBrand",
+          name: "Top Brand",
+        },
+        {
+          link: "/dashboardSKI/vouchers",
+          name: "Vouchers",
+        },
+        {
+          link: "/dashboardSKI/reports",
+          name: "Reports",
+        },
+      ],
+    },
+    {
+      name: "Manage Outlet",
       menu: [
         {
           link: "/dashboard",
@@ -86,6 +127,14 @@ const SideNav = ({ children }) => {
           name: "Order",
         },
         {
+          link: "/dashboard/voucher",
+          name: "Voucher",
+        },
+        {
+          link: "/dashboard/discount",
+          name: "Discount",
+        },
+        {
           link: "/dashboard/history",
           name: "History",
         },
@@ -101,25 +150,25 @@ const SideNav = ({ children }) => {
     <>
       <Modal globalCtx={globalCtx} globalAct={globalAct} />
       <div className="w-full h-full flex flex-row ">
-        <div className="w-80 h-screen bg-gray-200 flex flex-col select-none">
+        <div className="w-80 h-screen bg-white flex flex-col select-none">
           <div className="w-full h-auto flex justify-center items-center">
             <div className="w-52 h-52 p-4">
               <div className="w-full h-full relative rounded-full overflow-hidden">
-                <div className="bg-white w-full h-full"></div>
+                <div className="bg-gray-300 w-full h-full"></div>
               </div>
             </div>
           </div>
 
-          <div className="w-full h-full bg-gray-200">
+          <div className="w-full h-full ">
             {/* overflow-scroll */}
             {faqs.map((item, key) => (
               <Item q={item.name} a={item.menu} key={key} r={router.asPath} />
             ))}
           </div>
         </div>
-        <div className="w-full max-h-max relative border-l-2">
+        <div className="w-full h-full relative border-l-2">
           <div className="w-full h-14 p-6 absolute top-0 bg-red-600 shadow-sm flex justify-between">
-            <div className="w-full h-auto flex items-center text-sm capitalize">
+            <div className="w-full h-full flex items-center text-sm capitalize">
               <Link href="/dashboard">
                 <svg
                   className="w-6 h-6 stroke-white fill-white"
