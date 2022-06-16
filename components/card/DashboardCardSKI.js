@@ -5,9 +5,9 @@ const DashboardCardSKI = (props) => {
     <>
       <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-full h-44 rounded-md p-4 flex flex-col justify-between hover:shadow-red-500 hover:scale-95">
         <div>
-          <p className="font-bold text-gray-800 ">{props.otlet}</p>
+          <p className="font-bold text-gray-800 pb-2">{props.otlet}</p>
           <hr />
-          <div className="flex items-center gap-x-2">
+          <div className="flex items-center gap-x-2 pt-2">
             <span className="text-red-500 font-bold text-sm">
               {props.order}
             </span>
@@ -36,7 +36,7 @@ const DashboardCardSKI = (props) => {
           {/* <Link href={props.routes} passHref> */}
           <button
             className={
-              "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-orange/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:after:content-['See_all'] "
+              "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-orange/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:after:content-['Detail'] "
             }
           >
             <svg

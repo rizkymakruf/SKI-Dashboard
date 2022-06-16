@@ -17,10 +17,23 @@ import { useEffect, useState, useRef } from "react";
 
 const CoinPriceChart = (props) => {
   const data = {
-    labels: ["January", "Februari", "Maret", "April", "Mei", "Juni", "Juli"],
+    labels: [
+      "January",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "agustus",
+      "september",
+      "november",
+      "oktober",
+      "desember",
+    ],
     datasets: [
       {
-        data: [0.1, 0.4, 0.5, 0.6, 0.3, 0.4, 0.5],
+        data: [0.1, 0.4, 0.5, 0.6, 0.3, 0.4, 0.5, 0.3, 0.4, 0.7, 0.8, 0.2],
       },
     ],
   };

@@ -6,6 +6,7 @@ import UserOrderModal from "components/modal/UserOrder";
 import Profile from "components/modal/Profile";
 import { useContext, useEffect } from "react";
 import { GlobalContext } from "context/global";
+import OtletModal from "components/modal/Otlet";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
@@ -58,6 +59,15 @@ const Modal = (props) => {
         } z-50 fixed right-0 duration-500 w-96 h-fit p-4`}
       >
         <Profile />
+      </div>
+      <div
+        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "addOtlet"
+            ? "-translate-y-16 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <OtletModal />
       </div>
     </div>
   );
