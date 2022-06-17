@@ -41,7 +41,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   const uid = JSON.parse(atob(user.access_token.split(".")[1]));
   const checkUids = await checkUid(uid.user_id);
-  console.log(checkUids);
+  // console.log(checkUids);
 
   if (checkUids.length < 1) {
     return redirect("/");

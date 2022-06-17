@@ -47,7 +47,7 @@ export default function FormOtletUpdate({
                 placeholder="Red White Coffee"
               ></input>
             </div>
-            <div className="w-full">
+            {/* <div className="w-full">
               <p>Password Otlet</p>
               <input
                 type={"password"}
@@ -55,11 +55,11 @@ export default function FormOtletUpdate({
                 // placeholder="Password Otlet"
                 value={"rahasia123"}
               ></input>
-            </div>
+            </div> */}
             <div className="w-full">
               <p>Deskripsi Otlet</p>
               <textarea
-                className="rounded-md p-2 border-2 border-orange-500/50 w-full"
+                className="rounded-md p-2 border-2 border-orange-500/50 w-full h-40"
                 placeholder="Hello world, this is a description of otlet, you can input or edit here."
               ></textarea>
             </div>
@@ -123,13 +123,13 @@ export default function FormOtletUpdate({
 
               <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                 <div className="w-full h-auto flex justify-end gap-2">
-                  {/* <button
+                  <button
                     onClick={(e) => resetForm(e)}
                     // disabled={globalCtx.isFetch ? "disabled" : ""}
                     className="px-6 h-8 bg-yellow-500/30 text-yellow-500 border-2 shadow-md hover:bg-yellow-500/50 border-yellow-300 font-semibold rounded overflow-hidden"
                   >
                     Cancel
-                  </button> */}
+                  </button>
                   <button
                     onClick={onSubmit}
                     // disabled={globalCtx.isFetch ? "disabled" : ""}

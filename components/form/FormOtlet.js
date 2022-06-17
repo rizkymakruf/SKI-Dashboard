@@ -47,17 +47,17 @@ export default function FormOtlet({
                 placeholder="Nama Otlet"
               ></input>
             </div>
-            <div className="w-full">
+            {/* <div className="w-full">
               <p>Password Otlet</p>
               <input
                 className="rounded-md p-2 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                 placeholder="Password Otlet"
               ></input>
-            </div>
+            </div> */}
             <div className="w-full">
               <p>Deskripsi Otlet</p>
               <textarea
-                className="rounded-md p-2 border-2 border-orange-500/50 w-full"
+                className="rounded-md p-2 border-2 border-orange-500/50 w-full h-40"
                 placeholder="Deskripsi Otlet"
               ></textarea>
             </div>
