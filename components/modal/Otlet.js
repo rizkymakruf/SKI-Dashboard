@@ -7,7 +7,7 @@ const OtletModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
 
   return (
-    <div className="bg-white w-3/4 h-full rounded-md shadow-sm shadow-black">
+    <div className="bg-white w-full h-full rounded-md shadow-sm shadow-black">
       <div className="bg-red-500 h-12 w-full flex items-center justify-between px-3 rounded-t-md">
         <p className="text-white font-bold">Create new otlet</p>
         <button

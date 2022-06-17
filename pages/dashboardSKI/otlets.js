@@ -33,56 +33,68 @@ const Otlets = (props) => {
       <div className="w-full grid grid-cols-3 items-center gap-4">
         <div className="w-full">
           <DashboardCardSKI
+            globalAct={globalAct}
+            globalCtx={globalCtx}
             otlet={"Red White Coffee"}
             order={"180"}
             products={"1100"}
             subCategory={"11"}
-            route={"/outlet/redwhite"}
+            route={"dashboard"}
           />
         </div>
         <div className="w-full">
           <DashboardCardSKI
+            globalAct={globalAct}
+            globalCtx={globalCtx}
             otlet={"Blue Green Coffee"}
             order={"280"}
             products={"100"}
             subCategory={"18"}
-            route={"/outlet/redwhite"}
+            route={"dashboard"}
           />
         </div>
         <div className="w-full">
           <DashboardCardSKI
+            globalAct={globalAct}
+            globalCtx={globalCtx}
             otlet={"White Black Coffee"}
             order={"208"}
             products={"900"}
             subCategory={"8"}
-            route={"/outlet/redwhite"}
+            route={"dashboard"}
           />
         </div>
         <div className="w-full">
           <DashboardCardSKI
+            globalAct={globalAct}
+            globalCtx={globalCtx}
             otlet={"Red White Coffee"}
             order={"180"}
             products={"1100"}
             subCategory={"11"}
-            route={"/outlet/redwhite"}
+            route={"dashboard"}
           />
         </div>
         <div className="w-full">
           <DashboardCardSKI
+            globalAct={globalAct}
+            globalCtx={globalCtx}
             otlet={"Blue Green Coffee"}
             order={"280"}
             products={"100"}
             subCategory={"18"}
-            route={"/outlet/redwhite"}
+            route={"dashboard"}
           />
         </div>
         <div className="w-full">
           <DashboardCardSKI
+            globalAct={globalAct}
+            globalCtx={globalCtx}
             otlet={"White Black Coffee"}
             order={"208"}
             products={"900"}
             subCategory={"8"}
-            route={"/outlet/redwhite"}
+            route={"dashboard"}
           />
         </div>
       </div>

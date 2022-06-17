@@ -116,7 +116,7 @@ const Administration = (props) => {
               <div className="w-full h-full p-3 backdrop-blur bg-white/30 rounded-md border overflow-hidden">
                 <p className="text-sm">Hi {props.fullName},</p>
                 <div className="w-full h-full relative flex justify-between items-center gap-3">
-                  <Link href="dashboard">
+                  <Link href="dashboardSKI">
                     <button className="w-full h-auto bg-blue-50 py-2 overflow-hidden rounded border-2 border-white shadow-lg">
                       Dashboard
                     </button>
@@ -153,7 +153,7 @@ const Administration = (props) => {
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify(body),
                     });
-                    router.push("/dashboard");
+                    router.push("/dashboardSKI");
                   } catch (error) {
                     alert("error");
                     if (error instanceof FetchError) {

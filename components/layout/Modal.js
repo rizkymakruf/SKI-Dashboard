@@ -7,6 +7,7 @@ import Profile from "components/modal/Profile";
 import { useContext, useEffect } from "react";
 import { GlobalContext } from "context/global";
 import OtletModal from "components/modal/Otlet";
+import OtletUpdateModal from "components/modal/OtletUpdate";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
@@ -63,11 +64,20 @@ const Modal = (props) => {
       <div
         className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "addOtlet"
-            ? "-translate-y-32 bottom-0"
+            ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
         }`}
       >
         <OtletModal />
+      </div>
+      <div
+        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "editOtlet"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <OtletUpdateModal />
       </div>
     </div>
   );

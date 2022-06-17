@@ -41,6 +41,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   const uid = JSON.parse(atob(user.access_token.split(".")[1]));
   const checkUids = await checkUid(uid.user_id);
+  console.log(checkUids);
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -78,16 +79,16 @@ const DashboardSKI = (props) => {
       </div> */}
       <div className="flex items-center gap-x-4">
         <div className="w-full grid grid-cols-2 gap-4">
-          <div className="w-full border border-gray-200 rounded-md shadow-md p-3">
-            <p className="py-1 text-red-500 font-semibold">
+          <div className="w-full border border-gray-200 rounded-md shadow-md px-3 py-6">
+            <p className="pb-2 text-red-500 font-semibold">
               Pendapatan Perbulan
             </p>
             <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-full h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
               <Line1 />
             </div>
           </div>
-          <div className="w-full border border-gray-200 rounded-md shadow-md p-3">
-            <p className="py-1 text-red-500 font-semibold">
+          <div className="w-full border border-gray-200 rounded-md shadow-md px-3 py-6">
+            <p className="pb-2 text-red-500 font-semibold">
               Penjualan Perbulan
             </p>
             <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-full h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
@@ -103,56 +104,68 @@ const DashboardSKI = (props) => {
       <div className="w-full grid grid-cols-3 items-center gap-4">
         <div className="w-full">
           <DashboardCardSKI
+            globalAct={globalAct}
+            globalCtx={globalCtx}
             otlet={"Red White Coffee"}
             order={"180"}
             products={"1100"}
             subCategory={"11"}
-            route={"/outlet/redwhite"}
+            route={"dashboard"}
           />
         </div>
         <div className="w-full">
           <DashboardCardSKI
+            globalAct={globalAct}
+            globalCtx={globalCtx}
             otlet={"Blue Green Coffee"}
             order={"280"}
             products={"100"}
             subCategory={"18"}
-            route={"/outlet/redwhite"}
+            route={"dashboard"}
           />
         </div>
         <div className="w-full">
           <DashboardCardSKI
+            globalAct={globalAct}
+            globalCtx={globalCtx}
             otlet={"White Black Coffee"}
             order={"208"}
             products={"900"}
             subCategory={"8"}
-            route={"/outlet/redwhite"}
+            route={"dashboard"}
           />
         </div>
         <div className="w-full">
           <DashboardCardSKI
+            globalAct={globalAct}
+            globalCtx={globalCtx}
             otlet={"Red White Coffee"}
             order={"180"}
             products={"1100"}
             subCategory={"11"}
-            route={"/outlet/redwhite"}
+            route={"dashboard"}
           />
         </div>
         <div className="w-full">
           <DashboardCardSKI
+            globalAct={globalAct}
+            globalCtx={globalCtx}
             otlet={"Blue Green Coffee"}
             order={"280"}
             products={"100"}
             subCategory={"18"}
-            route={"/outlet/redwhite"}
+            route={"dashboard"}
           />
         </div>
         <div className="w-full">
           <DashboardCardSKI
+            globalAct={globalAct}
+            globalCtx={globalCtx}
             otlet={"White Black Coffee"}
             order={"208"}
             products={"900"}
             subCategory={"8"}
-            route={"/outlet/redwhite"}
+            route={"dashboard"}
           />
         </div>
       </div>
