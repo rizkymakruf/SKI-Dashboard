@@ -63,7 +63,7 @@ const Modal = (props) => {
       <div
         className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "addOtlet"
-            ? "-translate-y-16 bottom-0"
+            ? "-translate-y-32 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
         }`}
       >

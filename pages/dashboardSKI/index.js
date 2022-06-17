@@ -73,15 +73,27 @@ const DashboardSKI = (props) => {
 
   return (
     <div className="w-full p-4 flex flex-col gap-y-4">
-      <div>
+      {/* <div>
         <hr />
-      </div>
+      </div> */}
       <div className="flex items-center gap-x-4">
-        <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-2/4 h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
-          <Line1 />
-        </div>
-        <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-2/4 h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
-          <Line />
+        <div className="w-full grid grid-cols-2 gap-4">
+          <div className="w-full border border-gray-200 rounded-md shadow-md p-3">
+            <p className="py-1 text-red-500 font-semibold">
+              Pendapatan Perbulan
+            </p>
+            <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-full h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
+              <Line1 />
+            </div>
+          </div>
+          <div className="w-full border border-gray-200 rounded-md shadow-md p-3">
+            <p className="py-1 text-red-500 font-semibold">
+              Penjualan Perbulan
+            </p>
+            <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-full h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
+              <Line />
+            </div>
+          </div>
         </div>
       </div>
       <div>

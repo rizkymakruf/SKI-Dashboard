@@ -86,14 +86,6 @@ const Otlets = (props) => {
           />
         </div>
       </div>
-      {/* <div>
-        <hr />
-      </div>
-      <div className="w-full flex flex-row items-center gap-x-4">
-        <div className="w-72">
-          <OrderCard />
-        </div>
-      </div> */}
     </div>
   );
 };
