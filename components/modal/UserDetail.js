@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { GlobalContext } from "context/global";
+import DetailUser from "components/card/DetailUser";
 
 const UserDetailModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
@@ -28,6 +29,7 @@ const UserDetailModal = () => {
           </svg>
         </button>
       </div>
+      <DetailUser />
     </div>
   );
 };
