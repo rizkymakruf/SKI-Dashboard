@@ -8,6 +8,9 @@ import { useContext, useEffect } from "react";
 import { GlobalContext } from "context/global";
 import OtletModal from "components/modal/Otlet";
 import OtletUpdateModal from "components/modal/OtletUpdate";
+import DeleteUserModal from "components/modal/DeleteUser";
+import UserModal from "components/modal/User";
+import UserUpdateModal from "components/modal/UserUpdate";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
@@ -72,12 +75,37 @@ const Modal = (props) => {
       </div>
       <div
         className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "addUser"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <UserModal />
+      </div>
+      <div
+        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "editOtlet"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
         }`}
       >
         <OtletUpdateModal />
+      </div>
+      <div
+        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "editUser"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <UserUpdateModal />
+      </div>
+      <div
+        className={`${
+          modal === "deleteUser" ? "translate-x-0" : "-translate-x-full"
+        } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
+      >
+        <DeleteUserModal />
       </div>
     </div>
   );
