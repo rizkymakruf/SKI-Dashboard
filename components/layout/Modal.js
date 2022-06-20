@@ -11,6 +11,7 @@ import OtletUpdateModal from "components/modal/OtletUpdate";
 import DeleteUserModal from "components/modal/DeleteUser";
 import UserModal from "components/modal/User";
 import UserUpdateModal from "components/modal/UserUpdate";
+import UserDetailModal from "components/modal/UserDetail";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
@@ -91,6 +92,7 @@ const Modal = (props) => {
       >
         <OtletUpdateModal />
       </div>
+
       <div
         className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "editUser"
@@ -100,6 +102,17 @@ const Modal = (props) => {
       >
         <UserUpdateModal />
       </div>
+
+      <div
+        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "detailUser"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <UserDetailModal />
+      </div>
+
       <div
         className={`${
           modal === "deleteUser" ? "translate-x-0" : "-translate-x-full"

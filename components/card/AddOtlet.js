@@ -4,7 +4,7 @@ const AddOtlet = (props) => {
   return (
     <>
       <div className="w-full flex justify-between items-center border border-gray-200 shadow-md p-3 rounded-md">
-        <p className="text-md font-semibold text-red-500">Create Otlet</p>
+        <p className="text-md font-semibold text-red-500">Create Outlet</p>
         <button
           className={
             "bg-green-500/30 items-center justify-center h-10 w-10 rounded-md hover:bg-red-orange/50 shadow-sm flex gap-x-2 text-md border border-green-500 font-semibold text-green-500 hover:w-28 duration-150 hover:after:content-['Create'] "

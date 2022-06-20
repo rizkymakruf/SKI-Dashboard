@@ -7,18 +7,22 @@ const UsersTable = ({}) => {
   const data = [
     {
       username: "Coffee124",
+      email: "redwhite@mail.com",
       otlet: "Red White Coffe",
     },
     {
       username: "Coffee765",
+      email: "blackwhite@mail.com",
       otlet: "Black White Coffe",
     },
     {
       username: "Coffee344",
+      email: "seren@mail.com",
       otlet: "Seren Coffe",
     },
     {
       username: "Coffee9877",
+      email: "bluecoffee@mail.com",
       otlet: "Blue Coffee",
     },
   ];
@@ -33,11 +37,42 @@ const UsersTable = ({}) => {
       ),
     },
     {
+      name: <div className="font-bold text-red-500">Email</div>,
+      grow: 2,
+      cell: (a) => (
+        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
+          <p className="text-xs font-bold">{a.email}</p>
+        </div>
+      ),
+    },
+    {
       name: <div className="font-bold text-red-500">Otlet</div>,
       grow: 2,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
           <p className="text-xs font-bold">{a.otlet}</p>
+        </div>
+      ),
+    },
+    {
+      name: (
+        <div className="w-full text-center font-bold text-red-500">Active</div>
+      ),
+      grow: 2,
+      cell: (a) => (
+        <div className="flex flex-row items-center justify-center gap-x-2 w-full">
+          <label className="switch">
+            <input
+              type="checkbox"
+              // value={moreDay}
+              // onClick={() => {
+              //   setMoreDay(!moreDay);
+              //   setInputValue({ ...inputValue, sampai: "" });
+              // }}
+              // onChange={(e) => setMoreDay(e.target.checked)}
+            />
+            <span className="slider round"></span>
+          </label>
         </div>
       ),
     },
@@ -49,7 +84,7 @@ const UsersTable = ({}) => {
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button
-            onClick={() => alert("delete")}
+            onClick={() => globalAct.setModal("detailUser")}
             className={
               "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-orange-500/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:before:content-['View'] border border-orange-300"
             }
@@ -69,7 +104,7 @@ const UsersTable = ({}) => {
             </svg>
           </button>
           <button
-            onClick={() => alert("delete")}
+            onClick={() => globalAct.setModal("editUser")}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:before:content-['Edit'] border border-blue-300"
             }
@@ -89,7 +124,7 @@ const UsersTable = ({}) => {
             </svg>
           </button>
           <button
-            onClick={() => globalAct.setModal("deleteProduct")}
+            onClick={() => globalAct.setModal("deleteUser")}
             className={
               "bg-red-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-500/50 shadow-md flex gap-x-2 text-xs text-red-500 hover:w-24 duration-150 hover:before:content-['Remove'] border border-red-300"
             }
