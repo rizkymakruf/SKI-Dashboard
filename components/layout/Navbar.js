@@ -82,7 +82,7 @@ const SideNav = ({ children }) => {
           name: "Users",
         },
         {
-          link: "/dashboardSKI/categorys",
+          link: "/dashboardSKI/category",
           name: "Categorys",
         },
         {

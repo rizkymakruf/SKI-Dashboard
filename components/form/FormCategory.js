@@ -17,7 +17,7 @@ export default function FormCategory({ globalCtx, onSubmit }) {
                 name="category"
                 type="text"
                 className="placeholder-gray-400 h-10 bg-gray-500/20 form-input mt-1 rounded-md border border-gray-300 w-full focus:ring-2 duration-500 focus:ring-blue-500"
-                placeholder="Provide category name"
+                placeholder="$category"
                 disabled={globalCtx.isFetch ? "disabled" : ""}
               />
             </div>

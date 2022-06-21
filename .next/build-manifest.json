@@ -30,10 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/dashboardSKI.js"
     ],
-    "/dashboardSKI/users": [
+    "/dashboardSKI/category": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/users.js"
+      "static/chunks/pages/dashboardSKI/category.js"
     ]
   },
   "ampFirstPages": []

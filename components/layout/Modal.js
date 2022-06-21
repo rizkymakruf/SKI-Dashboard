@@ -12,6 +12,8 @@ import DeleteUserModal from "components/modal/DeleteUser";
 import UserModal from "components/modal/User";
 import UserUpdateModal from "components/modal/UserUpdate";
 import UserDetailModal from "components/modal/UserDetail";
+import DeleteCategoryModal from "components/modal/DeleteCategory";
+import CategoryModal from "components/modal/Category";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
@@ -114,11 +116,28 @@ const Modal = (props) => {
       </div>
 
       <div
+        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "editCategory"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <CategoryModal />
+      </div>
+
+      <div
         className={`${
           modal === "deleteUser" ? "translate-x-0" : "-translate-x-full"
         } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
       >
         <DeleteUserModal />
+      </div>
+      <div
+        className={`${
+          modal === "deleteCategory" ? "translate-x-0" : "-translate-x-full"
+        } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
+      >
+        <DeleteCategoryModal />
       </div>
     </div>
   );

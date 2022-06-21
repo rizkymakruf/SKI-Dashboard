@@ -1,6 +1,9 @@
 import DataTable from "react-data-table-component";
+import { GlobalContext } from "context/global";
+import { useContext } from "react";
 
 const OrderTable = ({}) => {
+  const { globalCtx, globalAct } = useContext(GlobalContext);
   const data = [
     {
       name: "Coffee",
@@ -30,7 +33,7 @@ const OrderTable = ({}) => {
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button
-            onClick={() => alert("delete")}
+            onClick={() => globalAct.setModal("editCategory")}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:before:content-['Edit'] border border-blue-300"
             }
@@ -50,7 +53,7 @@ const OrderTable = ({}) => {
             </svg>
           </button>
           <button
-            onClick={() => alert("delete")}
+            onClick={() => globalAct.setModal("deleteCategory")}
             className={
               "bg-red-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-500/50 shadow-md flex gap-x-2 text-xs text-red-500 hover:w-24 duration-150 hover:before:content-['Remove'] border border-red-300"
             }
