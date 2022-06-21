@@ -18,6 +18,8 @@ import ContentModal from "components/modal/Content";
 import DeleteContentModal from "components/modal/DeleteContent";
 import ContentUpdateModal from "components/modal/ContentUpdate";
 import ContentDetailModal from "components/modal/ContentDetail";
+import DeleteRekomenModal from "components/modal/DeleteRekomen";
+import AddedRekomenModal from "components/modal/AddedRekomen";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
@@ -178,6 +180,20 @@ const Modal = (props) => {
         } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
       >
         <DeleteContentModal />
+      </div>
+      <div
+        className={`${
+          modal === "deleteRekomen" ? "translate-x-0" : "-translate-x-full"
+        } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
+      >
+        <DeleteRekomenModal />
+      </div>
+      <div
+        className={`${
+          modal === "addedRekomen" ? "translate-x-0" : "-translate-x-full"
+        } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
+      >
+        <AddedRekomenModal />
       </div>
     </div>
   );

@@ -90,7 +90,7 @@ const SideNav = ({ children }) => {
           name: "Content",
         },
         {
-          link: "/dashboardSKI/productRecomendation",
+          link: "/dashboardSKI/produkRekomen",
           name: "Product Recomendation",
         },
         {
