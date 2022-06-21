@@ -14,6 +14,10 @@ import UserUpdateModal from "components/modal/UserUpdate";
 import UserDetailModal from "components/modal/UserDetail";
 import DeleteCategoryModal from "components/modal/DeleteCategory";
 import CategoryModal from "components/modal/Category";
+import ContentModal from "components/modal/Content";
+import DeleteContentModal from "components/modal/DeleteContent";
+import ContentUpdateModal from "components/modal/ContentUpdate";
+import ContentDetailModal from "components/modal/ContentDetail";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
@@ -87,6 +91,15 @@ const Modal = (props) => {
       </div>
       <div
         className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "addContent"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <ContentModal />
+      </div>
+      <div
+        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "editOtlet"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
@@ -107,12 +120,32 @@ const Modal = (props) => {
 
       <div
         className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "editContent"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <ContentUpdateModal />
+      </div>
+
+      <div
+        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "detailUser"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
         }`}
       >
         <UserDetailModal />
+      </div>
+
+      <div
+        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "detailContent"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <ContentDetailModal />
       </div>
 
       <div
@@ -138,6 +171,13 @@ const Modal = (props) => {
         } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
       >
         <DeleteCategoryModal />
+      </div>
+      <div
+        className={`${
+          modal === "deleteContent" ? "translate-x-0" : "-translate-x-full"
+        } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
+      >
+        <DeleteContentModal />
       </div>
     </div>
   );
