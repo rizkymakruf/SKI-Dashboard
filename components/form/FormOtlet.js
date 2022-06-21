@@ -43,7 +43,7 @@ export default function FormOtlet({
             <div className="w-full">
               <p>Nama Otlet</p>
               <input
-                className="rounded-md p-2 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
+                className="rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 "
                 placeholder="Nama Otlet"
               ></input>
             </div>
