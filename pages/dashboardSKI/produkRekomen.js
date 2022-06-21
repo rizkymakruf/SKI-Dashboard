@@ -14,13 +14,13 @@ const ManageProdukRekomen = () => {
   const router = useRouter();
   return (
     <div className="w-full p-3 flex flex-col gap-y-2">
-      <div className="bg-orange-500/40 rounded-md p-5 shadow-md mb-3">
+      <div className="border-2 border-orange-200 rounded-md p-5 shadow-md mb-3">
         <ProdukRekomenTable />
       </div>
       <div className="mb-3">
         <SearchProduct />
       </div>
-      <div className="bg-green-500/40 rounded-md p-5 shadow-md">
+      <div className="bg-white border border-gray-200 rounded-md p-5 shadow-md">
         <ProdukRekomenListTable />
       </div>
     </div>

@@ -28,7 +28,7 @@ const ProdukRekomenTable = ({}) => {
     {
       name: (
         <div className="w-full text-center font-bold text-red-500">
-          Add Rekomendation ?
+          Product Rekomendation
         </div>
       ),
       grow: 2,

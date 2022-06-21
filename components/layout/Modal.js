@@ -20,6 +20,8 @@ import ContentUpdateModal from "components/modal/ContentUpdate";
 import ContentDetailModal from "components/modal/ContentDetail";
 import DeleteRekomenModal from "components/modal/DeleteRekomen";
 import AddedRekomenModal from "components/modal/AddedRekomen";
+import DeleteBrandModal from "components/modal/DeleteBrand";
+import AddedBrandModal from "components/modal/AddedBrand";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
@@ -74,7 +76,7 @@ const Modal = (props) => {
         <Profile />
       </div>
       <div
-        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "addOtlet"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
@@ -83,7 +85,7 @@ const Modal = (props) => {
         <OtletModal />
       </div>
       <div
-        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "addUser"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
@@ -92,7 +94,7 @@ const Modal = (props) => {
         <UserModal />
       </div>
       <div
-        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+        className={`duration p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "addContent"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
@@ -101,7 +103,7 @@ const Modal = (props) => {
         <ContentModal />
       </div>
       <div
-        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "editOtlet"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
@@ -111,7 +113,7 @@ const Modal = (props) => {
       </div>
 
       <div
-        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "editUser"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
@@ -121,7 +123,7 @@ const Modal = (props) => {
       </div>
 
       <div
-        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "editContent"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
@@ -131,7 +133,7 @@ const Modal = (props) => {
       </div>
 
       <div
-        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "detailUser"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
@@ -141,7 +143,7 @@ const Modal = (props) => {
       </div>
 
       <div
-        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "detailContent"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
@@ -151,7 +153,7 @@ const Modal = (props) => {
       </div>
 
       <div
-        className={`duration-700 bg-yellow-300/0 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "editCategory"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
@@ -190,10 +192,24 @@ const Modal = (props) => {
       </div>
       <div
         className={`${
+          modal === "deleteBrand" ? "translate-x-0" : "-translate-x-full"
+        } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
+      >
+        <DeleteBrandModal />
+      </div>
+      <div
+        className={`${
           modal === "addedRekomen" ? "translate-x-0" : "-translate-x-full"
         } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
       >
         <AddedRekomenModal />
+      </div>
+      <div
+        className={`${
+          modal === "addedbrand" ? "translate-x-0" : "-translate-x-full"
+        } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
+      >
+        <AddedBrandModal />
       </div>
     </div>
   );

@@ -40,7 +40,7 @@ const ProdukRekomenListTable = ({}) => {
     {
       name: (
         <div className="w-full text-center font-bold text-red-500">
-          Add Rekomendation ?
+          Product Rekomendation
         </div>
       ),
       grow: 2,
@@ -89,7 +89,7 @@ const ProdukRekomenListTable = ({}) => {
   return (
     <div className="w-full h-auto relative ">
       <div className=" py-3">
-        <p className="text-green-500 font-bold text-md">Product List</p>
+        <p className="text-red-500 font-bold text-md">Product List</p>
       </div>
       <div className="border-2 rounded-md">
         <DataTable

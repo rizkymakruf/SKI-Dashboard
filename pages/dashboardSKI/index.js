@@ -73,7 +73,7 @@ const DashboardSKI = (props) => {
   }
 
   return (
-    <div className="w-full p-4 flex flex-col gap-y-4">
+    <div className="w-full p-3 flex flex-col gap-y-4">
       {/* <div>
         <hr />
       </div> */}

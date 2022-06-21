@@ -9,7 +9,7 @@ import SearchUser from "components/search/User";
 const ManageUsers = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   return (
-    <div className="w-full p-2 flex flex-col gap-y-2">
+    <div className="w-full p-3 flex flex-col gap-y-3">
       <div>
         <AddUser globalAct={globalAct} globalCtx={globalCtx} />
       </div>

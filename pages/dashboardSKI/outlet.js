@@ -28,47 +28,47 @@ const Otlets = (props) => {
       order: "120",
       product: "321",
       subcategory: "11",
-      route: "/outlet/redwhite",
+      route: "/dashboard",
     },
     {
       outlet: "Blue Green Coffee",
       order: "55",
       product: "98",
       subcategory: "87",
-      route: "/outlet/redwhite",
+      route: "/dashboard",
     },
     {
       outlet: "White Black Coffee",
       order: "80",
       product: "90",
       subcategory: "9",
-      route: "/outlet/redwhite",
+      route: "/dashboard",
     },
     {
       outlet: "Red White Coffee",
       order: "88",
       product: "108",
       subcategory: "8",
-      route: "/outlet/redwhite",
+      route: "/dashboard",
     },
     {
       outlet: "Blue Green Coffee",
       order: "11",
       product: "201",
       subcategory: "7",
-      route: "/outlet/redwhite",
+      route: "/dashboard",
     },
     {
       outlet: "White Black Coffee",
       order: "51",
       product: "100",
       subcategory: "5",
-      route: "/outlet/redwhite",
+      route: "/dashboard",
     },
   ];
 
   return (
-    <div className="w-full p-4 flex flex-col gap-y-4">
+    <div className="w-full p-3 flex flex-col gap-y-4">
       <AddOtlet globalAct={globalAct} globalCtx={globalCtx} />
       <div>
         <hr />

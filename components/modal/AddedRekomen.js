@@ -14,9 +14,9 @@ const AddedRekomenModal = () => {
         <div className="flex gap-x-4">
           <button
             onClick={() => globalAct.setModal("")}
-            className="px-6 h-8 bg-red-500/30 text-red-500 border-2 shadow-md hover:bg-red-500/50 border-red-300 font-semibold rounded overflow-hidden"
+            className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
           >
-            Cancel
+            Done
           </button>
         </div>
       </div>
