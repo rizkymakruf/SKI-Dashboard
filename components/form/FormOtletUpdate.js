@@ -123,13 +123,13 @@ export default function FormOtletUpdate({
 
               <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                 <div className="w-full h-auto flex justify-end gap-2">
-                  <button
+                  {/* <button
                     onClick={(e) => resetForm(e)}
                     // disabled={globalCtx.isFetch ? "disabled" : ""}
                     className="px-6 h-8 bg-yellow-500/30 text-yellow-500 border-2 shadow-md hover:bg-yellow-500/50 border-yellow-300 font-semibold rounded overflow-hidden"
                   >
                     Cancel
-                  </button>
+                  </button> */}
                   <button
                     onClick={onSubmit}
                     // disabled={globalCtx.isFetch ? "disabled" : ""}

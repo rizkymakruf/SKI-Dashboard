@@ -102,8 +102,8 @@ const SideNav = ({ children }) => {
           name: "Vouchers",
         },
         {
-          link: "/dashboardSKI/reports",
-          name: "Reports",
+          link: "/dashboardSKI/report",
+          name: "Report",
         },
       ],
     },
@@ -159,7 +159,7 @@ const SideNav = ({ children }) => {
             </div>
           </div>
 
-          <div className="w-full h-full ">
+          <div className="w-full h-full">
             {/* overflow-scroll */}
             {faqs.map((item, key) => (
               <Item q={item.name} a={item.menu} key={key} r={router.asPath} />

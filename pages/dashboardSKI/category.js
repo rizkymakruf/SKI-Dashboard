@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { getLayout } from "components/layout/Navbar";
 import { GlobalContext } from "context/global";
 
-import FormCategory from "components/form/FormUpdateCategory";
+import FormCategory from "components/form/FormCategory";
 import SearchCategory from "components/search/Category";
 import CategoryTable from "components/table/Category";
 
