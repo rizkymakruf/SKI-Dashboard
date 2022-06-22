@@ -43,31 +43,28 @@ export default function FormOtlet({
             <div className="w-full">
               <p>Nama Otlet</p>
               <input
+                name="name"
+                autocomplete="off"
                 className="rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 "
                 placeholder="Nama Otlet"
               ></input>
             </div>
-            {/* <div className="w-full">
-              <p>Password Otlet</p>
-              <input
-                className="rounded-md p-2 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
-                placeholder="Password Otlet"
-              ></input>
-            </div> */}
             <div className="w-full">
               <p>Deskripsi Otlet</p>
               <textarea
+                name="description"
+                autocomplete="off"
                 className="rounded-md p-2 border-2 border-orange-500/50 w-full h-40"
                 placeholder="Deskripsi Otlet"
               ></textarea>
             </div>
-            <div className="w-full"></div>
           </div>
           <div className="w-full">
             <div className="w-full h-auto relative pt-2">
               <input
                 accept="image/png, image/gif, image/jpeg"
                 type="file"
+                name="pict"
                 id="fileContract"
                 ref={inputFileImage}
                 style={{ display: "none" }}
@@ -121,16 +118,8 @@ export default function FormOtlet({
 
               <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                 <div className="w-full h-auto flex justify-end gap-2">
-                  {/* <button
-                    onClick={(e) => resetForm(e)}
-                    // disabled={globalCtx.isFetch ? "disabled" : ""}
-                    className="px-6 h-8 bg-yellow-500/30 text-yellow-500 border-2 shadow-md hover:bg-yellow-500/50 border-yellow-300 font-semibold rounded overflow-hidden"
-                  >
-                    Cancel
-                  </button> */}
                   <button
-                    onClick={onSubmit}
-                    // disabled={globalCtx.isFetch ? "disabled" : ""}
+                    disabled={globalCtx.isFetch ? "disabled" : ""}
                     className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                   >
                     Save

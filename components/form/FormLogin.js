@@ -20,7 +20,7 @@ export default function FormLogin({ myRef, globalCtx, globalAct, onSubmit }) {
             <div className="w-full h-auto relative mb-4">
               <p className="text-sm font-extrabold">Password</p>
               <div className="relative">
-                <button className="absolute top-3.5 right-2.5">
+                {/* <button className="absolute top-3.5 right-2.5">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -34,7 +34,7 @@ export default function FormLogin({ myRef, globalCtx, globalAct, onSubmit }) {
                       clipRule="evenodd"
                     />
                   </svg>
-                </button>
+                </button> */}
               </div>
               <input
                 name="password"

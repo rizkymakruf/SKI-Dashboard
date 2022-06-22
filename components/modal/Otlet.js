@@ -2,9 +2,12 @@ import FormProduct from "components/form/FormProduct";
 import { useContext } from "react";
 import { GlobalContext } from "context/global";
 import FormOtlet from "components/form/FormOtlet";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
 
 const OtletModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
+  const router = useRouter();
 
   return (
     <div className="bg-white w-full h-full rounded-md shadow-sm shadow-black">
@@ -30,9 +33,7 @@ const OtletModal = () => {
           </svg>
         </button>
       </div>
-      <FormOtlet />
-      {/* <FormProduct
-        // Default Form
+      <FormOtlet
         globalCtx={globalCtx}
         globalAct={globalAct}
         onSubmit={async function handleSubmit(e) {
@@ -40,19 +41,21 @@ const OtletModal = () => {
           globalAct.setIsFetch(true);
 
           const body = {
-            username: e.currentTarget.username.value,
-            password: e.currentTarget.password.value,
-            uri: "login_office",
+            name: e.currentTarget.name.value,
+            pict: [],
+            description: e.currentTarget.description.value,
+            uri: "outlet/add",
           };
 
           try {
-            await fetchJson("/api/post", {
+            await fetchJson("/api/prot/post", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.replace("/config/dashboard");
+            // router.push("/dashboardSKI");
           } catch (error) {
+            console.log("error", error);
             if (error instanceof FetchError) {
               globalAct.setErrorMsg(error.data.message);
             } else {
@@ -60,9 +63,11 @@ const OtletModal = () => {
             }
           }
 
+          router.replace("/dashboardSKI/outlet");
+          globalAct.setModal("");
           globalAct.setIsFetch(false);
         }}
-      /> */}
+      />
     </div>
   );
 };
