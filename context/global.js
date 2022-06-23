@@ -8,6 +8,7 @@ export const GlobalProvider = ({ children }) => {
   const [isFetch, setIsFetch] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [fullname, setFullname] = useState("Faouzia");
+  const [selectedData, setSelectedData] = useState("");
 
   const contextValue = {
     globalCtx: {
@@ -16,6 +17,7 @@ export const GlobalProvider = ({ children }) => {
       errorMsg,
       isFetch,
       fullname,
+      selectedData,
     },
     globalAct: {
       setModal,
@@ -23,6 +25,7 @@ export const GlobalProvider = ({ children }) => {
       setErrorMsg,
       setIsFetch,
       setFullname,
+      setSelectedData,
     },
   };
 

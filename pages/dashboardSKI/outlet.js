@@ -130,11 +130,7 @@ const Otlets = (props) => {
               <DashboardCardSKI
                 globalAct={globalAct}
                 globalCtx={globalCtx}
-                otlet={dat.name}
-                order={dat.orders}
-                products={dat.products}
-                subCategory={dat.sub_categories}
-                route={dat.key}
+                otlet={dat}
               />
             </div>
           );

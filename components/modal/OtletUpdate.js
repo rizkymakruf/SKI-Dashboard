@@ -29,7 +29,42 @@ const OtletUpdateModal = () => {
           </svg>
         </button>
       </div>
-      <FormOtletUpdate />
+      <FormOtletUpdate
+        globalCtx={globalCtx}
+        globalAct={globalAct}
+        onSubmit={async function handleSubmit(e) {
+          e.preventDefault();
+          globalAct.setIsFetch(true);
+
+          const body = {
+            key: e.currentTarget.key.value,
+            name: e.currentTarget.name.value,
+            pict: [],
+            description: e.currentTarget.description.value,
+            uri: "outlet/update",
+          };
+
+          try {
+            await fetchJson("/api/prot/post", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(body),
+            });
+            // router.push("/dashboardSKI");
+          } catch (error) {
+            console.log("error", error);
+            if (error instanceof FetchError) {
+              globalAct.setErrorMsg(error.data.message);
+            } else {
+              globalAct.setErrorMsg("An unexpected error happened");
+            }
+          }
+
+          router.replace("/dashboardSKI/outlet");
+          globalAct.setModal("");
+          globalAct.setIsFetch(false);
+        }}
+      />
     </div>
   );
 };

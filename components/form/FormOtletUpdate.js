@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { GlobalContext } from "context/global";
+import { useState, useEffect, useRef, useContext } from "react";
 
 export default function FormOtletUpdate({
   myRef,
-  globalCtx,
-  globalAct,
   onSubmit,
   update,
   setUpdate,
@@ -23,6 +22,8 @@ export default function FormOtletUpdate({
   //   });
   const [imageFile, setImageFile] = useState([]);
   const inputFileImage = useRef(null);
+  const { globalCtx, globalAct } = useContext(GlobalContext);
+  console.log(globalCtx);
 
   const upLoad = (props, ref) => {
     inputFileImage.current.click();
@@ -40,27 +41,29 @@ export default function FormOtletUpdate({
       <form onSubmit={onSubmit}>
         <div className="w-full h-full grid grid-cols-2 gap-4 select-none p-5">
           <div className="w-full space-y-2">
+            <input
+              name="key"
+              defaultValue={globalCtx.selectedData.key}
+              type="hidden"
+            ></input>
             <div className="w-full">
               <p>Nama Otlet</p>
               <input
+                name="name"
+                autocomplete="off"
+                defaultValue={globalCtx.selectedData.name}
                 className="rounded-md p-2 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
-                placeholder="Red White Coffee"
+                placeholder={globalCtx.selectedData.name}
               ></input>
             </div>
-            {/* <div className="w-full">
-              <p>Password Otlet</p>
-              <input
-                type={"password"}
-                className="rounded-md p-2 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
-                // placeholder="Password Otlet"
-                value={"rahasia123"}
-              ></input>
-            </div> */}
             <div className="w-full">
               <p>Deskripsi Otlet</p>
               <textarea
+                name="description"
+                autocomplete="off"
+                defaultValue={globalCtx.selectedData.description}
                 className="rounded-md p-2 border-2 border-orange-500/50 w-full h-40"
-                placeholder="Hello world, this is a description of otlet, you can input or edit here."
+                placeholder={globalCtx.selectedData.description}
               ></textarea>
             </div>
             <div className="w-full"></div>
@@ -70,6 +73,7 @@ export default function FormOtletUpdate({
               <input
                 accept="image/png, image/gif, image/jpeg"
                 type="file"
+                name="pict"
                 id="fileContract"
                 ref={inputFileImage}
                 style={{ display: "none" }}
@@ -123,19 +127,11 @@ export default function FormOtletUpdate({
 
               <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                 <div className="w-full h-auto flex justify-end gap-2">
-                  {/* <button
-                    onClick={(e) => resetForm(e)}
-                    // disabled={globalCtx.isFetch ? "disabled" : ""}
-                    className="px-6 h-8 bg-yellow-500/30 text-yellow-500 border-2 shadow-md hover:bg-yellow-500/50 border-yellow-300 font-semibold rounded overflow-hidden"
-                  >
-                    Cancel
-                  </button> */}
                   <button
-                    onClick={onSubmit}
                     // disabled={globalCtx.isFetch ? "disabled" : ""}
                     className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                   >
-                    Save
+                    Update
                   </button>
                   <span
                     className={`${

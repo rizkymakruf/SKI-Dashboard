@@ -3,21 +3,22 @@ import Link from "next/link";
 const DashboardCardSKI = (props) => {
   const { modal } = props.globalCtx;
   const { setModal } = props.globalAct;
+  const { setSelectedData } = props.globalAct;
   return (
     <>
       <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-full h-44 rounded-md p-4 flex flex-col justify-between hover:shadow-red-500 hover:scale-95">
         <div>
-          <p className="font-bold text-gray-800 pb-2">{props.otlet}</p>
+          <p className="font-bold text-gray-800 pb-2">{props.otlet.name}</p>
           <hr />
           <div className="flex items-center gap-x-2 pt-2">
             <span className="text-red-500 font-bold text-sm">
-              {props.order}
+              {props.otlet.orders}
             </span>
             <span className="text-gray-600 font-semibold text-sm">Orders</span>
           </div>
           <div className="flex items-center gap-x-2">
             <span className="text-red-500 font-bold text-sm">
-              {props.products}
+              {props.otlet.products}
             </span>
             <span className="text-gray-600 font-semibold text-sm">
               Products
@@ -25,7 +26,7 @@ const DashboardCardSKI = (props) => {
           </div>
           <div className="flex items-center gap-x-2">
             <span className="text-red-500 font-bold text-sm">
-              {props.subCategory}
+              {props.otlet.sub_categories}
             </span>
             <span className="text-gray-600 font-semibold text-sm">
               Sub Category
@@ -36,19 +37,19 @@ const DashboardCardSKI = (props) => {
         <div className="flex flex-row items-center justify-between">
           <label className="switch">
             <input
-              type="checkbox"
-              // value={moreDay}
-              // onClick={() => {
-              //   setMoreDay(!moreDay);
-              //   setInputValue({ ...inputValue, sampai: "" });
-              // }}
-              // onChange={(e) => setMoreDay(e.target.checked)}
+            // type="checkbox"
+            // value={moreDay}
+            // onClick={() => {
+            //   setMoreDay(!moreDay);
+            //   setInputValue({ ...inputValue, sampai: "" });
+            // }}
+            // onChange={(e) => setMoreDay(e.target.checked)}
             />
             <span className="slider round"></span>
           </label>
 
           <div className="flex gap-2">
-            <Link href={props.route} passHref>
+            <Link href={props.otlet.key} passHref>
               <button
                 className={
                   "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-orange/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:after:content-['Manage'] "
@@ -78,7 +79,10 @@ const DashboardCardSKI = (props) => {
 
             {/* btn update  */}
             <button
-              onClick={() => setModal("editOtlet")}
+              onClick={() => {
+                setModal("editOtlet");
+                props.globalAct.setSelectedData(props.otlet);
+              }}
               className={
                 "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-orange/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:after:content-['Update'] "
               }

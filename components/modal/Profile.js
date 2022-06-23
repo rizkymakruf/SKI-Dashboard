@@ -35,7 +35,7 @@ const Profile = () => {
   return (
     <div
       className="bg-white w-full h-auto rounded-md shadow-sm shadow-black"
-      onMouseOver={() => globalAct.setModal("userProfile")}
+      // onMouseOver={() => globalAct.setModal("userProfile")}
     >
       <div className="bg-red-500 h-12 w-full flex items-center justify-between px-3">
         <p className="text-white font-bold">User Profile</p>
@@ -85,7 +85,9 @@ const Profile = () => {
             </button>
           </Link>
           <button
-            onClick={() => logout()}
+            onClick={() => {
+              globalAct.setModal(""), logout();
+            }}
             // onSubmit={() => globalAct.setModal({ modal: "", type: "" })}
             disabled={globalCtx.isFetch ? "disabled" : ""}
             className="p-2 text-left bg-red-500/30 rounded-md text-red-500 hover:bg-red-500/50 flex flex-row items-center justify-between"
