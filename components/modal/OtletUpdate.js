@@ -1,9 +1,14 @@
 import { useContext } from "react";
 import { GlobalContext } from "context/global";
 import FormOtletUpdate from "components/form/FormOtletUpdate";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
+import axios from "axios";
+import { headers } from "next.config";
 
 const OtletUpdateModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
+  const router = useRouter();
 
   return (
     <div className="bg-white w-full h-full rounded-md shadow-sm shadow-black">
@@ -41,16 +46,27 @@ const OtletUpdateModal = () => {
             name: e.currentTarget.name.value,
             pict: [],
             description: e.currentTarget.description.value,
-            uri: "outlet/update",
+            // uri: "outlet/update",
           };
 
           try {
-            await fetchJson("/api/prot/post", {
-              method: "POST",
+            // const a = await axios.put(
+            //   `http://192.168.254.197:9036/outlet/update`,
+            //   {
+            //     headers: {
+            //       "Content-Type": "application/json",
+            //       Authorization: ``,
+            //     },
+            //     body: JSON.stringify(body),
+            //   }
+            // );
+            // console.log(a);
+            await fetchJson("/api/prot/put", {
+              method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            // router.push("/dashboardSKI");
+            router.push("/dashboardSKI");
           } catch (error) {
             console.log("error", error);
             if (error instanceof FetchError) {

@@ -49,7 +49,7 @@ const DashboardCardSKI = (props) => {
           </label>
 
           <div className="flex gap-2">
-            <Link href={props.otlet.key} passHref>
+            <Link href={props.otlet.key}>
               <button
                 className={
                   "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-orange/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:after:content-['Manage'] "

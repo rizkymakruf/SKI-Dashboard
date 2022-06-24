@@ -37,6 +37,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   const uid = JSON.parse(atob(user.access_token.split(".")[1]));
   const checkUids = await checkUid(uid.user_id);
+
   // naaaaa
 
   const outlet = await allOutlet();
@@ -47,6 +48,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   return retObject({
     isLogin: true,
+    // access_token: user.access_token,
     fullName: checkUids[0].fullname,
     allOutlet: outlet,
   });
@@ -54,6 +56,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 sessionOptions);
 
 const Otlets = (props) => {
+  // console.log(props.access_token);
   const router = useRouter();
   // console.log(props);
   {
@@ -63,58 +66,10 @@ const Otlets = (props) => {
   useEffect(() => {
     globalAct.setIsFetch(false);
     globalAct.setErrorMsg("");
-    // router.prefetch("/config/dashboard");
   }, []);
-  // useEffect(() => {
-  //   console.log("fetch data status : ", globalCtx.isFetch);
-  // }, [globalCtx]);
   {
     /* Default */
   }
-  // const data = [
-  //   {
-  //     outlet: "Red White Coffee",
-  //     order: "120",
-  //     product: "321",
-  //     subcategory: "11",
-  //     route: "/dashboard",
-  //   },
-  //   {
-  //     outlet: "Blue Green Coffee",
-  //     order: "55",
-  //     product: "98",
-  //     subcategory: "87",
-  //     route: "/dashboard",
-  //   },
-  //   {
-  //     outlet: "White Black Coffee",
-  //     order: "80",
-  //     product: "90",
-  //     subcategory: "9",
-  //     route: "/dashboard",
-  //   },
-  //   {
-  //     outlet: "Red White Coffee",
-  //     order: "88",
-  //     product: "108",
-  //     subcategory: "8",
-  //     route: "/dashboard",
-  //   },
-  //   {
-  //     outlet: "Blue Green Coffee",
-  //     order: "11",
-  //     product: "201",
-  //     subcategory: "7",
-  //     route: "/dashboard",
-  //   },
-  //   {
-  //     outlet: "White Black Coffee",
-  //     order: "51",
-  //     product: "100",
-  //     subcategory: "5",
-  //     route: "/dashboard",
-  //   },
-  // ];
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-4">

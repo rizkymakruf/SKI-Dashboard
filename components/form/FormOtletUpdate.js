@@ -128,7 +128,7 @@ export default function FormOtletUpdate({
               <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                 <div className="w-full h-auto flex justify-end gap-2">
                   <button
-                    // disabled={globalCtx.isFetch ? "disabled" : ""}
+                    disabled={globalCtx.isFetch ? "disabled" : ""}
                     className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                   >
                     Update

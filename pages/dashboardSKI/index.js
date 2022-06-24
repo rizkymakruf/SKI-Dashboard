@@ -3,15 +3,12 @@ import DashboardCardSKI from "components/card/DashboardCardSKI";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { useContext, useEffect } from "react";
-import { checkUid } from "lib/arangoDb";
+import { allOutlet, checkUid } from "lib/arangoDb";
 import { useRouter } from "next/router";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
-import OrderCard from "components/card/OrderCard";
 import Line from "components/chart/line";
 import Line1 from "components/chart/line1";
 import { GlobalContext } from "context/global";
-import fetchJson, { FetchError } from "lib/fetchJson";
-import History from "components/table/History";
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -24,6 +21,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   }
 
   const validationToken = await checkerToken(user);
+
   if (validationToken.error) {
     await req.session.destroy();
     return redirect("/");
@@ -43,6 +41,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   const checkUids = await checkUid(uid.user_id);
   // console.log(checkUids);
 
+  const outlet = await allOutlet();
+
   if (checkUids.length < 1) {
     return redirect("/");
   }
@@ -50,6 +50,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
+    allOutlet: outlet,
   });
 },
 sessionOptions);
@@ -63,11 +64,7 @@ const DashboardSKI = (props) => {
   useEffect(() => {
     globalAct.setIsFetch(false);
     globalAct.setErrorMsg("");
-    // router.prefetch("/config/dashboard");
   }, []);
-  useEffect(() => {
-    console.log("fetch data status : ", globalCtx.isFetch);
-  }, [globalCtx]);
   {
     /* Default */
   }
@@ -102,72 +99,17 @@ const DashboardSKI = (props) => {
       </div>
 
       <div className="w-full grid grid-cols-3 items-center gap-4">
-        <div className="w-full">
-          <DashboardCardSKI
-            globalAct={globalAct}
-            globalCtx={globalCtx}
-            otlet={"Red White Coffee"}
-            order={"180"}
-            products={"1100"}
-            subCategory={"11"}
-            route={"dashboard"}
-          />
-        </div>
-        <div className="w-full">
-          <DashboardCardSKI
-            globalAct={globalAct}
-            globalCtx={globalCtx}
-            otlet={"Blue Green Coffee"}
-            order={"280"}
-            products={"100"}
-            subCategory={"18"}
-            route={"dashboard"}
-          />
-        </div>
-        <div className="w-full">
-          <DashboardCardSKI
-            globalAct={globalAct}
-            globalCtx={globalCtx}
-            otlet={"White Black Coffee"}
-            order={"208"}
-            products={"900"}
-            subCategory={"8"}
-            route={"dashboard"}
-          />
-        </div>
-        <div className="w-full">
-          <DashboardCardSKI
-            globalAct={globalAct}
-            globalCtx={globalCtx}
-            otlet={"Red White Coffee"}
-            order={"180"}
-            products={"1100"}
-            subCategory={"11"}
-            route={"dashboard"}
-          />
-        </div>
-        <div className="w-full">
-          <DashboardCardSKI
-            globalAct={globalAct}
-            globalCtx={globalCtx}
-            otlet={"Blue Green Coffee"}
-            order={"280"}
-            products={"100"}
-            subCategory={"18"}
-            route={"dashboard"}
-          />
-        </div>
-        <div className="w-full">
-          <DashboardCardSKI
-            globalAct={globalAct}
-            globalCtx={globalCtx}
-            otlet={"White Black Coffee"}
-            order={"208"}
-            products={"900"}
-            subCategory={"8"}
-            route={"dashboard"}
-          />
-        </div>
+        {props.allOutlet.map((dat, idx) => {
+          return (
+            <div className="w-full">
+              <DashboardCardSKI
+                globalAct={globalAct}
+                globalCtx={globalCtx}
+                otlet={dat}
+              />
+            </div>
+          );
+        })}
       </div>
       {/* <div>
         <hr />
