@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import { GlobalContext } from "context/global";
 import FormUser from "components/form/FormUser";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
 
 const UserModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
+  const router = useRouter();
 
   return (
     <div className="bg-white w-full h-full rounded-md shadow-sm shadow-black">
@@ -29,9 +32,7 @@ const UserModal = () => {
           </svg>
         </button>
       </div>
-      <FormUser />
-      {/* <FormProduct
-        // Default Form
+      <FormUser
         globalCtx={globalCtx}
         globalAct={globalAct}
         onSubmit={async function handleSubmit(e) {
@@ -40,18 +41,25 @@ const UserModal = () => {
 
           const body = {
             username: e.currentTarget.username.value,
+            fullname: e.currentTarget.fullname.value,
             password: e.currentTarget.password.value,
-            uri: "login_office",
+            address: e.currentTarget.address.value,
+            email: e.currentTarget.email.value,
+            phone: e.currentTarget.phone.value,
+            outlet: e.currentTarget.outlet.value,
+            pict: [],
+            uri: "user/add",
           };
 
           try {
-            await fetchJson("/api/post", {
+            await fetchJson("/api/prot/post", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.replace("/config/dashboard");
+            // router.push("/dashboardSKI");
           } catch (error) {
+            console.log("error", error);
             if (error instanceof FetchError) {
               globalAct.setErrorMsg(error.data.message);
             } else {
@@ -59,9 +67,11 @@ const UserModal = () => {
             }
           }
 
+          router.replace("/dashboardSKI/users");
+          globalAct.setModal("");
           globalAct.setIsFetch(false);
         }}
-      /> */}
+      />
     </div>
   );
 };

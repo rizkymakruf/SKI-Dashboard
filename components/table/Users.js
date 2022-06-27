@@ -2,37 +2,37 @@ import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
 import { useContext } from "react";
 
-const UsersTable = ({}) => {
+const UsersTable = ({ props }) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  const data = [
-    {
-      username: "Coffee124",
-      email: "redwhite@mail.com",
-      otlet: "Red White Coffe",
-    },
-    {
-      username: "Coffee765",
-      email: "blackwhite@mail.com",
-      otlet: "Black White Coffe",
-    },
-    {
-      username: "Coffee344",
-      email: "seren@mail.com",
-      otlet: "Seren Coffe",
-    },
-    {
-      username: "Coffee9877",
-      email: "bluecoffee@mail.com",
-      otlet: "Blue Coffee",
-    },
-  ];
+  // const data = [
+  //   {
+  //     username: "Coffee124",
+  //     email: "redwhite@mail.com",
+  //     otlet: "Red White Coffe",
+  //   },
+  //   {
+  //     username: "Coffee765",
+  //     email: "blackwhite@mail.com",
+  //     otlet: "Black White Coffe",
+  //   },
+  //   {
+  //     username: "Coffee344",
+  //     email: "seren@mail.com",
+  //     otlet: "Seren Coffe",
+  //   },
+  //   {
+  //     username: "Coffee9877",
+  //     email: "bluecoffee@mail.com",
+  //     otlet: "Blue Coffee",
+  //   },
+  // ];
   const columns = [
     {
       name: <div className="font-bold text-red-500">Username</div>,
       grow: 2,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.username}</p>
+          <p className="text-xs font-bold">{props.users.username}</p>
         </div>
       ),
     },
@@ -41,7 +41,7 @@ const UsersTable = ({}) => {
       grow: 2,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.email}</p>
+          <p className="text-xs font-bold">{props.users.email}</p>
         </div>
       ),
     },
@@ -50,7 +50,7 @@ const UsersTable = ({}) => {
       grow: 2,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.otlet}</p>
+          <p className="text-xs font-bold">{props.users.outlet}</p>
         </div>
       ),
     },
@@ -123,25 +123,6 @@ const UsersTable = ({}) => {
               />
             </svg>
           </button>
-          {/* <button
-            onClick={() => globalAct.setModal("deleteUser")}
-            className={
-              "bg-red-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-500/50 shadow-md flex gap-x-2 text-xs text-red-500 hover:w-24 duration-150 hover:before:content-['Remove'] border border-red-300"
-            }
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-red-500"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button> */}
         </div>
       ),
     },
@@ -151,11 +132,8 @@ const UsersTable = ({}) => {
     <div className="w-full h-auto relative ">
       <div className="shadow-md border-2 rounded-md">
         <DataTable
-          // title={
-          //   <p className="text-red-500 font-bold text-sm">Category List</p>
-          // }
           columns={columns}
-          data={data}
+          data={[]}
           responsive={true}
           highlightOnHover={true}
           pagination

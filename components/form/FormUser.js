@@ -59,6 +59,7 @@ export default function FormUser({
               <div className="w-full">
                 <p>Username</p>
                 <input
+                  name="username"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Username"
                 ></input>
@@ -66,6 +67,7 @@ export default function FormUser({
               <div className="w-full">
                 <p>Fullname</p>
                 <input
+                  name="fullname"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Fullname"
                 ></input>
@@ -73,6 +75,7 @@ export default function FormUser({
               <div className="w-full">
                 <p>Email</p>
                 <input
+                  name="email"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Email"
                 ></input>
@@ -80,6 +83,7 @@ export default function FormUser({
               <div className="w-full">
                 <p>Phone Number</p>
                 <input
+                  name="phone"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Phone"
                 ></input>
@@ -87,6 +91,7 @@ export default function FormUser({
               <div className="w-full">
                 <p>Password</p>
                 <input
+                  name="password"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Password"
                 ></input>
@@ -116,6 +121,7 @@ export default function FormUser({
               <div className="w-full">
                 <p>Alamat</p>
                 <textarea
+                  name="address"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full h-32"
                   placeholder="Alamat lengkap"
                 ></textarea>
@@ -125,6 +131,7 @@ export default function FormUser({
                 <input
                   accept="image/png, image/gif, image/jpeg"
                   type="file"
+                  name="pict"
                   id="fileContract"
                   ref={inputFileImage}
                   style={{ display: "none" }}
@@ -186,7 +193,7 @@ export default function FormUser({
                       Cancel
                     </button> */}
                     <button
-                      onClick={onSubmit}
+                      // onClick={onSubmit}
                       // disabled={globalCtx.isFetch ? "disabled" : ""}
                       className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                     >
