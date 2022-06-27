@@ -46,7 +46,7 @@ const OtletUpdateModal = () => {
             name: e.currentTarget.name.value,
             pict: [],
             description: e.currentTarget.description.value,
-            // uri: "outlet/update",
+            uri: "outlet/update",
           };
 
           try {

@@ -1,9 +1,17 @@
 import Link from "next/link";
+import { useState } from "react";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
+import { useContext } from "react";
+import { GlobalContext } from "context/global";
 
 const DashboardCardSKI = (props) => {
+  const { globalAct, globalCtx } = useContext(GlobalContext);
+  const router = useRouter();
   const { modal } = props.globalCtx;
   const { setModal } = props.globalAct;
   const { setSelectedData } = props.globalAct;
+  const [active, setActive] = useState(props.otlet.active);
   return (
     <>
       <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-full h-44 rounded-md p-4 flex flex-col justify-between hover:shadow-red-500 hover:scale-95">
@@ -37,13 +45,42 @@ const DashboardCardSKI = (props) => {
         <div className="flex flex-row items-center justify-between">
           <label className="switch">
             <input
-            // type="checkbox"
-            // value={moreDay}
-            // onClick={() => {
-            //   setMoreDay(!moreDay);
-            //   setInputValue({ ...inputValue, sampai: "" });
-            // }}
-            // onChange={(e) => setMoreDay(e.target.checked)}
+              type="checkbox"
+              checked={active}
+              globalCtx={globalCtx}
+              globalAct={globalAct}
+              onClick={async function handleSubmit(e) {
+                e.preventDefault();
+                globalAct.setIsFetch(true);
+
+                const body = {
+                  uri: "outlet/status",
+                  key: props.otlet.key,
+                  active: !active,
+                };
+
+                try {
+                  await fetchJson("/api/prot/patch", {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
+                  });
+                  // router.push("/dashboardSKI");
+                } catch (error) {
+                  console.log("error", error);
+                  if (error instanceof FetchError) {
+                    globalAct.setErrorMsg(error.data.message);
+                  } else {
+                    globalAct.setErrorMsg("An unexpected error happened");
+                  }
+                }
+
+                console.log("niii", body);
+                setActive(!active);
+                // router.replace("/dashboardSKI/outlet");
+                globalAct.setModal("");
+                globalAct.setIsFetch(false);
+              }}
             />
             <span className="slider round"></span>
           </label>
