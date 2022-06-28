@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
 export default function FormUpdateCategory({ globalCtx, onSubmit }) {
-  useEffect(() => {
-    console.log("dkoa", document.querySelector("input[name=category]").value);
-  }, []);
+  // useEffect(() => {
+  //   console.log("dkoa", document.querySelector("input[name=category]").value);
+  // }, []);
   return (
     <div className="w-full h-auto">
       <form onSubmit={onSubmit}>
@@ -14,10 +14,16 @@ export default function FormUpdateCategory({ globalCtx, onSubmit }) {
                 Category Name
               </p>
               <input
-                name="category"
+                name="key"
+                type="hidden"
+                defaultValue={globalCtx.selectedData.key}
+              ></input>
+              <input
+                name="name"
                 type="text"
                 className="placeholder-gray-400 h-10 bg-gray-500/20 form-input mt-1 rounded-md border border-gray-300 w-full focus:ring-2 duration-500 focus:ring-blue-500"
-                placeholder="$category"
+                defaultValue={globalCtx.selectedData.name}
+                placeholder={globalCtx.selectedData.name}
                 // disabled={globalCtx.isFetch ? "disabled" : ""}
               />
             </div>

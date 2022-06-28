@@ -63,10 +63,10 @@ const Otlets = (props) => {
     /* Default */
   }
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  useEffect(() => {
-    globalAct.setIsFetch(false);
-    globalAct.setErrorMsg("");
-  }, []);
+  // useEffect(() => {
+  //   globalAct.setIsFetch(false);
+  //   globalAct.setErrorMsg("");
+  // }, []);
   {
     /* Default */
   }

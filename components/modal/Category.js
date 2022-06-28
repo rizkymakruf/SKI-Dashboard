@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import { GlobalContext } from "context/global";
 import FormUpdateCategory from "components/form/FormUpdateCategory";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
 
 const CategoryModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
+  const router = useRouter();
 
   return (
     <div className="bg-white w-full h-full rounded-md shadow-sm shadow-black">
@@ -29,9 +32,7 @@ const CategoryModal = () => {
           </svg>
         </button>
       </div>
-      <FormUpdateCategory />
-      {/* <FormProduct
-        // Default Form
+      <FormUpdateCategory
         globalCtx={globalCtx}
         globalAct={globalAct}
         onSubmit={async function handleSubmit(e) {
@@ -39,19 +40,22 @@ const CategoryModal = () => {
           globalAct.setIsFetch(true);
 
           const body = {
-            username: e.currentTarget.username.value,
-            password: e.currentTarget.password.value,
-            uri: "login_office",
+            key: e.currentTarget.key.value,
+            name: e.currentTarget.name.value,
+            uri: "category/update",
           };
 
           try {
-            await fetchJson("/api/post", {
-              method: "POST",
+            const res = await fetchJson("/api/prot/patch", {
+              method: "PATCH",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.replace("/config/dashboard");
+            // globalAct.setNewData(res.data[0]);
+            router.push("/dashboardSKI/category");
+            router.reload();
           } catch (error) {
+            console.log("error", error);
             if (error instanceof FetchError) {
               globalAct.setErrorMsg(error.data.message);
             } else {
@@ -59,9 +63,11 @@ const CategoryModal = () => {
             }
           }
 
+          // router.replace("/dashboardSKI/users");
+          globalAct.setModal("");
           globalAct.setIsFetch(false);
         }}
-      /> */}
+      />
     </div>
   );
 };

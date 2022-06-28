@@ -60,20 +60,14 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 sessionOptions);
 
 const ManageUsers = (props) => {
-  // useEffect(() => {
-  //   console.log("users : ", props.users);
-  // });
-  // console.log(props.access_token);
+  const { globalCtx, globalAct } = useContext(GlobalContext);
+  const [data, setData] = useState(props.users);
   const router = useRouter();
   // console.log(props);
   {
     /* Default */
   }
-  const { globalCtx, globalAct } = useContext(GlobalContext);
-  const [data, setData] = useState(props.users);
   useEffect(() => {
-    globalAct.setIsFetch(false);
-    globalAct.setErrorMsg("");
     globalAct.setListOutlet(props.listOutlet);
     globalAct.setSelectedData(props.users);
   }, []);

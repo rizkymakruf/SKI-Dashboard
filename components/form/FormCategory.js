@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export default function FormCategory({ globalCtx, onSubmit }) {
   useEffect(() => {
-    console.log("dkoa", document.querySelector("input[name=category]").value);
+    // console.log("dkoa", document.querySelector("input[name=category]").value);
   }, []);
   return (
     <div className="w-full h-auto">
@@ -11,13 +11,13 @@ export default function FormCategory({ globalCtx, onSubmit }) {
           <div className="w-full h-full p-3 backdrop-blur bg-white/30 rounded-md border border-gray-300 shadow-md">
             <div className="w-full h-auto relative mb-4">
               <p className="text-sm font-bold text-red-600 mb-2">
-                Category Name
+                Create Main Category
               </p>
               <input
                 name="category"
                 type="text"
                 className="placeholder-gray-400 h-10 bg-gray-500/20 form-input mt-1 rounded-md border border-gray-300 w-full focus:ring-2 duration-500 focus:ring-blue-500"
-                placeholder="$category"
+                placeholder="Category Name"
                 disabled={globalCtx.isFetch ? "disabled" : ""}
               />
             </div>
