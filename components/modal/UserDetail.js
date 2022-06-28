@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import { GlobalContext } from "context/global";
 import DetailUser from "components/card/DetailUser";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
 
 const UserDetailModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
+  const router = useRouter();
 
   return (
     <div className="bg-white w-full h-full rounded-md shadow-sm shadow-black">
@@ -29,7 +32,7 @@ const UserDetailModal = () => {
           </svg>
         </button>
       </div>
-      <DetailUser />
+      <DetailUser globalCtx={globalCtx} globalAct={globalAct} />
     </div>
   );
 };

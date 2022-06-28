@@ -34,22 +34,7 @@ export default function FormUser({
     setSlide([]);
     setUpdate([]);
   };
-
-  const data = [
-    {
-      outlet: "Red White Coffee",
-    },
-    {
-      outlet: "Blue Red Coffee",
-    },
-    {
-      outlet: "Black White Coffee",
-    },
-    {
-      outlet: "Yellow Coffee",
-    },
-  ];
-
+  // console.log(globalCtx);
   return (
     <>
       <div className="w-full h-auto">
@@ -111,8 +96,8 @@ export default function FormUser({
                   id="outlet"
                   className="w-full rounded-md border-2 border-orange-500/50"
                 >
-                  {data.map((dat, idx) => {
-                    return <option value={dat.outlet}>{dat.outlet}</option>;
+                  {globalCtx.listOutlet.map((dat, idx) => {
+                    return <option value={dat.key}>{dat.name}</option>;
                   })}
                 </select>
               </div>

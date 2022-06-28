@@ -4,7 +4,7 @@ import FormUser from "components/form/FormUser";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-const UserModal = () => {
+const UserModal = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
 
@@ -41,9 +41,10 @@ const UserModal = () => {
 
           const body = {
             username: e.currentTarget.username.value,
+            username: e.currentTarget.username.value,
             fullname: e.currentTarget.fullname.value,
-            password: e.currentTarget.password.value,
             address: e.currentTarget.address.value,
+            password: e.currentTarget.password.value,
             email: e.currentTarget.email.value,
             phone: e.currentTarget.phone.value,
             outlet: e.currentTarget.outlet.value,

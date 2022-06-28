@@ -35,21 +35,6 @@ export default function FormUserUpdate({
     setUpdate([]);
   };
 
-  const data = [
-    {
-      outlet: "Red White Coffee",
-    },
-    {
-      outlet: "Blue Red Coffee",
-    },
-    {
-      outlet: "Black White Coffee",
-    },
-    {
-      outlet: "Yellow Coffee",
-    },
-  ];
-
   return (
     <>
       <div className="w-full h-auto">
@@ -59,6 +44,7 @@ export default function FormUserUpdate({
               <div className="w-full">
                 <p>Username</p>
                 <input
+                  name="username"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Username"
                 ></input>
@@ -66,6 +52,7 @@ export default function FormUserUpdate({
               <div className="w-full">
                 <p>Fullname</p>
                 <input
+                  name="fullname"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Fullname"
                 ></input>
@@ -73,6 +60,7 @@ export default function FormUserUpdate({
               <div className="w-full">
                 <p>Email</p>
                 <input
+                  name="email"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Email"
                 ></input>
@@ -80,25 +68,11 @@ export default function FormUserUpdate({
               <div className="w-full">
                 <p>Phone Number</p>
                 <input
+                  name="phone"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Phone"
                 ></input>
               </div>
-              {/* <div className="w-full">
-                <p>Password</p>
-                <input
-                  className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
-                  placeholder="Password"
-                ></input>
-              </div>
-              <div className="w-full">
-                <p>Retype Password</p>
-                <input
-                  className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
-                  placeholder="Retype Password"
-                ></input>
-              </div> */}
-
               <div className="w-full">
                 <p>Outlet</p>
                 <select
@@ -106,8 +80,8 @@ export default function FormUserUpdate({
                   id="outlet"
                   className="w-full rounded-md border-2 border-orange-500/50"
                 >
-                  {data.map((dat, idx) => {
-                    return <option value={dat.outlet}>{dat.outlet}</option>;
+                  {globalCtx.listOutlet.map((dat, idx) => {
+                    return <option value={dat.key}>{dat.name}</option>;
                   })}
                 </select>
               </div>
@@ -116,6 +90,7 @@ export default function FormUserUpdate({
               <div className="w-full">
                 <p>Alamat</p>
                 <textarea
+                  name="address"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full h-32"
                   placeholder="Alamat lengkap"
                 ></textarea>
@@ -125,6 +100,7 @@ export default function FormUserUpdate({
                 <input
                   accept="image/png, image/gif, image/jpeg"
                   type="file"
+                  name="pict"
                   id="fileContract"
                   ref={inputFileImage}
                   style={{ display: "none" }}
@@ -178,15 +154,8 @@ export default function FormUserUpdate({
 
                 <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                   <div className="w-full h-auto flex justify-end gap-2">
-                    {/* <button
-                      onClick={(e) => resetForm(e)}
-                      // disabled={globalCtx.isFetch ? "disabled" : ""}
-                      className="px-6 h-8 bg-yellow-500/30 text-yellow-500 border-2 shadow-md hover:bg-yellow-500/50 border-yellow-300 font-semibold rounded overflow-hidden"
-                    >
-                      Cancel
-                    </button> */}
                     <button
-                      onClick={onSubmit}
+                      // onClick={onSubmit}
                       // disabled={globalCtx.isFetch ? "disabled" : ""}
                       className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                     >

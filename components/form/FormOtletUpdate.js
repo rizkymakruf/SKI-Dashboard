@@ -23,7 +23,7 @@ export default function FormOtletUpdate({
   const [imageFile, setImageFile] = useState([]);
   const inputFileImage = useRef(null);
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  console.log(globalCtx);
+  // console.log(globalCtx);
 
   const upLoad = (props, ref) => {
     inputFileImage.current.click();

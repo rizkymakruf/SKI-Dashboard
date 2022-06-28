@@ -9,6 +9,8 @@ export const GlobalProvider = ({ children }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [fullname, setFullname] = useState("Faouzia");
   const [selectedData, setSelectedData] = useState("");
+  const [listOutlet, setListOutlet] = useState([]);
+  const [listUser, setListUser] = useState([]);
 
   const contextValue = {
     globalCtx: {
@@ -18,6 +20,8 @@ export const GlobalProvider = ({ children }) => {
       isFetch,
       fullname,
       selectedData,
+      listOutlet,
+      listUser,
     },
     globalAct: {
       setModal,
@@ -26,6 +30,8 @@ export const GlobalProvider = ({ children }) => {
       setIsFetch,
       setFullname,
       setSelectedData,
+      setListOutlet,
+      setListUser,
     },
   };
 

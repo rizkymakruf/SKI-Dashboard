@@ -1,6 +1,14 @@
+import { GlobalContext } from "context/global";
+import { useRouter } from "next/router";
+import { useContext, useState } from "react";
+
 const DetailUser = (props) => {
+  const { globalCtx, globalAct } = useContext(GlobalContext);
+  const router = useRouter();
+  const [selectedData, setSelectedData] = useState(props.users);
   // const { modal } = props.globalCtx;
   // const { setModal } = props.globalAct;
+  console.log("helll", globalCtx.selectedData);
   return (
     <>
       <div className="w-full flex items-center p-5">
@@ -15,16 +23,26 @@ const DetailUser = (props) => {
           <p className="text-md font-semibold text-red-500">Phone</p>
           <p className="text-md font-semibold text-red-500">Address</p>
           <p className="text-md font-semibold text-red-500">Outlet</p>
-          <p className="text-md font-semibold text-red-500">Active</p>
+          {/* <p className="text-md font-semibold text-red-500">Active</p> */}
         </div>
         <div className="space-y-2">
           {/* <p className="text-md font-semibold text-gray-500">$username</p> */}
-          <p className="text-md font-semibold text-gray-500">$fullname</p>
-          <p className="text-md font-semibold text-gray-500">$email</p>
-          <p className="text-md font-semibold text-gray-500">$phone</p>
-          <p className="text-md font-semibold text-gray-500">$address</p>
-          <p className="text-md font-semibold text-gray-500">$outlet</p>
-          <label className="switch">
+          <p className="text-md font-semibold text-gray-500">
+            {globalCtx.selectedData.fullname}
+          </p>
+          <p className="text-md font-semibold text-gray-500">
+            {globalCtx.selectedData.email}
+          </p>
+          <p className="text-md font-semibold text-gray-500">
+            {globalCtx.selectedData.phone}
+          </p>
+          <p className="text-md font-semibold text-gray-500">
+            {globalCtx.selectedData.address}
+          </p>
+          <p className="text-md font-semibold text-gray-500">
+            {globalCtx.selectedData.outlet}
+          </p>
+          {/* <label className="switch">
             <input
               type="checkbox"
               // value={moreDay}
@@ -35,7 +53,7 @@ const DetailUser = (props) => {
               // onChange={(e) => setMoreDay(e.target.checked)}
             />
             <span className="slider round"></span>
-          </label>
+          </label> */}
         </div>
       </div>
     </>

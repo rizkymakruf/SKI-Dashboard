@@ -1,13 +1,55 @@
-const SearchUser = () => {
+import { GlobalContext } from "context/global";
+import { useContext, useEffect, useState } from "react";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
+
+const SearchUser = (props) => {
+  const { globalCtx, globalAct } = useContext(GlobalContext);
+  const router = useRouter();
+
   return (
-    <div
+    <form
       className="w-full flex items-center justify-between border border-gray-300 rounded-md p-3 shadow-md"
-      onSubmit={null}
+      onSubmit={async function handleSubmit(e) {
+        e.preventDefault();
+        globalAct.setIsFetch(true);
+
+        const body = {
+          username: "%" + e.currentTarget.username.value + "%",
+          uri: "user/search",
+        };
+
+        // console.log(body);
+
+        try {
+          const res = await fetchJson("/api/prot/post", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          console.log(res);
+          props.setData(res.data);
+        } catch (error) {
+          console.log("error", error);
+          if (error instanceof FetchError) {
+            globalAct.setErrorMsg(error.data.message);
+          } else {
+            globalAct.setErrorMsg("An unexpected error happened");
+          }
+        }
+
+        globalAct.setModal("");
+        globalAct.setIsFetch(false);
+      }}
     >
       <p className="text-sm font-bold text-red-600 w-1/6">Find User</p>
       <div className="w-full">
         <div className="relative">
-          <button className="absolute top-1.5 right-1.5 bg-blue-500/30 p-1 rounded-md shadow-md hover:bg-blue-500/50">
+          <button
+            className="absolute top-1.5 right-1.5 bg-blue-500/30 p-1 rounded-md shadow-md hover:bg-blue-500/50"
+            globalCtx={globalCtx}
+            globalAct={globalAct}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 text-blue-500"
@@ -23,12 +65,12 @@ const SearchUser = () => {
           </button>
         </div>
         <input
-          name="search-user"
+          name="username"
           placeholder="Cari User"
           className="placeholder-gray-400 px-2 w-full pr-10 h-10 bg-gray-500/20 outline-none focus:ring-2 duration-500 focus:ring-blue-500 border-2 border-gray-300 rounded-md"
         />
       </div>
-    </div>
+    </form>
   );
 };
 

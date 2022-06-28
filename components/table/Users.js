@@ -1,38 +1,25 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
 
-const UsersTable = ({ props }) => {
+const UsersTable = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  // const data = [
-  //   {
-  //     username: "Coffee124",
-  //     email: "redwhite@mail.com",
-  //     otlet: "Red White Coffe",
-  //   },
-  //   {
-  //     username: "Coffee765",
-  //     email: "blackwhite@mail.com",
-  //     otlet: "Black White Coffe",
-  //   },
-  //   {
-  //     username: "Coffee344",
-  //     email: "seren@mail.com",
-  //     otlet: "Seren Coffe",
-  //   },
-  //   {
-  //     username: "Coffee9877",
-  //     email: "bluecoffee@mail.com",
-  //     otlet: "Blue Coffee",
-  //   },
-  // ];
+  const router = useRouter();
+  const data = props.users;
+  const [active, setActive] = useState(props.users.active);
+  const [selectedData, setSelectedData] = useState(props.users);
+
+  // console.log("hello", props.users.email);
+
   const columns = [
     {
       name: <div className="font-bold text-red-500">Username</div>,
       grow: 2,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{props.users.username}</p>
+          <p className="text-xs font-bold">{a.username}</p>
         </div>
       ),
     },
@@ -41,7 +28,7 @@ const UsersTable = ({ props }) => {
       grow: 2,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{props.users.email}</p>
+          <p className="text-xs font-bold">{a.email}</p>
         </div>
       ),
     },
@@ -50,7 +37,7 @@ const UsersTable = ({ props }) => {
       grow: 2,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{props.users.outlet}</p>
+          <p className="text-xs font-bold">{a.outlet.name}</p>
         </div>
       ),
     },
@@ -64,12 +51,41 @@ const UsersTable = ({ props }) => {
           <label className="switch">
             <input
               type="checkbox"
-              // value={moreDay}
-              // onClick={() => {
-              //   setMoreDay(!moreDay);
-              //   setInputValue({ ...inputValue, sampai: "" });
-              // }}
-              // onChange={(e) => setMoreDay(e.target.checked)}
+              checked={a.active}
+              globalCtx={globalCtx}
+              globalAct={globalAct}
+              onClick={async function handleSubmit(e) {
+                e.preventDefault();
+                globalAct.setIsFetch(true);
+                globalAct.setSelectedData(a);
+
+                const body = {
+                  uri: "user/status",
+                  key: a.key,
+                  active: !a.active,
+                };
+
+                console.log(body);
+
+                try {
+                  await fetchJson("/api/prot/patch", {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
+                  });
+                } catch (error) {
+                  console.log("error", error);
+                  if (error instanceof FetchError) {
+                    globalAct.setErrorMsg(error.data.message);
+                  } else {
+                    globalAct.setErrorMsg("An unexpected error happened");
+                  }
+                }
+                // setActive(!active);
+                router.replace("/dashboardSKI/users");
+                globalAct.setModal("");
+                globalAct.setIsFetch(false);
+              }}
             />
             <span className="slider round"></span>
           </label>
@@ -84,7 +100,11 @@ const UsersTable = ({ props }) => {
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button
-            onClick={() => globalAct.setModal("detailUser")}
+            onClick={() => {
+              globalAct.setModal("detailUser");
+              props.globalAct.setSelectedData(props.users);
+              console.log("ini", globalAct.setSelectedData(props.users));
+            }}
             className={
               "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-orange-500/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:before:content-['View'] border border-orange-300"
             }
@@ -104,7 +124,10 @@ const UsersTable = ({ props }) => {
             </svg>
           </button>
           <button
-            onClick={() => globalAct.setModal("editUser")}
+            onClick={() => {
+              globalAct.setModal("editUser");
+              // props.globalAct.setSelectedData();
+            }}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:before:content-['Edit'] border border-blue-300"
             }
@@ -133,7 +156,7 @@ const UsersTable = ({ props }) => {
       <div className="shadow-md border-2 rounded-md">
         <DataTable
           columns={columns}
-          data={[]}
+          data={data}
           responsive={true}
           highlightOnHover={true}
           pagination

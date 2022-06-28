@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getLayout } from "components/layout/Navbar";
 import { GlobalContext } from "context/global";
 
@@ -8,7 +8,7 @@ import SearchUser from "components/search/User";
 
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { allUsers, checkUid } from "lib/arangoDb";
+import { allUsers, getOutlet, checkUid } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { useRouter } from "next/router";
 
@@ -44,6 +44,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   // naaaaa
 
   const users = await allUsers();
+  const listOutlet = await getOutlet();
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -52,12 +53,16 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
-    allUsers: users,
+    users: users,
+    listOutlet: listOutlet,
   });
 },
 sessionOptions);
 
 const ManageUsers = (props) => {
+  // useEffect(() => {
+  //   console.log("users : ", props.users);
+  // });
   // console.log(props.access_token);
   const router = useRouter();
   // console.log(props);
@@ -65,28 +70,28 @@ const ManageUsers = (props) => {
     /* Default */
   }
   const { globalCtx, globalAct } = useContext(GlobalContext);
+  const [data, setData] = useState(props.users);
   useEffect(() => {
     globalAct.setIsFetch(false);
     globalAct.setErrorMsg("");
+    globalAct.setListOutlet(props.listOutlet);
+    globalAct.setSelectedData(props.users);
   }, []);
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">
-      {props.allUsers.map((dat, idx) => {
-        return (
-          <div className="w-full">
-            <AddUser globalAct={globalAct} globalCtx={globalCtx} users={dat} />
-          </div>
-        );
-      })}
-      {/* <div>
-        <AddUser globalAct={globalAct} globalCtx={globalCtx} />
-      </div> */}
       <div>
-        <SearchUser globalAct={globalAct} globalCtx={globalCtx} />
+        <AddUser globalAct={globalAct} globalCtx={globalCtx} />
       </div>
       <div>
-        <UsersTable globalAct={globalAct} globalCtx={globalCtx} />
+        <SearchUser
+          globalAct={globalAct}
+          globalCtx={globalCtx}
+          setData={setData}
+        />
+      </div>
+      <div>
+        <UsersTable globalAct={globalAct} globalCtx={globalCtx} users={data} />
       </div>
     </div>
   );

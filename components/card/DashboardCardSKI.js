@@ -74,8 +74,6 @@ const DashboardCardSKI = (props) => {
                     globalAct.setErrorMsg("An unexpected error happened");
                   }
                 }
-
-                console.log("niii", body);
                 setActive(!active);
                 // router.replace("/dashboardSKI/outlet");
                 globalAct.setModal("");
