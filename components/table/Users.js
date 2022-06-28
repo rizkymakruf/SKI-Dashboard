@@ -8,8 +8,6 @@ const UsersTable = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
   const data = props.users;
-  const [active, setActive] = useState(props.users.active);
-  const [selectedData, setSelectedData] = useState(props.users);
 
   // console.log("hello", props.users.email);
 
@@ -65,7 +63,7 @@ const UsersTable = (props) => {
                   active: !a.active,
                 };
 
-                console.log(body);
+                // console.log(body);
 
                 try {
                   await fetchJson("/api/prot/patch", {
@@ -81,7 +79,7 @@ const UsersTable = (props) => {
                     globalAct.setErrorMsg("An unexpected error happened");
                   }
                 }
-                // setActive(!active);
+
                 router.replace("/dashboardSKI/users");
                 globalAct.setModal("");
                 globalAct.setIsFetch(false);
@@ -102,8 +100,8 @@ const UsersTable = (props) => {
           <button
             onClick={() => {
               globalAct.setModal("detailUser");
-              props.globalAct.setSelectedData(props.users);
-              console.log("ini", globalAct.setSelectedData(props.users));
+              props.globalAct.setSelectedData(a);
+              // console.log("ini", globalAct.setSelectedData(props.users));
             }}
             className={
               "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-orange-500/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:before:content-['View'] border border-orange-300"
@@ -126,7 +124,7 @@ const UsersTable = (props) => {
           <button
             onClick={() => {
               globalAct.setModal("editUser");
-              // props.globalAct.setSelectedData();
+              props.globalAct.setSelectedData(a);
             }}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:before:content-['Edit'] border border-blue-300"

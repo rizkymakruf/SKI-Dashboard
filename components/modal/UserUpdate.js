@@ -58,6 +58,7 @@ const UserUpdateModal = (props) => {
               body: JSON.stringify(body),
             });
             // router.push("/dashboardSKI");
+            router.reload();
           } catch (error) {
             console.log("error", error);
             if (error instanceof FetchError) {
@@ -67,7 +68,7 @@ const UserUpdateModal = (props) => {
             }
           }
 
-          router.replace("/dashboardSKI/users");
+          // router.replace("/dashboardSKI/users");
           globalAct.setModal("");
           globalAct.setIsFetch(false);
         }}

@@ -75,7 +75,7 @@ const DashboardCardSKI = (props) => {
                   }
                 }
                 setActive(!active);
-                // router.replace("/dashboardSKI/outlet");
+                router.replace("/dashboardSKI/outlet");
                 globalAct.setModal("");
                 globalAct.setIsFetch(false);
               }}

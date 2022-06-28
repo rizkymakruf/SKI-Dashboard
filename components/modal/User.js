@@ -53,12 +53,14 @@ const UserModal = (props) => {
           };
 
           try {
-            await fetchJson("/api/prot/post", {
+            const res = await fetchJson("/api/prot/post", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
+            // globalAct.setNewData(res.data[0]);
             // router.push("/dashboardSKI");
+            router.reload();
           } catch (error) {
             console.log("error", error);
             if (error instanceof FetchError) {
@@ -68,7 +70,7 @@ const UserModal = (props) => {
             }
           }
 
-          router.replace("/dashboardSKI/users");
+          // router.replace("/dashboardSKI/users");
           globalAct.setModal("");
           globalAct.setIsFetch(false);
         }}

@@ -78,6 +78,10 @@ const ManageUsers = (props) => {
     globalAct.setSelectedData(props.users);
   }, []);
 
+  // useEffect(() => {
+  //   data.push(globalCtx.newData);
+  // }, [globalCtx.data]);
+
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">
       <div>

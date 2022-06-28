@@ -41,36 +41,49 @@ export default function FormUserUpdate({
         <form onSubmit={onSubmit}>
           <div className="w-full h-full grid grid-cols-2 gap-4 select-none p-5">
             <div className="w-full space-y-2">
+              <input
+                name="key"
+                defaultValue={globalCtx.selectedData.key}
+                type="hidden"
+              ></input>
               <div className="w-full">
                 <p>Username</p>
                 <input
                   name="username"
+                  autocomplete="off"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
-                  placeholder="Username"
+                  defaultValue={globalCtx.selectedData.username}
+                  placeholder={globalCtx.selectedData.username}
                 ></input>
               </div>
               <div className="w-full">
                 <p>Fullname</p>
                 <input
                   name="fullname"
+                  autocomplete="off"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
-                  placeholder="Fullname"
+                  defaultValue={globalCtx.selectedData.fullname}
+                  placeholder={globalCtx.selectedData.fullname}
                 ></input>
               </div>
               <div className="w-full">
                 <p>Email</p>
                 <input
                   name="email"
+                  autocomplete="off"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
-                  placeholder="Email"
+                  defaultValue={globalCtx.selectedData.email}
+                  placeholder={globalCtx.selectedData.email}
                 ></input>
               </div>
               <div className="w-full">
                 <p>Phone Number</p>
                 <input
                   name="phone"
+                  autocomplete="off"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
-                  placeholder="Phone"
+                  defaultValue={globalCtx.selectedData.phone}
+                  placeholder={globalCtx.selectedData.phone}
                 ></input>
               </div>
               <div className="w-full">
@@ -78,10 +91,18 @@ export default function FormUserUpdate({
                 <select
                   name="outlet"
                   id="outlet"
+                  autocomplete="off"
                   className="w-full rounded-md border-2 border-orange-500/50"
                 >
                   {globalCtx.listOutlet.map((dat, idx) => {
-                    return <option value={dat.key}>{dat.name}</option>;
+                    return (
+                      <option
+                        selected={globalCtx.selectedData.outlet?.key == dat.key}
+                        value={dat.key}
+                      >
+                        {dat.name}
+                      </option>
+                    );
                   })}
                 </select>
               </div>
@@ -92,7 +113,8 @@ export default function FormUserUpdate({
                 <textarea
                   name="address"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full h-32"
-                  placeholder="Alamat lengkap"
+                  defaultValue={globalCtx.selectedData.address}
+                  placeholder={globalCtx.selectedData.address}
                 ></textarea>
               </div>
               <div className="w-full h-auto relative pt-2">

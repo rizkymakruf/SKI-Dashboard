@@ -45,6 +45,7 @@ export default function FormUser({
                 <p>Username</p>
                 <input
                   name="username"
+                  autocomplete="off"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Username"
                 ></input>
@@ -53,6 +54,7 @@ export default function FormUser({
                 <p>Fullname</p>
                 <input
                   name="fullname"
+                  autocomplete="off"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Fullname"
                 ></input>
@@ -61,6 +63,7 @@ export default function FormUser({
                 <p>Email</p>
                 <input
                   name="email"
+                  autocomplete="off"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Email"
                 ></input>
@@ -69,6 +72,7 @@ export default function FormUser({
                 <p>Phone Number</p>
                 <input
                   name="phone"
+                  autocomplete="off"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Phone"
                 ></input>
@@ -77,6 +81,8 @@ export default function FormUser({
                 <p>Password</p>
                 <input
                   name="password"
+                  autocomplete="off"
+                  type="password"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Password"
                 ></input>
@@ -84,6 +90,8 @@ export default function FormUser({
               <div className="w-full">
                 <p>Retype Password</p>
                 <input
+                  autocomplete="off"
+                  type="password"
                   className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   placeholder="Retype Password"
                 ></input>
@@ -94,6 +102,7 @@ export default function FormUser({
                 <select
                   name="outlet"
                   id="outlet"
+                  autocomplete="off"
                   className="w-full rounded-md border-2 border-orange-500/50"
                 >
                   {globalCtx.listOutlet.map((dat, idx) => {
