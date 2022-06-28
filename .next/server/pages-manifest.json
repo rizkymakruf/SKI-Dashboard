@@ -1,8 +1,5 @@
 {
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/_error": "pages/_error.js",
-  "/dashboardSKI/users": "pages/dashboardSKI/users.js",
-  "/dashboardSKI/category": "pages/dashboardSKI/category.js",
-  "/api/prot/patch": "pages/api/prot/patch.js"
+  "/_error": "pages/_error.js"
 }
