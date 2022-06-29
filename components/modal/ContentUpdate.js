@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { GlobalContext } from "context/global";
 import FormContent from "components/form/FormContent";
 import FormContentUpdate from "components/form/FormContentUpdate";
+import fetchJson, { FetchError } from "lib/fetchJson";
 
 const ContentUpdateModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
@@ -31,9 +32,7 @@ const ContentUpdateModal = () => {
           </svg>
         </button>
       </div>
-      <FormContentUpdate />
-      {/* <FormProduct
-        // Default Form
+      <FormContentUpdate
         globalCtx={globalCtx}
         globalAct={globalAct}
         onSubmit={async function handleSubmit(e) {
@@ -41,9 +40,13 @@ const ContentUpdateModal = () => {
           globalAct.setIsFetch(true);
 
           const body = {
-            username: e.currentTarget.username.value,
-            password: e.currentTarget.password.value,
-            uri: "login_office",
+            key: e.currentTarget.key.value,
+            title: e.currentTarget.title.value,
+            description: e.currentTarget.description.value,
+            pict: [],
+            type: parseInt(e.currentTarget.type.value),
+            label: e.currentTarget.label.value,
+            uri: "content/update",
           };
 
           try {
@@ -52,7 +55,8 @@ const ContentUpdateModal = () => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.replace("/config/dashboard");
+
+            router.reload("/dashboardSKI/content");
           } catch (error) {
             if (error instanceof FetchError) {
               globalAct.setErrorMsg(error.data.message);
@@ -63,7 +67,7 @@ const ContentUpdateModal = () => {
 
           globalAct.setIsFetch(false);
         }}
-      /> */}
+      />
     </div>
   );
 };
