@@ -2,5 +2,8 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/dashboardSKI/content": "pages/dashboardSKI/content.js"
+  "/dashboardSKI/usersCst": "pages/dashboardSKI/usersCst.js",
+  "/dashboardSKI": "pages/dashboardSKI.js",
+  "/dashboardSKI/users": "pages/dashboardSKI/users.js",
+  "/dashboardSKI/outlet": "pages/dashboardSKI/outlet.js"
 }

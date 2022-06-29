@@ -57,38 +57,31 @@ sessionOptions);
 
 const DashboardSKI = (props) => {
   const router = useRouter();
-  {
-    /* Default */
-  }
+
   const { globalCtx, globalAct } = useContext(GlobalContext);
   useEffect(() => {
-    globalAct.setIsFetch(false);
-    globalAct.setErrorMsg("");
+    globalAct.setFullname(props.fullName);
+    // globalAct.setIsFetch(false);
+    // globalAct.setErrorMsg("");
   }, []);
-  {
-    /* Default */
-  }
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-4">
-      {/* <div>
-        <hr />
-      </div> */}
       <div className="flex items-center gap-x-4">
         <div className="w-full grid grid-cols-2 gap-4">
-          <div className="w-full border border-gray-200 rounded-md shadow-md px-3 py-6">
-            <p className="pb-2 text-red-500 font-semibold">
-              Pendapatan Perbulan
+          <div className="w-full border border-gray-200 hover:shadow-red-500 rounded-md shadow-md px-3 py-6">
+            <p className="pb-2 text-red-500 underline font-semibold">
+              Penjualan Perbulan
             </p>
-            <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-full h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
+            <div className="duration-500 bg-white w-full h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
               <Line1 />
             </div>
           </div>
-          <div className="w-full border border-gray-200 rounded-md shadow-md px-3 py-6">
-            <p className="pb-2 text-red-500 font-semibold">
+          <div className="w-full border border-gray-200 hover:shadow-red-500 rounded-md shadow-md px-3 py-6">
+            <p className="pb-2 text-red-500 underline font-semibold">
               Penjualan Perbulan
             </p>
-            <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-full h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
+            <div className="duration-500 bg-white w-full h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
               <Line />
             </div>
           </div>
@@ -111,14 +104,6 @@ const DashboardSKI = (props) => {
           );
         })}
       </div>
-      {/* <div>
-        <hr />
-      </div>
-      <div className="w-full flex flex-row items-center gap-x-4">
-        <div className="w-72">
-          <OrderCard />
-        </div>
-      </div> */}
     </div>
   );
 };

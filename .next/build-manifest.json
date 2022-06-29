@@ -25,25 +25,25 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboardSKI/content": [
+    "/dashboardSKI": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/content.js"
+      "static/chunks/pages/dashboardSKI.js"
     ],
     "/dashboardSKI/outlet": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/dashboardSKI/outlet.js"
     ],
-    "/dashboardSKI/produkRekomen": [
+    "/dashboardSKI/users": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/produkRekomen.js"
+      "static/chunks/pages/dashboardSKI/users.js"
     ],
-    "/dashboardSKI/topBrand": [
+    "/dashboardSKI/usersCst": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/topBrand.js"
+      "static/chunks/pages/dashboardSKI/usersCst.js"
     ]
   },
   "ampFirstPages": []

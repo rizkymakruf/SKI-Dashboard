@@ -48,7 +48,6 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   return retObject({
     isLogin: true,
-    // access_token: user.access_token,
     fullName: checkUids[0].fullname,
     allOutlet: outlet,
   });
@@ -56,20 +55,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 sessionOptions);
 
 const Otlets = (props) => {
-  // console.log(props.access_token);
   const router = useRouter();
-  // console.log(props);
-  {
-    /* Default */
-  }
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  // useEffect(() => {
-  //   globalAct.setIsFetch(false);
-  //   globalAct.setErrorMsg("");
-  // }, []);
-  {
-    /* Default */
-  }
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-4">

@@ -56,14 +56,15 @@ sessionOptions);
 
 const Administration = (props) => {
   const router = useRouter();
-  {
-    /* Default */
-  }
+
+  // console.log(props.fullName);
+  const [fullname, setfullname] = useState(props.fullName);
+
   const { globalCtx, globalAct } = useContext(GlobalContext);
   useEffect(() => {
     globalAct.setIsFetch(false);
     globalAct.setErrorMsg("");
-    // router.prefetch("/config/dashboard");
+    router.prefetch("/config/dashboard");
   }, []);
   {
     /* Default */
@@ -89,9 +90,9 @@ const Administration = (props) => {
     await router.push("/");
   };
 
-  useEffect(() => {
-    console.log("fetch data status : ", globalCtx.isFetch);
-  }, [globalCtx]);
+  // useEffect(() => {
+  //   console.log("fetch data status : ", globalCtx.isFetch);
+  // }, [globalCtx]);
 
   return (
     <div className="w-full min-h-screen relative bg-white flex flex-row overflow-hidden">

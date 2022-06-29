@@ -13,15 +13,13 @@ const ManageProdukRekomen = () => {
   const [inputValue, setInputValue] = useState("");
   const router = useRouter();
   return (
-    <div className="w-full p-3 flex flex-col gap-y-2">
-      <div className="border-2 border-orange-200 rounded-md p-5 shadow-md mb-3">
-        <ProdukRekomenTable />
-      </div>
-      <div className="mb-3">
+    <div className="w-full flex flex-col p-5">
+      <div className="w-full p-4 border border-gray-200 rounded-md shadow-md">
         <SearchProduct />
-      </div>
-      <div className="bg-white border border-gray-200 rounded-md p-5 shadow-md">
-        <ProdukRekomenListTable />
+        <div className="flex gap-6 my-4">
+          <ProdukRekomenListTable />
+          <ProdukRekomenTable />
+        </div>
       </div>
     </div>
   );

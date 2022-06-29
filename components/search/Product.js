@@ -1,13 +1,15 @@
 const SearchProduct = () => {
   return (
     <div
-      className="w-full flex items-center justify-between border border-gray-300 rounded-md p-3 shadow-md"
+      className="w-full flex items-center justify-between  border-b-2 border-gray-200 pb-4"
       onSubmit={null}
     >
-      <p className="text-sm font-bold text-red-600 w-1/6">Find Product</p>
+      <p className="text-md font-bold text-red-600 w-2/6">
+        Product Recomendation
+      </p>
       <div className="w-full">
         <div className="relative">
-          <button className="absolute top-1.5 right-1.5 bg-blue-500/30 p-1 rounded-md shadow-md hover:bg-blue-500/50">
+          <button className="absolute top-1.5 right-1.5 bg-blue-500/30 p-1 rounded-md hover:bg-blue-500/50">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 text-blue-500"
@@ -24,8 +26,8 @@ const SearchProduct = () => {
         </div>
         <input
           name="search-product"
-          placeholder="Cari product"
-          className="placeholder-gray-400 px-2 w-full pr-10 h-10 bg-gray-500/20 outline-none focus:ring-2 duration-500 focus:ring-blue-500 border-2 border-gray-300 rounded-md"
+          placeholder="Search..."
+          className="placeholder-gray-400 px-2 w-full h-10 bg-white outline-none focus:ring-2 duration-500 focus:ring-blue-500 border border-gray-300 rounded-md"
         />
       </div>
     </div>

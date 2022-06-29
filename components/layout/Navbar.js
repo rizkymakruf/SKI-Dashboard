@@ -56,7 +56,7 @@ const Item = ({ q, a, r }) => (
   </div>
 );
 
-const SideNav = ({ children }) => {
+const SideNav = ({ children, props }) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -80,7 +80,11 @@ const SideNav = ({ children }) => {
         },
         {
           link: "/dashboardSKI/users",
-          name: "Users",
+          name: "Users Admin",
+        },
+        {
+          link: "/dashboardSKI/usersCst",
+          name: "Users Costumer",
         },
         {
           link: "/dashboardSKI/category",

@@ -7,7 +7,7 @@ export const GlobalProvider = ({ children }) => {
   const [popover, setPopover] = useState("");
   const [isFetch, setIsFetch] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [fullname, setFullname] = useState("Faouzia");
+  const [fullname, setFullname] = useState("");
   const [selectedData, setSelectedData] = useState("");
   const [listOutlet, setListOutlet] = useState([]);
   const [listUser, setListUser] = useState([]);

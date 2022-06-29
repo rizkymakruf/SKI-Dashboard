@@ -80,7 +80,7 @@ const UsersTable = (props) => {
                   }
                 }
 
-                router.replace("/dashboardSKI/users");
+                router.reload("/dashboardSKI/users");
                 globalAct.setModal("");
                 globalAct.setIsFetch(false);
               }}

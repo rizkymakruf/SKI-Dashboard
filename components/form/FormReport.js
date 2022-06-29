@@ -1,5 +1,3 @@
-import { useState, useEffect, useRef } from "react";
-
 export default function FormReport({
   myRef,
   globalCtx,
@@ -15,35 +13,18 @@ export default function FormReport({
   handleImage,
   removeMe,
 }) {
-  //   const [detail, setDetail] = useState(false);
-  //   const [infoLengkap, setInfoLengkap] = useState(false);
-
-  //   useEffect(() => {
-  //     !detail && setInfoLengkap(false);
-  //   });
-  const [imageFile, setImageFile] = useState([]);
-  const inputFileImage = useRef(null);
-
-  const upLoad = (props, ref) => {
-    inputFileImage.current.click();
-  };
-
-  const resetForm = (e) => {
-    e.preventDefault();
-    document.querySelector("form").reset();
-    setSlide([]);
-    setUpdate([]);
-  };
-
   const data = [
     {
-      report: "Report by product",
+      key: "brand",
+      name: "Report by brand",
     },
     {
-      report: "Report by brand",
+      key: "category",
+      name: "Report by category",
     },
     {
-      report: "Report by category",
+      key: "product",
+      name: "Report by product",
     },
   ];
 
@@ -60,16 +41,16 @@ export default function FormReport({
                   id="report"
                   className="w-full rounded-md border-2 border-orange-500/50"
                 >
-                  {data.map((dat, idx) => {
-                    return <option value={dat.report}>{dat.report}</option>;
-                  })}
+                  {data.map((dat) => (
+                    <option value={dat.key}>{dat.name}</option>
+                  ))}
                 </select>
               </div>
               <div className="w-full">
                 <p>Date From</p>
                 <input
-                  name="dateFrom"
-                  id="dateFrom"
+                  name="start"
+                  id="start"
                   type={"date"}
                   className="w-full rounded-md border-2 border-orange-500/50 bg-orange-300"
                 ></input>
@@ -77,8 +58,8 @@ export default function FormReport({
               <div className="w-full">
                 <p>Date To</p>
                 <input
-                  name="dateTo"
-                  id="dateTo"
+                  name="end"
+                  id="end"
                   type={"date"}
                   className="w-full rounded-md border-2 border-orange-500/50 bg-orange-300"
                 ></input>
@@ -86,11 +67,7 @@ export default function FormReport({
 
               <div className="w-full h-auto relative py-6 flex justify-end gap-1">
                 <div className="w-full h-auto flex justify-end gap-2">
-                  <button
-                    onClick={onSubmit}
-                    // disabled={globalCtx.isFetch ? "disabled" : ""}
-                    className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
-                  >
+                  <button className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden">
                     View Report
                   </button>
                   <span
