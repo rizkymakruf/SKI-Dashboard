@@ -1,71 +1,20 @@
+import React from "react";
 import DataTable from "react-data-table-component";
-import { GlobalContext } from "context/global";
-import { useContext } from "react";
 
-const ViewReportByCategoryTable = ({}) => {
-  const { globalCtx, globalAct } = useContext(GlobalContext);
-  const data = [
-    {
-      name: "Coffee",
-      order: "208 order",
-      income: "Rp 21.540.000,-",
-    },
-    {
-      name: "Machine Coffee",
-      order: "198 order",
-      income: "Rp 133.543.000,-",
-    },
-    {
-      name: "Other",
-      order: "99 order",
-      income: "Rp 13.400.000,-",
-    },
-    {
-      name: "Category 1",
-      order: "0 order",
-      income: "Rp 0,-",
-    },
-    {
-      name: "Category 2",
-      order: "0 order",
-      income: "Rp 0,-",
-    },
-    {
-      name: "Category 3",
-      order: "0 order",
-      income: "Rp 0,-",
-    },
-    {
-      name: "Category 4",
-      order: "0 order",
-      income: "Rp 0,-",
-    },
-    {
-      name: "Category 5",
-      order: "0 order",
-      income: "Rp 0,-",
-    },
-    {
-      name: "Category 6",
-      order: "0 order",
-      income: "Rp 0,-",
-    },
-    {
-      name: "Category 7",
-      order: "0 order",
-      income: "Rp 0,-",
-    },
-    {
-      name: "Category 8",
-      order: "0 order",
-      income: "Rp 0,-",
-    },
-    {
-      name: "Category 9",
-      order: "0 order",
-      income: "Rp 0,-",
-    },
-  ];
+const ViewReportByCategoryTable = ({data}) => {
+  
+  const CountIncome = (a) => {
+    var x = 0
+    a.map(e => x += e.order)
+    return x
+  }
+
+  const CountProduct = (a) => {
+    var x = 0
+    a.map(e => x += e.qty)
+    return x
+  }
+
   const columns = [
     {
       name: <div className="font-bold text-red-500">Category Name</div>,
@@ -77,11 +26,20 @@ const ViewReportByCategoryTable = ({}) => {
       ),
     },
     {
+      name: <div className="font-bold text-red-500">Total Product</div>,
+      grow: 10,
+      cell: (a) => (
+        <div className="w-full h-full py-1 flex flex-row gap-1">
+          <p className="text-xs font-bold">{a.order ? CountProduct(a.order) : 0}</p>
+        </div>
+      ),
+    },
+    {
       name: <div className="font-bold text-red-500">Total Order</div>,
       grow: 10,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1">
-          <p className="text-xs font-bold">{a.order}</p>
+          <p className="text-xs font-bold">{a.order ? a.order.length : 0}</p>
         </div>
       ),
     },
@@ -90,7 +48,7 @@ const ViewReportByCategoryTable = ({}) => {
       grow: 10,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1">
-          <p className="text-xs font-bold">{a.income}</p>
+          <p className="text-xs font-bold">{a.order ? CountIncome(a.order) : 0}</p>
         </div>
       ),
     },
@@ -114,4 +72,4 @@ const ViewReportByCategoryTable = ({}) => {
   );
 };
 
-export default ViewReportByCategoryTable;
+export default React.memo(ViewReportByCategoryTable);
