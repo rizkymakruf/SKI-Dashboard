@@ -30,7 +30,7 @@ const ContentDetailModal = () => {
           </svg>
         </button>
       </div>
-      <DetailContent />
+      <DetailContent globalCtx={globalCtx} globalAct={globalAct} />
     </div>
   );
 };

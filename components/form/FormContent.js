@@ -15,12 +15,6 @@ export default function FormContent({
   handleImage,
   removeMe,
 }) {
-  //   const [detail, setDetail] = useState(false);
-  //   const [infoLengkap, setInfoLengkap] = useState(false);
-
-  //   useEffect(() => {
-  //     !detail && setInfoLengkap(false);
-  //   });
   const [imageFile, setImageFile] = useState([]);
   const inputFileImage = useRef(null);
 
@@ -34,6 +28,17 @@ export default function FormContent({
     setSlide([]);
     setUpdate([]);
   };
+
+  const tb = [
+    {
+      p: 1,
+      title: "Top Slider",
+    },
+    {
+      title: "Bottom Slider",
+      p: 2,
+    },
+  ];
 
   return (
     <div className="w-full h-auto">
@@ -59,8 +64,9 @@ export default function FormContent({
                   Button content
                 </p>
                 <input
-                  name="button"
+                  name="label"
                   type="text"
+                  autocomplete="off"
                   className="placeholder-gray-400 h-10 bg-gray-500/20 form-input mt-1 rounded-md border border-gray-300 w-full focus:ring-2 duration-500 focus:ring-blue-500"
                   placeholder="Button content"
                   // disabled={globalCtx.isFetch ? "disabled" : ""}
@@ -68,16 +74,18 @@ export default function FormContent({
               </div>
 
               <div className="w-full h-auto relative mb-4">
-                <p className="text-sm font-bold text-red-600 mb-2">
-                  Route Button content
-                </p>
-                <input
-                  name="route"
-                  type="text"
-                  className="placeholder-gray-400 h-10 bg-gray-500/20 form-input mt-1 rounded-md border border-gray-300 w-full focus:ring-2 duration-500 focus:ring-blue-500"
-                  placeholder="Route button content"
-                  // disabled={globalCtx.isFetch ? "disabled" : ""}
-                />
+                <p className="text-sm font-bold text-red-600 mb-2">Position</p>
+                <select
+                  name="type"
+                  id="type"
+                  className="w-full rounded-md border-2 border-orange-500/50"
+                >
+                  {/* {tb.map((dat, idx) => {
+                    return <option value={dat.p}>{dat.title}</option>;
+                  })} */}
+                  <option value={1}>Top Slider</option>
+                  <option value={2}>Bottom Slider</option>
+                </select>
               </div>
 
               <div className="w-full h-auto relative mb-4">
@@ -101,6 +109,7 @@ export default function FormContent({
               <input
                 accept="image/png, image/gif, image/jpeg"
                 type="file"
+                name="pict"
                 id="fileContract"
                 ref={inputFileImage}
                 style={{ display: "none" }}
@@ -154,16 +163,8 @@ export default function FormContent({
 
               <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                 <div className="w-full h-auto flex justify-end gap-2">
-                  {/* <button
-                    onClick={(e) => resetForm(e)}
-                    // disabled={globalCtx.isFetch ? "disabled" : ""}
-                    className="px-6 h-8 bg-yellow-500/30 text-yellow-500 border-2 shadow-md hover:bg-yellow-500/50 border-yellow-300 font-semibold rounded overflow-hidden"
-                  >
-                    Cancel
-                  </button> */}
                   <button
-                    onClick={onSubmit}
-                    // disabled={globalCtx.isFetch ? "disabled" : ""}
+                    disabled={globalCtx.isFetch ? "disabled" : ""}
                     className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                   >
                     Save

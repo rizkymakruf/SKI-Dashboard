@@ -58,7 +58,6 @@ const DashboardCardSKI = (props) => {
                   key: props.otlet.key,
                   active: !active,
                 };
-
                 try {
                   await fetchJson("/api/prot/patch", {
                     method: "PATCH",
@@ -70,11 +69,11 @@ const DashboardCardSKI = (props) => {
                   console.log("error", error);
                   if (error instanceof FetchError) {
                     globalAct.setErrorMsg(error.data.message);
+                    alert(error.data.message);
                   } else {
                     globalAct.setErrorMsg("An unexpected error happened");
                   }
                 }
-                setActive(!active);
                 router.replace("/dashboardSKI/outlet");
                 globalAct.setModal("");
                 globalAct.setIsFetch(false);

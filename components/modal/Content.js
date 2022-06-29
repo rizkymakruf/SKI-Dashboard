@@ -2,9 +2,12 @@ import FormProduct from "components/form/FormProduct";
 import { useContext } from "react";
 import { GlobalContext } from "context/global";
 import FormContent from "components/form/FormContent";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
 
 const ContentModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
+  const router = useRouter();
 
   return (
     <div className="bg-white w-full h-full rounded-md shadow-sm shadow-black">
@@ -30,39 +33,44 @@ const ContentModal = () => {
           </svg>
         </button>
       </div>
-      <FormContent />
-      {/* <FormProduct
-        // Default Form
-        globalCtx={globalCtx}
+      <FormContent
         globalAct={globalAct}
+        globalCtx={globalCtx}
         onSubmit={async function handleSubmit(e) {
           e.preventDefault();
           globalAct.setIsFetch(true);
 
           const body = {
-            username: e.currentTarget.username.value,
-            password: e.currentTarget.password.value,
-            uri: "login_office",
+            title: e.currentTarget.title.value,
+            description: e.currentTarget.description.value,
+            pict: [],
+            type: parseInt(e.currentTarget.type.value),
+            label: e.currentTarget.label.value,
+            uri: "content/add",
           };
 
+          // console.log(body);
+
           try {
-            await fetchJson("/api/post", {
+            await fetchJson("/api/prot/post", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.replace("/config/dashboard");
           } catch (error) {
             if (error instanceof FetchError) {
               globalAct.setErrorMsg(error.data.message);
             } else {
+              console.log(error);
               globalAct.setErrorMsg("An unexpected error happened");
             }
           }
 
+          router.reload("/dashboardSKI/content");
+          globalAct.setModal("");
           globalAct.setIsFetch(false);
         }}
-      /> */}
+      />
     </div>
   );
 };
