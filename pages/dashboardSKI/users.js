@@ -12,6 +12,7 @@ import { allUsers, getOutlet, checkUid } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { useRouter } from "next/router";
 
+// ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
   res,
@@ -64,17 +65,10 @@ const ManageUsers = (props) => {
   const [data, setData] = useState(props.users);
   const router = useRouter();
   // console.log(props);
-  {
-    /* Default */
-  }
   useEffect(() => {
     globalAct.setListOutlet(props.listOutlet);
     globalAct.setSelectedData(props.users);
   }, []);
-
-  // useEffect(() => {
-  //   data.push(globalCtx.newData);
-  // }, [globalCtx.data]);
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">

@@ -72,6 +72,7 @@ const SideNav = ({ children }) => {
         {
           link: "/dashboardSKI",
           name: "Dashboard",
+          // ic: "",
         },
         {
           link: "/dashboardSKI/outlet",
