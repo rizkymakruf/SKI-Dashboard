@@ -14,7 +14,7 @@ const DashboardCardSKI = (props) => {
   const [active, setActive] = useState(props.otlet.active);
   return (
     <>
-      <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-full h-44 rounded-md p-4 flex flex-col justify-between hover:shadow-red-500 hover:scale-95">
+      <div className="duration-300 bg-white border-gray-300 border shadow-md w-full h-44 rounded-md p-4 flex flex-col justify-between hover:shadow-red-500 hover:scale-95">
         <div>
           <p className="font-bold text-gray-800 pb-2">{props.otlet.name}</p>
           <hr />

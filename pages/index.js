@@ -13,6 +13,8 @@ import { redirect, retObject, checkerToken } from "lib/listFunct";
 
 import FormLogin from "components/form/FormLogin";
 import { route } from "next/dist/server/router";
+import Image from "next/image";
+import Ilus from "../public/img/ill.png";
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -58,7 +60,7 @@ const Administration = (props) => {
   const router = useRouter();
 
   // console.log(props.fullName);
-  const [fullname, setfullname] = useState(props.fullName);
+  // const [fullname, setfullname] = useState(props.fullName);
 
   const { globalCtx, globalAct } = useContext(GlobalContext);
   useEffect(() => {
@@ -90,27 +92,19 @@ const Administration = (props) => {
     await router.push("/");
   };
 
-  // useEffect(() => {
-  //   console.log("fetch data status : ", globalCtx.isFetch);
-  // }, [globalCtx]);
-
   return (
-    <div className="w-full min-h-screen relative bg-white flex flex-row overflow-hidden">
-      <div className="w-full min-h-screen flex items-center justify-center">
-        <div className="flex gap-2 rotate-45 overflow-hidden absolute">
-          <div className="bg-red-600 w-44 h-44" />
-          <div className="bg-red-600 w-64 h-64" />
-          <div className="bg-red-400 w-72 h-72 translate-y-4" />
-          <div className="bg-red-600 w-96 h-96 " />
-          <div className="relative">
-            <div className="bg-red-500 w-44 h-44 -translate-y-24 absolute bottom-24" />
-          </div>
-          <div className="bg-black w-44 h-44" />
-          <div className="bg-red-900 w-44 h-44" />
+    <div className="w-full grid grid-cols-2 min-h-screen overflow-hidden">
+      <div className="flex w-full items-center justify-center">
+        <div className="absolute z-30 w-2/4">
+          <Image
+            className="w-full"
+            src={Ilus}
+            layout={"responsive"}
+            objectFit={"cover"}
+          />
         </div>
       </div>
       <div className="w-full min-h-screen relative flex flex-row justify-center items-center gap-4">
-        {/* <div className="bg-red-500 rounded-full w-full h-screen" /> */}
         <div className="w-96 h-auto relative">
           {props.isLogin ? (
             <div className="w-full h-32 relative select-none ">
@@ -156,7 +150,7 @@ const Administration = (props) => {
                     });
                     router.push("/dashboardSKI");
                   } catch (error) {
-                    alert("error");
+                    // alert("error");
                     if (error instanceof FetchError) {
                       globalAct.setErrorMsg(error.data.message);
                     } else {

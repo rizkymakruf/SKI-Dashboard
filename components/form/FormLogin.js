@@ -4,15 +4,19 @@ export default function FormLogin({ myRef, globalCtx, globalAct, onSubmit }) {
   const [formType, setFormType] = useState(false);
   return (
     <div className="w-full h-auto">
+      <p className="text-5xl text-red-500 font-bold pb-10">
+        Login <br /> Dashboard
+      </p>
       <form onSubmit={onSubmit}>
         <div className="w-full h-full select-none">
-          <div className="w-full h-full p-3 backdrop-blur bg-white/50 shadow-md rounded-md border">
+          <div className="w-full h-full ">
             <div className="w-full h-auto relative mb-4">
               <p className="text-sm font-extrabold">Username</p>
               <input
                 name="username"
                 type="text"
-                className="placeholder-gray-300 form-input mt-1 rounded-md border w-full"
+                autoComplete="off"
+                className="placeholder-gray-300 form-input mt-1 focus:ring-0 border-b-2 border-t-0 border-x-0 w-full"
                 placeholder="Username"
                 disabled={globalCtx.isFetch ? "disabled" : ""}
               />
@@ -39,24 +43,22 @@ export default function FormLogin({ myRef, globalCtx, globalAct, onSubmit }) {
               <input
                 name="password"
                 type="password"
-                className="placeholder-gray-300 form-input mt-1 rounded-md border w-full"
+                className="placeholder-gray-300 form-input mt-1 focus:ring-0 border-b-2 border-t-0 border-x-0 w-full"
                 placeholder="Password"
                 disabled={globalCtx.isFetch ? "disabled" : ""}
               />
             </div>
 
-            <div className="w-full h-12 flex justify-between gap-2">
-              <div className="w-full h-full flex items-center text-xs text-red-400">
+            <div className="w-full flex flex-col justify-center pt-4">
+              <div className="w-full h-full flex items-center text-xs text-red-400 py-3">
                 {globalCtx.errorMsg}
               </div>
-              <div className="w-auto h-full flex items-center">
-                <button
-                  disabled={globalCtx.isFetch ? "disabled" : ""}
-                  className="px-8 h-10 bg-gray-50 border-2 border-gray-300 rounded overflow-hidden"
-                >
-                  Login
-                </button>
-              </div>
+              <button
+                disabled={globalCtx.isFetch ? "disabled" : ""}
+                className="w-full px-8 h-10 bg-red-500 border-2 border-red-300 text-white font-bold hover:bg-red-500/50 hover:text-red-500 rounded overflow-hidden"
+              >
+                Login
+              </button>
             </div>
           </div>
         </div>
