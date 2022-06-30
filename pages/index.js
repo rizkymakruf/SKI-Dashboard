@@ -107,19 +107,20 @@ const Administration = (props) => {
       <div className="w-full min-h-screen relative flex flex-row justify-center items-center gap-4">
         <div className="w-96 h-auto relative">
           {props.isLogin ? (
-            <div className="w-full h-32 relative select-none ">
-              <div className="w-full h-full p-3 backdrop-blur bg-white/30 rounded-md border overflow-hidden">
-                <p className="text-sm">Hi {props.fullName},</p>
+            <div className="w-full relative select-none ">
+              <div className="w-full h-full p-3  overflow-hidden">
+                <p className="text-md">Hi {props.fullName},</p>
+                <p className="text-sm pb-4">You have logged in</p>
                 <div className="w-full h-full relative flex justify-between items-center gap-3">
                   <Link href="dashboardSKI">
-                    <button className="w-full h-auto bg-blue-50 py-2 overflow-hidden rounded border-2 border-white shadow-lg">
+                    <button className="w-full h-auto bg-blue-50 py-2 overflow-hidden rounded border-2 border-blue-500/50 hover:shadow-md">
                       Dashboard
                     </button>
                   </Link>
                   <button
                     onClick={() => logout()}
                     disabled={globalCtx.isFetch ? "disabled" : ""}
-                    className="w-full h-auto bg-red-50 py-2 overflow-hidden rounded border-2 border-white shadow-lg"
+                    className="w-full h-auto bg-red-50 py-2 overflow-hidden rounded border-2 border-red-500/50 hover:shadow-md"
                   >
                     Logout
                   </button>

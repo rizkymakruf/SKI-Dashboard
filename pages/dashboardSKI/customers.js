@@ -1,16 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { getLayout } from "components/layout/Navbar";
 import { GlobalContext } from "context/global";
-
-import AddUser from "components/card/AddUser";
 import UsersTable from "components/table/Users";
-import SearchUser from "components/search/User";
-
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { allUsers, getOutlet, checkUid } from "lib/arangoDb";
+import { allCst, checkUid } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { useRouter } from "next/router";
+import SearchUserCst from "components/search/UserCst";
+import UsersTableCst from "components/table/UsersCst";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
@@ -44,8 +42,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   // naaaaa
 
-  const users = await allUsers();
-  const listOutlet = await getOutlet();
+  const cst = await allCst();
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -54,36 +51,34 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
-    users: users,
-    listOutlet: listOutlet,
+    cst: cst,
   });
 },
 sessionOptions);
 
 const ManageUsersCst = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  const [data, setData] = useState(props.users);
+  const [data, setData] = useState(props.cst);
   const router = useRouter();
-  // console.log(props);
+  // console.log(props.cst);
   useEffect(() => {
-    globalAct.setListOutlet(props.listOutlet);
-    globalAct.setSelectedData(props.users);
+    // globalAct.setSelectedData(props.cst);
   }, []);
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">
-      <div>
+      {/* <div>
         <AddUser globalAct={globalAct} globalCtx={globalCtx} />
-      </div>
+      </div> */}
       <div>
-        <SearchUser
+        <SearchUserCst
           globalAct={globalAct}
           globalCtx={globalCtx}
           setData={setData}
         />
       </div>
       <div>
-        <UsersTable globalAct={globalAct} globalCtx={globalCtx} users={data} />
+        <UsersTableCst globalAct={globalAct} globalCtx={globalCtx} cst={data} />
       </div>
     </div>
   );

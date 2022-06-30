@@ -22,6 +22,7 @@ import DeleteRekomenModal from "components/modal/DeleteRekomen";
 import AddedRekomenModal from "components/modal/AddedRekomen";
 import DeleteBrandModal from "components/modal/DeleteBrand";
 import AddedBrandModal from "components/modal/AddedBrand";
+import UserDetailCstModal from "components/modal/UserDetailCst";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
@@ -140,6 +141,16 @@ const Modal = (props) => {
         }`}
       >
         <UserDetailModal />
+      </div>
+
+      <div
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "detailUserCst"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <UserDetailCstModal />
       </div>
 
       <div
