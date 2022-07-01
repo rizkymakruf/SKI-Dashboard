@@ -4,7 +4,7 @@ let width, height, gradient;
 function getGradient(ctx, chartArea) {
   const chartWidth = chartArea.right - chartArea.left;
   const chartHeight = chartArea.bottom - chartArea.top;
-  const r = () => Math.random() * 256 >> 0;
+  const r = () => (Math.random() * 256) >> 0;
   const cRgba = (n) => `rgba(${r()}, ${r()}, ${r()}, ${n})`;
 
   if (!gradient || width !== chartWidth || height !== chartHeight) {
@@ -12,7 +12,7 @@ function getGradient(ctx, chartArea) {
     height = chartHeight;
     gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
     gradient.addColorStop(1, `${cAmber(1)}`);
-    gradient.addColorStop(0.5,  `${cAmber(0.32)}`);
+    gradient.addColorStop(0.5, `${cAmber(0.32)}`);
     gradient.addColorStop(0, `${cAmber(0)}`);
   }
 
@@ -39,9 +39,9 @@ export const ConfigLine = {
       tension: 0,
       borderWidth: 1,
       fill: "start",
-      backgroundColor: function(context) {
+      backgroundColor: function (context) {
         const chart = context.chart;
-        const {ctx, chartArea} = chart;
+        const { ctx, chartArea } = chart;
         if (!chartArea) {
           return;
         }
@@ -51,17 +51,17 @@ export const ConfigLine = {
     },
     point: {
       radius: 0,
-      hitRadius: 0
-    }
+      hitRadius: 0,
+    },
   },
   scales: {
     xAxis: {
-      display: false,
+      display: true,
     },
     yAxis: {
-      display: false,
-    }
-  }
+      display: true,
+    },
+  },
 };
 
 export const Config = {
@@ -76,14 +76,14 @@ export const Config = {
     lineWeight: 1.5,
   },
 
-//   animate in
+  //   animate in
   animation: {
     duration: 1,
   },
   maintainAspectRatio: false,
   responsive: true,
 
-//   show the x and y scales
+  //   show the x and y scales
   scales: {
     x: { display: true },
     y: { display: true },

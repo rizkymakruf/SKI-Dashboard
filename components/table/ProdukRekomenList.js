@@ -1,16 +1,19 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
+import fetchJson, { FetchError } from "lib/fetchJson";
 import { useContext } from "react";
+import { useRouter } from "next/router";
 
 const ProdukRekomenListTable = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
+  const router = useRouter();
   const data = props.product;
 
   console.log("ppp", props.product);
 
   const columns = [
     {
-      name: <div className="font-bold text-red-500">Products</div>,
+      name: <div className="font-bold text-red-500">Product</div>,
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex items-center flex-row gap-1">
@@ -28,7 +31,40 @@ const ProdukRekomenListTable = (props) => {
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button
-            onClick={() => globalAct.setModal("addedRekomen")}
+            globalCtx={globalCtx}
+            globalAct={globalAct}
+            onClick={async function handleSubmit(e) {
+              e.preventDefault();
+              globalAct.setIsFetch(true);
+              globalAct.setSelectedData(a);
+
+              const body = {
+                uri: "product/recommend",
+                key: a.key,
+                action: "add",
+              };
+
+              // console.log("kk", body);
+
+              try {
+                await fetchJson("/api/prot/post", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                });
+              } catch (error) {
+                console.log("error", error);
+                if (error instanceof FetchError) {
+                  globalAct.setErrorMsg(error.data.message);
+                } else {
+                  globalAct.setErrorMsg("An unexpected error happened");
+                }
+              }
+
+              router.reload("/dashboardSKI/produkRekomen");
+              globalAct.setModal("addedRekomen");
+              globalAct.setIsFetch(false);
+            }}
             className={
               "bg-green-500/30 items-center justify-center h-8 w-8 rounded-md flex gap-x-2 text-xs text-green-500 hover:w-24 duration-150 hover:before:content-['Add'] border border-green-300"
             }

@@ -2,56 +2,18 @@ import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
 import { useContext } from "react";
 
-const ProdukRekomenTable = ({}) => {
+const ProdukRekomenTable = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  const data = [
-    {
-      title: "Coffee satu",
-    },
-    {
-      title: "Coffee dua",
-    },
-    {
-      title: "Coffee tiga",
-    },
-    {
-      title: "Coffee empat",
-    },
-    {
-      title: "Coffee lima",
-    },
-    {
-      title: "Coffee dua",
-    },
-    {
-      title: "Coffee tiga",
-    },
-    {
-      title: "Coffee empat",
-    },
-    {
-      title: "Coffee lima",
-    },
-    {
-      title: "Coffee dua",
-    },
-    {
-      title: "Coffee tiga",
-    },
-    {
-      title: "Coffee empat",
-    },
-    {
-      title: "Coffee lima",
-    },
-  ];
+  const recomd = props.recomd;
+
+  console.log("o", props.recomd);
   const columns = [
     {
       name: <div className="font-bold text-red-500">Product Recomendation</div>,
       grow: 2,
       cell: (a) => (
         <div className="w-full h-full py-1 flex items-center flex-row gap-1">
-          <p className="text-xs font-bold">{a.title}</p>
+          <p className="text-xs font-bold">{a.name}</p>
         </div>
       ),
     },
@@ -98,7 +60,7 @@ const ProdukRekomenTable = ({}) => {
       <div className="border-2 rounded-md">
         <DataTable
           columns={columns}
-          data={data}
+          data={recomd}
           responsive={true}
           highlightOnHover={true}
           pagination

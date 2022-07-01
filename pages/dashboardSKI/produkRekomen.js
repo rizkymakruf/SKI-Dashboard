@@ -9,7 +9,7 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { getProducts, checkUid } from "lib/arangoDb";
+import { getProducts, getProductsRecomd, checkUid } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 
 // ssr
@@ -45,6 +45,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   // naaaaa
 
   const product = await getProducts();
+  const recomd = await getProductsRecomd();
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -54,6 +55,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     isLogin: true,
     fullName: checkUids[0].fullname,
     product: product,
+    recomd: recomd,
   });
 },
 sessionOptions);
@@ -63,11 +65,13 @@ const ManageProdukRekomen = (props) => {
   const [inputValue, setInputValue] = useState("");
   const router = useRouter();
   const [data, setData] = useState(props.product);
+  const [recomd, setRecomd] = useState(props.recomd);
 
   // console.log(props.category);
 
   useEffect(() => {
     globalAct.setSelectedData(props.product);
+    globalAct.setSelectedData(props.recomd);
   }, []);
   return (
     <div className="w-full flex flex-col p-5">
@@ -82,7 +86,7 @@ const ManageProdukRekomen = (props) => {
           <ProdukRekomenTable
             globalAct={globalAct}
             globalCtx={globalCtx}
-            product={data}
+            recomd={recomd}
           />
         </div>
       </div>

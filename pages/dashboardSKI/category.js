@@ -66,6 +66,9 @@ const ManageCategory = (props) => {
   const [data, setData] = useState(props.category);
 
   // console.log(props.category);
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
 
   useEffect(() => {
     globalAct.setSelectedData(props.category);
@@ -87,11 +90,12 @@ const ManageCategory = (props) => {
             };
 
             try {
-              await fetchJson("/api/prot/post", {
+              const aa = await fetchJson("/api/prot/post", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
+              await router.replace(router.pathname);
             } catch (error) {
               if (error instanceof FetchError) {
                 globalAct.setErrorMsg(error.data.message);
@@ -100,7 +104,6 @@ const ManageCategory = (props) => {
                 globalAct.setErrorMsg("An unexpected error happened");
               }
             }
-            router.replace("/dashboardSKI/category");
             globalAct.setIsFetch(false);
           }}
         />

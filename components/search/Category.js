@@ -19,7 +19,7 @@ const SearchCategory = (props) => {
           uri: "category/search",
         };
 
-        // console.log(body);
+        console.log(body);
 
         try {
           const res = await fetchJson("/api/prot/post", {
@@ -67,6 +67,7 @@ const SearchCategory = (props) => {
         <input
           name="name"
           placeholder="Search..."
+          autoComplete="off"
           className="placeholder-gray-400 px-2 w-full pr-10 h-10 bg-white outline-none focus:ring-2 duration-500 focus:ring-blue-500 border-2 border-gray-300 rounded-md"
         />
       </div>
