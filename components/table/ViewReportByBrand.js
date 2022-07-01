@@ -1,7 +1,12 @@
 import React from "react";
 import DataTable from "react-data-table-component";
 
-const ViewReportByBrandTable = ({ data }) => {
+const ViewReportByBrandTable = ({
+  data,
+  totalRows,
+  handlePerRowsChange,
+  handlePageChange,
+}) => {
   const columns = [
     {
       name: <div className="font-bold text-red-500">Brand Name</div>,
@@ -44,6 +49,10 @@ const ViewReportByBrandTable = ({ data }) => {
           responsive={true}
           highlightOnHover={true}
           pagination
+          paginationServer
+          paginationTotalRows={totalRows}
+          onChangeRowsPerPage={handlePerRowsChange}
+          onChangePage={handlePageChange}
         />
       </div>
     </div>

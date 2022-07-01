@@ -1,7 +1,12 @@
 import React from "react";
 import DataTable from "react-data-table-component";
 
-const ViewReportByCategoryTable = ({ data }) => {
+const ViewReportByCategoryTable = ({
+  data,
+  totalRows,
+  handlePageChange,
+  handlePerRowsChange,
+}) => {
   const CountIncome = (a) => {
     var x = 0;
     a.map((e) => (x += e.order));
@@ -68,7 +73,11 @@ const ViewReportByCategoryTable = ({ data }) => {
           data={data}
           responsive={true}
           highlightOnHover={true}
+          paginationServer
           pagination
+          paginationTotalRows={totalRows}
+          onChangeRowsPerPage={handlePerRowsChange}
+          onChangePage={handlePageChange}
         />
       </div>
     </div>

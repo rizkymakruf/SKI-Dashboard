@@ -25,15 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboardSKI/admins": [
+    "/dashboardSKI": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/admins.js"
-    ],
-    "/dashboardSKI/customers": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/customers.js"
+      "static/chunks/pages/dashboardSKI.js"
     ],
     "/dashboardSKI/produkRekomen": [
       "static/chunks/webpack.js",

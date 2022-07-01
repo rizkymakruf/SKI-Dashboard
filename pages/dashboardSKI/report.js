@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getLayout } from "components/layout/Navbar";
 import { GlobalContext } from "context/global";
 
@@ -63,8 +63,51 @@ const ManageReport = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const [mode, setMode] = useState("");
   const [dataReport, setDataReport] = useState([]);
+  const [totalRows, setTotalRows] = useState(0);
+  const [perPage, setPerPage] = useState(10);
   const router = useRouter();
+  const [newBody, setNewBody] = useState({});
   // console.log(dataReport);
+
+  const handlePageChange = (page) => {
+    console.log("page", page);
+    console.log("index", (page - 1) * perPage);
+    setNewBody({ ...newBody, index: (page - 1) * perPage });
+    fetchData();
+  };
+
+  const handlePerRowsChange = (newPerPage, page) => {
+    console.log("new page", newPerPage);
+    setNewBody({ ...newBody, index: 0, length: newPerPage });
+    fetchData();
+  };
+
+  const fetchData = async () => {
+    globalAct.setIsFetch(true);
+    // console.log("body", newBody);
+    try {
+      const res = await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newBody),
+      });
+      setMode(newBody.method);
+      setDataReport(res.data);
+      setTotalRows(res.total);
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+    globalAct.setIsFetch(false);
+  };
+
+  useEffect(() => {
+    fetchData(); // fetch page 1 of users
+  }, [newBody]);
   return (
     <div className="w-full p-3 flex flex-col gap-y-2 space-y-3">
       <div className="bg-white rounded-md p-5 shadow-md border-2 border-gray-200">
@@ -80,10 +123,13 @@ const ManageReport = () => {
               method: e.currentTarget.report.value,
               start: startDate.getTime() / 1000,
               end: endDate.getTime() / 1000,
+              index: 0,
+              length: perPage,
               uri: "report",
             };
 
-            console.log("body", body);
+            setNewBody(body);
+            // console.log("body", body);
 
             try {
               const res = await fetchJson("/api/prot/post", {
@@ -93,6 +139,7 @@ const ManageReport = () => {
               });
               setMode(body.method);
               setDataReport(res.data);
+              setTotalRows(res.total);
             } catch (error) {
               console.log("error", error);
               if (error instanceof FetchError) {
@@ -115,11 +162,28 @@ const ManageReport = () => {
               : mode === "product" && "Report By Product"}
           </p>
           {mode === "brand" ? (
-            <ViewReportByBrandTable data={dataReport} />
+            <ViewReportByBrandTable
+              data={dataReport}
+              totalRows={totalRows}
+              handlePageChange={handlePageChange}
+              handlePerRowsChange={handlePerRowsChange}
+            />
           ) : mode === "category" ? (
-            <ViewReportByCategoryTable data={dataReport} />
+            <ViewReportByCategoryTable
+              data={dataReport}
+              totalRows={totalRows}
+              handlePageChange={handlePageChange}
+              handlePerRowsChange={handlePerRowsChange}
+            />
           ) : (
-            mode === "product" && <ViewReportByProductTable data={dataReport} />
+            mode === "product" && (
+              <ViewReportByProductTable
+                data={dataReport}
+                totalRows={totalRows}
+                handlePageChange={handlePageChange}
+                handlePerRowsChange={handlePerRowsChange}
+              />
+            )
           )}
         </div>
       )}

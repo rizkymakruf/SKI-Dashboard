@@ -2,47 +2,19 @@ import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
 import { useContext } from "react";
 
-const ProdukRekomenListTable = ({}) => {
+const ProdukRekomenListTable = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  const data = [
-    {
-      title: "Coffee satu",
-    },
-    {
-      title: "Coffee dua",
-    },
-    {
-      title: "Coffee tiga",
-    },
-    {
-      title: "Coffee empat",
-    },
-    {
-      title: "Coffee lima",
-    },
-    {
-      title: "Coffee enam",
-    },
-    {
-      title: "Coffee tuju",
-    },
-    {
-      title: "Coffee lima",
-    },
-    {
-      title: "Coffee enam",
-    },
-    {
-      title: "Coffee tuju",
-    },
-  ];
+  const data = props.product;
+
+  console.log("ppp", props.product);
+
   const columns = [
     {
-      name: <div className="font-bold text-red-500">List All Product</div>,
+      name: <div className="font-bold text-red-500">Products</div>,
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex items-center flex-row gap-1">
-          <p className="text-xs font-bold">{a.title}</p>
+          <p className="text-xs font-bold">{a.name}</p>
         </div>
       ),
     },
