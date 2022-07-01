@@ -67,9 +67,6 @@ const ManageUsersCst = (props) => {
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">
-      {/* <div>
-        <AddUser globalAct={globalAct} globalCtx={globalCtx} />
-      </div> */}
       <div>
         <SearchUserCst
           globalAct={globalAct}
