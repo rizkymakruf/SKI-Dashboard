@@ -3,7 +3,7 @@ import DashboardCardSKI from "components/card/DashboardCardSKI";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { useContext, useEffect } from "react";
-import { allOutlet, checkUid } from "lib/arangoDb";
+import { allOutlet, checkUid, PenjualanQty, PenjualanRp } from "lib/arangoDb";
 import { useRouter } from "next/router";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import Line from "components/chart/line";
@@ -42,6 +42,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   // console.log(checkUids);
 
   const outlet = await allOutlet();
+  const qty = await PenjualanQty();
+  const rp = await PenjualanRp();
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -51,38 +53,47 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     isLogin: true,
     fullName: checkUids[0].fullname,
     allOutlet: outlet,
+    qty: qty,
+    rp: rp,
   });
 },
 sessionOptions);
 
 const DashboardSKI = (props) => {
   const router = useRouter();
-
+  {
+    /* Default */
+  }
   const { globalCtx, globalAct } = useContext(GlobalContext);
   useEffect(() => {
-    globalAct.setFullname(props.fullName);
-    // globalAct.setIsFetch(false);
-    // globalAct.setErrorMsg("");
+    globalAct.setIsFetch(false);
+    globalAct.setErrorMsg("");
   }, []);
+  {
+    /* Default */
+  }
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-4">
+      {/* <div>
+        <hr />
+      </div> */}
       <div className="flex items-center gap-x-4">
         <div className="w-full grid grid-cols-2 gap-4">
-          <div className="w-full border border-gray-200 hover:shadow-red-500 rounded-md shadow-md px-3 py-6">
-            <p className="pb-2 text-red-500 underline font-semibold">
-              Penjualan Perbulan
+          <div className="w-full border border-gray-200 rounded-md hover:shadow-md px-3 py-6">
+            <p className="pb-2 text-red-500 font-semibold">
+              Pendapatan Perbulan
             </p>
-            <div className="duration-500 bg-white w-full h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
-              <Line1 />
+            <div className="bg-white w-full h-44 rounded-md flex flex-col justify-between">
+              <Line1 qty={props.qty} />
             </div>
           </div>
-          <div className="w-full border border-gray-200 hover:shadow-red-500 rounded-md shadow-md px-3 py-6">
-            <p className="pb-2 text-red-500 underline font-semibold">
+          <div className="w-full border border-gray-200 rounded-md hover:shadow-md px-3 py-6">
+            <p className="pb-2 text-red-500 font-semibold">
               Penjualan Perbulan
             </p>
-            <div className="duration-500 bg-white w-full h-44 rounded-md flex flex-col justify-between hover:shadow-red-500">
-              <Line />
+            <div className="bg-white  w-full h-44 rounded-md flex flex-col justify-between">
+              <Line rp={props.rp} />
             </div>
           </div>
         </div>
@@ -104,6 +115,14 @@ const DashboardSKI = (props) => {
           );
         })}
       </div>
+      {/* <div>
+        <hr />
+      </div>
+      <div className="w-full flex flex-row items-center gap-x-4">
+        <div className="w-72">
+          <OrderCard />
+        </div>
+      </div> */}
     </div>
   );
 };

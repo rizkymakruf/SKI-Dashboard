@@ -25,15 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboardSKI/category": [
+    "/dashboardSKI": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/category.js"
+      "static/chunks/pages/dashboardSKI.js"
     ],
-    "/dashboardSKI/customers": [
+    "/dashboardSKI/outlet": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/customers.js"
+      "static/chunks/pages/dashboardSKI/outlet.js"
     ]
   },
   "ampFirstPages": []

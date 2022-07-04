@@ -1,12 +1,15 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
 import { useContext } from "react";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
 
 const ProdukRekomenTable = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const recomd = props.recomd;
+  const router = useRouter();
 
-  console.log("o", props.recomd);
+  // console.log("o", props.recomd);
   const columns = [
     {
       name: <div className="font-bold text-red-500">Product Recomendation</div>,
@@ -27,7 +30,40 @@ const ProdukRekomenTable = (props) => {
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button
-            onClick={() => globalAct.setModal("deleteRekomen")}
+            globalCtx={globalCtx}
+            globalAct={globalAct}
+            onClick={async function handleSubmit(e) {
+              e.preventDefault();
+              globalAct.setIsFetch(true);
+              props.globalAct.setSelectedData;
+
+              const body = {
+                uri: "product/recommend",
+                key: a.key,
+                action: "remove",
+              };
+
+              // console.log("kk", body);
+
+              try {
+                await fetchJson("/api/prot/post", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                });
+              } catch (error) {
+                console.log("error", error);
+                if (error instanceof FetchError) {
+                  globalAct.setErrorMsg(error.data.message);
+                } else {
+                  globalAct.setErrorMsg("An unexpected error happened");
+                }
+              }
+
+              router.reload("/dashboardSKI/produkRekomen");
+              globalAct.setModal("deleteRekomen");
+              globalAct.setIsFetch(false);
+            }}
             className={
               "bg-red-500/30 items-center justify-center h-8 w-8 rounded-md flex gap-x-2 text-xs text-red-500 hover:w-24 duration-150 hover:before:content-['Remove'] border border-red-300"
             }

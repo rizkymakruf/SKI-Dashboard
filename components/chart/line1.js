@@ -7,6 +7,7 @@ import {
   PointElement,
   LinearScale,
   Title,
+  Legend,
 } from "chart.js";
 
 ChartJS.register(LineController, LineElement, PointElement, LinearScale, Title);
@@ -20,24 +21,24 @@ const CoinPriceChart = (props) => {
     labels: [
       "Jan",
       "Feb",
-      "Mar",
-      "Apr",
+      "March",
+      "April",
       "Mei",
-      "Jun",
-      "Jul",
-      "Ags",
-      "Sep",
+      "June",
+      "July",
+      "Aug",
+      "Sept",
       "Nov",
-      "Okt",
-      "Des",
+      "Oct",
+      "Dec",
     ],
     datasets: [
       {
-        data: [100, 200, 300, 250, 500, 400, 700, 150, 230, 300, 310, 300],
+        data: props.qty,
       },
     ],
   };
-
+  console.log("data", data);
   return (
     <div className="chart-container w-full h-full relative">
       <Chart type="line" data={data} options={ConfigLine} />

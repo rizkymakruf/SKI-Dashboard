@@ -60,6 +60,9 @@ export const ConfigLine = {
     },
     yAxis: {
       display: true,
+      ticks: {
+        precision: 0,
+      },
     },
   },
 };
