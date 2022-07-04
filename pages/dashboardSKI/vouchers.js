@@ -7,7 +7,7 @@ import VoucherTable from "components/table/Voucher";
 
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { getVoucher, checkUid } from "lib/arangoDb";
+import { getVoucher, checkUid, getTotalVoucher } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { useRouter } from "next/router";
 
@@ -44,6 +44,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   // naaaaa
 
   const voucher = await getVoucher();
+  const totalVoucher = await getTotalVoucher();
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -53,23 +54,61 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     isLogin: true,
     fullName: checkUids[0].fullname,
     voucher: voucher,
+    totalVoucher: totalVoucher[0].total,
   });
 },
 sessionOptions);
 
 const ManageTopBrand = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
-  const [inputValue, setInputValue] = useState("");
-  const [data, setData] = useState(props.voucher);
   const router = useRouter();
+  const [data, setData] = useState(props.voucher);
+
+  const [totalRows, setTotalRows] = useState(props.totalVoucher);
+  const [perPage, setPerPage] = useState(10);
+
+  const handlePageChange = (page) => {
+    fetchData((page - 1) * perPage, perPage);
+  };
+
+  const handlePerRowsChange = (newPerPage, page) => {
+    fetchData(0, newPerPage);
+  };
+
+  const fetchData = async (start, page) => {
+    globalAct.setIsFetch(true);
+    const body = {
+      uri: "voucher",
+      start: start,
+      length: page,
+    };
+    try {
+      const res = await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      setData(res.data);
+      setTotalRows(res.total);
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+    globalAct.setIsFetch(false);
+  };
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-2">
       <div className="bg-white border border-gray-200 rounded-md p-5 shadow-md mb-3">
         <VoucherTable
-          globalAct={globalAct}
-          globalCtx={globalCtx}
-          voucher={data}
+          data={data}
+          totalRows={totalRows}
+          handlePageChange={handlePageChange}
+          handlePerRowsChange={handlePerRowsChange}
         />
       </div>
     </div>

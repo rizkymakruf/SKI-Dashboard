@@ -4,10 +4,14 @@ import { useContext } from "react";
 import { useRouter } from "next/router";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
-const ContentTable = (props) => {
+const ContentTable = ({
+  data,
+  totalRows,
+  handlePageChange,
+  handlePerRowsChange,
+}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
-  const data = props.content;
 
   const columns = [
     {
@@ -142,6 +146,10 @@ const ContentTable = (props) => {
           responsive={true}
           highlightOnHover={true}
           pagination
+          paginationServer
+          paginationTotalRows={totalRows}
+          onChangeRowsPerPage={handlePerRowsChange}
+          onChangePage={handlePageChange}
         />
       </div>
     </div>

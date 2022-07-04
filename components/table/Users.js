@@ -4,12 +4,14 @@ import { useContext, useEffect, useState } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-const UsersTable = (props) => {
+const UsersTable = ({
+  data,
+  totalRows,
+  handlePerRowsChange,
+  handlePageChange,
+}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
-  const data = props.users;
-
-  // console.log("hello", props.users.email);
 
   const columns = [
     {
@@ -50,8 +52,6 @@ const UsersTable = (props) => {
             <input
               type="checkbox"
               checked={a.active}
-              globalCtx={globalCtx}
-              globalAct={globalAct}
               onClick={async function handleSubmit(e) {
                 e.preventDefault();
                 globalAct.setIsFetch(true);
@@ -62,8 +62,6 @@ const UsersTable = (props) => {
                   key: a.key,
                   active: !a.active,
                 };
-
-                // console.log(body);
 
                 try {
                   await fetchJson("/api/prot/patch", {
@@ -100,8 +98,7 @@ const UsersTable = (props) => {
           <button
             onClick={() => {
               globalAct.setModal("detailUser");
-              props.globalAct.setSelectedData(a);
-              // console.log("ini", globalAct.setSelectedData(props.users));
+              globalAct.setSelectedData(a);
             }}
             className={
               "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-orange-500/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:before:content-['View'] border border-orange-300"
@@ -124,7 +121,7 @@ const UsersTable = (props) => {
           <button
             onClick={() => {
               globalAct.setModal("editUser");
-              props.globalAct.setSelectedData(a);
+              globalAct.setSelectedData(a);
             }}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:before:content-['Edit'] border border-blue-300"
@@ -158,6 +155,10 @@ const UsersTable = (props) => {
           responsive={true}
           highlightOnHover={true}
           pagination
+          paginationServer
+          paginationTotalRows={totalRows}
+          onChangeRowsPerPage={handlePerRowsChange}
+          onChangePage={handlePageChange}
         />
       </div>
     </div>

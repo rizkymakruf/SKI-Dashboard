@@ -30,15 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/dashboardSKI.js"
     ],
-    "/dashboardSKI/topBrand": [
+    "/dashboardSKI/admins": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/topBrand.js"
-    ],
-    "/dashboardSKI/vouchers": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/vouchers.js"
+      "static/chunks/pages/dashboardSKI/admins.js"
     ]
   },
   "ampFirstPages": []

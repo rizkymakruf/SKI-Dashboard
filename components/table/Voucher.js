@@ -2,11 +2,13 @@ import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
 import { useContext } from "react";
 
-const VoucherTable = (props) => {
+const VoucherTable = ({
+  data,
+  totalRows,
+  handlePageChange,
+  handlePerRowsChange,
+}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  const data = props.voucher;
-
-  // console.log(props.voucher);
 
   const columns = [
     {
@@ -41,7 +43,7 @@ const VoucherTable = (props) => {
       grow: 10,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1">
-          <p className="text-xs font-bold">{a.min}</p>
+          <p className="text-xs font-bold">Rp {a.min}</p>
         </div>
       ),
     },
@@ -59,6 +61,10 @@ const VoucherTable = (props) => {
           responsive={true}
           highlightOnHover={true}
           pagination
+          paginationServer
+          paginationTotalRows={totalRows}
+          onChangeRowsPerPage={handlePerRowsChange}
+          onChangePage={handlePageChange}
         />
       </div>
     </div>

@@ -216,9 +216,11 @@ const Modal = (props) => {
         <AddedRekomenModal />
       </div>
       <div
-        className={`${
-          modal === "addedbrand" ? "translate-x-0" : "-translate-x-full"
-        } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "addedbrand"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
       >
         <AddedBrandModal />
       </div>

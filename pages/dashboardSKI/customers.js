@@ -4,11 +4,12 @@ import { GlobalContext } from "context/global";
 import UsersTable from "components/table/Users";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { allCst, checkUid } from "lib/arangoDb";
+import { allCst, checkUid, getTotalCust } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { useRouter } from "next/router";
 import SearchUserCst from "components/search/UserCst";
 import UsersTableCst from "components/table/UsersCst";
+import fetchJson, { FetchError } from "lib/fetchJson";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
@@ -43,6 +44,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   // naaaaa
 
   const cst = await allCst();
+  const totalCust = await getTotalCust();
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -52,6 +54,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     isLogin: true,
     fullName: checkUids[0].fullname,
     cst: cst,
+    totalCust: totalCust[0].total,
   });
 },
 sessionOptions);
@@ -60,10 +63,42 @@ const ManageUsersCst = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const [data, setData] = useState(props.cst);
   const router = useRouter();
-  // console.log(props.cst);
-  useEffect(() => {
-    // globalAct.setSelectedData(props.cst);
-  }, []);
+  const [totalRows, setTotalRows] = useState(props.totalCust);
+  const [perPage, setPerPage] = useState(10);
+
+  const handlePageChange = (page) => {
+    fetchData((page - 1) * perPage, perPage);
+  };
+
+  const handlePerRowsChange = (newPerPage, page) => {
+    fetchData(0, newPerPage);
+  };
+
+  const fetchData = async (start, page) => {
+    globalAct.setIsFetch(true);
+    const body = {
+      uri: "customer",
+      start: start,
+      length: page,
+    };
+    try {
+      const res = await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      setData(res.data);
+      setTotalRows(res.total);
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+    globalAct.setIsFetch(false);
+  };
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">
@@ -75,7 +110,12 @@ const ManageUsersCst = (props) => {
         />
       </div>
       <div>
-        <UsersTableCst globalAct={globalAct} globalCtx={globalCtx} cst={data} />
+        <UsersTableCst
+          data={data}
+          handlePageChange={handlePageChange}
+          handlePerRowsChange={handlePerRowsChange}
+          totalRows={totalRows}
+        />
       </div>
     </div>
   );

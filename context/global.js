@@ -11,6 +11,7 @@ export const GlobalProvider = ({ children }) => {
   const [selectedData, setSelectedData] = useState("");
   const [listOutlet, setListOutlet] = useState([]);
   const [listUser, setListUser] = useState([]);
+  const [listBrand, setListBrand] = useState([]);
   const [newData, setNewData] = useState({});
 
   const contextValue = {
@@ -24,6 +25,7 @@ export const GlobalProvider = ({ children }) => {
       listOutlet,
       listUser,
       newData,
+      listBrand,
     },
     globalAct: {
       setModal,
@@ -35,6 +37,7 @@ export const GlobalProvider = ({ children }) => {
       setListOutlet,
       setListUser,
       setNewData,
+      setListBrand,
     },
   };
 

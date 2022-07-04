@@ -278,7 +278,7 @@ const SideNav = ({ children, props }) => {
   return (
     <>
       <Modal globalCtx={globalCtx} globalAct={globalAct} />
-      <div className="w-full h-full flex flex-row ">
+      <div className="w-full h-full flex flex-row fixed">
         <div className="w-80 h-screen bg-white flex flex-col select-none">
           <div className="w-full h-auto flex justify-center items-center">
             <div className="w-52 h-52 p-4">
@@ -288,7 +288,7 @@ const SideNav = ({ children, props }) => {
             </div>
           </div>
 
-          <div className="w-full h-full">
+          <div className="w-full h-full overflow-y-auto">
             {/* overflow-scroll */}
             {faqs.map((item, key) => (
               <Item
@@ -301,8 +301,8 @@ const SideNav = ({ children, props }) => {
             ))}
           </div>
         </div>
-        <div className="w-full h-full relative border-l-2">
-          <div className="w-full h-14 p-6 absolute top-0 bg-red-600 shadow-sm flex justify-between">
+        <div className="w-full h-full relative border-l ">
+          <div className="w-full h-14 p-6 z-50 top-0 bg-red-600 shadow-sm flex justify-between">
             <div className="w-full h-full flex items-center text-sm capitalize">
               <Link href="/dashboard">
                 <svg
@@ -343,7 +343,9 @@ const SideNav = ({ children, props }) => {
               </div>
             </div>
           </div>
-          <div className="w-full h-full pt-16">{children}</div>
+          <div className="w-full h-full overflow-y-auto pb-[60px]">
+            {children}
+          </div>
         </div>
       </div>
     </>

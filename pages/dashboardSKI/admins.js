@@ -8,9 +8,10 @@ import SearchUser from "components/search/User";
 
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { allUsers, getOutlet, checkUid } from "lib/arangoDb";
+import { allUsers, getOutlet, checkUid, getTotalAdmin } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { useRouter } from "next/router";
+import fetchJson, { FetchError } from "lib/fetchJson";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
@@ -44,31 +45,68 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   // naaaaa
 
-  const users = await allUsers();
-  const listOutlet = await getOutlet();
-
   if (checkUids.length < 1) {
     return redirect("/");
   }
+
+  const users = await allUsers();
+  const listOutlet = await getOutlet();
+  const totalUser = await getTotalAdmin();
 
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
     users: users,
     listOutlet: listOutlet,
+    totalAdmin: totalUser[0].total,
   });
 },
 sessionOptions);
 
 const ManageUsers = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  const [data, setData] = useState(props.users);
   const router = useRouter();
-  // console.log(props);
+  const [dataUser, setDataUser] = useState(props.users);
+  const [totalRows, setTotalRows] = useState(props.totalAdmin);
+  const [perPage, setPerPage] = useState(10);
+
   useEffect(() => {
     globalAct.setListOutlet(props.listOutlet);
-    globalAct.setSelectedData(props.users);
   }, []);
+
+  const handlePageChange = (page) => {
+    fetchData((page - 1) * perPage, perPage);
+  };
+
+  const handlePerRowsChange = (newPerPage, page) => {
+    fetchData(0, newPerPage);
+  };
+
+  const fetchData = async (start, page) => {
+    globalAct.setIsFetch(true);
+    const body = {
+      uri: "user",
+      start: start,
+      length: page,
+    };
+    try {
+      const res = await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      setDataUser(res.data);
+      setTotalRows(res.total);
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+    globalAct.setIsFetch(false);
+  };
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">
@@ -79,11 +117,16 @@ const ManageUsers = (props) => {
         <SearchUser
           globalAct={globalAct}
           globalCtx={globalCtx}
-          setData={setData}
+          setData={setDataUser}
         />
       </div>
       <div>
-        <UsersTable globalAct={globalAct} globalCtx={globalCtx} users={data} />
+        <UsersTable
+          data={dataUser}
+          totalRows={totalRows}
+          handlePageChange={handlePageChange}
+          handlePerRowsChange={handlePerRowsChange}
+        />
       </div>
     </div>
   );

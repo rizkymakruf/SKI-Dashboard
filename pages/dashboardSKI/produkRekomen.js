@@ -9,8 +9,15 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { getProducts, getProductsRecomd, checkUid } from "lib/arangoDb";
+import {
+  getProducts,
+  getProductsRecomd,
+  checkUid,
+  getTotalProductsRecomd,
+  getTotalProducts,
+} from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
+import Products from "components/table/Products";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
@@ -46,6 +53,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   const product = await getProducts();
   const recomd = await getProductsRecomd();
+  const totalRecomd = await getTotalProductsRecomd();
+  const totalProduct = await getTotalProducts();
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -56,6 +65,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     fullName: checkUids[0].fullname,
     product: product,
     recomd: recomd,
+    totalProduct: totalProduct[0].total,
+    totalRecomd: totalRecomd[0].total,
   });
 },
 sessionOptions);
@@ -67,29 +78,77 @@ const ManageProdukRekomen = (props) => {
   const [data, setData] = useState(props.product);
   const [recomd, setRecomd] = useState(props.recomd);
 
-  // console.log(props.category);
+  const [totalRows, setTotalRows] = useState(props.totalProduct);
+  const [totalRowsRec, setTotalRowsRec] = useState(props.totalRecomd);
+  const [perPage, setPerPage] = useState(10);
+  const [perPageRec, setPerPageRec] = useState(10);
 
-  useEffect(() => {
-    globalAct.setSelectedData(props.product);
-    globalAct.setSelectedData(props.recomd);
-  }, []);
+  const handlePageChange = (page) => {
+    fetchData((page - 1) * perPage, perPage, "p");
+  };
+  const handlePageChangeRec = (page) => {
+    fetchData((page - 1) * perPage, perPage, "r");
+  };
+
+  const handlePerRowsChange = (newPerPage, page) => {
+    fetchData(0, newPerPage, "p");
+  };
+  const handlePerRowsChangeRec = (newPerPage, page) => {
+    fetchData(0, newPerPage, "r");
+  };
+
+  const fetchData = async (start, page, type) => {
+    globalAct.setIsFetch(true);
+    const body = {
+      uri: type === "p" ? "product/other" : type === "r" && "product/recommend",
+      action: type === "r" ? "list" : null,
+      start: start,
+      length: page,
+    };
+    try {
+      const res = await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (type === "p") {
+        setData(res.data);
+        setTotalRows(res.total);
+      } else if (type === "r") {
+        setRecomd(res.data);
+        setTotalRowsRec(res.total);
+      }
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+    globalAct.setIsFetch(false);
+  };
+
   return (
-    <div className="w-full flex flex-col p-5">
+    <div className="w-full flex flex-col p-5 gap-y-5">
       <div className="w-full p-4 border border-gray-200 rounded-md shadow-md">
         <SearchProduct />
         <div className="flex gap-6 my-4">
           <ProdukRekomenListTable
-            globalAct={globalAct}
-            globalCtx={globalCtx}
-            product={data}
+            data={data}
+            totalRows={totalRows}
+            handlePageChange={handlePageChange}
+            handlePerRowsChange={handlePerRowsChange}
           />
           <ProdukRekomenTable
-            globalAct={globalAct}
-            globalCtx={globalCtx}
-            recomd={recomd}
+            data={recomd}
+            totalRows={totalRowsRec}
+            handlePageChange={handlePageChangeRec}
+            handlePerRowsChange={handlePerRowsChangeRec}
           />
         </div>
       </div>
+      <Products />
     </div>
   );
 };

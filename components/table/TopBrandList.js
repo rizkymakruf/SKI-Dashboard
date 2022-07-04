@@ -3,11 +3,14 @@ import { GlobalContext } from "context/global";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 
-const TopBrandListTable = (props) => {
+const TopBrandListTable = ({
+  data,
+  totalRows,
+  handlePageChange,
+  handlePerRowsChange,
+}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
-  const data = props.brand;
-
   const columns = [
     {
       name: <div className="font-bold text-red-500">Brand Name</div>,
@@ -28,7 +31,11 @@ const TopBrandListTable = (props) => {
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button
-            onClick={() => globalAct.setModal("addedbrand")}
+            onClick={() => {
+              globalAct.setModal("addedbrand");
+              globalAct.setSelectedData(a);
+              // console.log("kk", globalAct.setListBrand(a));
+            }}
             className={
               "bg-green-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-green-500/50 shadow-md flex gap-x-2 text-xs text-green-500 hover:w-24 duration-150 hover:before:content-['Add'] border border-green-300"
             }
@@ -65,6 +72,10 @@ const TopBrandListTable = (props) => {
           responsive={true}
           highlightOnHover={true}
           pagination
+          paginationServer
+          paginationTotalRows={totalRows}
+          onChangeRowsPerPage={handlePerRowsChange}
+          onChangePage={handlePageChange}
         />
       </div>
     </div>

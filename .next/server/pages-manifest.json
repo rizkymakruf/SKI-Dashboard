@@ -2,6 +2,7 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/api/prot/patch": "pages/api/prot/patch.js",
-  "/dashboardSKI": "pages/dashboardSKI.js"
+  "/dashboardSKI/outlet": "pages/dashboardSKI/outlet.js",
+  "/dashboardSKI/admins": "pages/dashboardSKI/admins.js",
+  "/api/prot/post": "pages/api/prot/post.js"
 }

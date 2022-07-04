@@ -4,13 +4,14 @@ import { useContext, useEffect, useState } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-const UsersTableCst = (props) => {
+const UsersTableCst = ({
+  data,
+  totalRows,
+  handlePageChange,
+  handlePerRowsChange,
+}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
-  const data = props.cst;
-
-  // console.log("hello", props.cst);
-
   const columns = [
     {
       name: <div className="font-bold text-red-500">Username</div>,
@@ -62,8 +63,6 @@ const UsersTableCst = (props) => {
                   key: a.key,
                   active: !a.active,
                 };
-
-                // console.log(body);
 
                 try {
                   await fetchJson("/api/prot/patch", {
@@ -132,6 +131,10 @@ const UsersTableCst = (props) => {
           responsive={true}
           highlightOnHover={true}
           pagination
+          paginationServer
+          paginationTotalRows={totalRows}
+          onChangeRowsPerPage={handlePerRowsChange}
+          onChangePage={handlePageChange}
         />
       </div>
     </div>

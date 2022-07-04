@@ -4,12 +4,14 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 
-const ProdukRekomenListTable = (props) => {
+const ProdukRekomenListTable = ({
+  data,
+  totalRows,
+  handlePageChange,
+  handlePerRowsChange,
+}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
-  const data = props.product;
-
-  console.log("ppp", props.product);
 
   const columns = [
     {
@@ -43,8 +45,6 @@ const ProdukRekomenListTable = (props) => {
                 key: a.key,
                 action: "add",
               };
-
-              // console.log("kk", body);
 
               try {
                 await fetchJson("/api/prot/post", {
@@ -99,6 +99,10 @@ const ProdukRekomenListTable = (props) => {
           responsive={true}
           highlightOnHover={true}
           pagination
+          paginationServer
+          paginationTotalRows={totalRows}
+          onChangeRowsPerPage={handlePerRowsChange}
+          onChangePage={handlePageChange}
         />
       </div>
     </div>

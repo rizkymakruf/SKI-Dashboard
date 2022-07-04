@@ -43,9 +43,6 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   const uid = JSON.parse(atob(user.access_token.split(".")[1]));
   const checkUids = await checkUid(uid.user_id);
 
-  const users = await allUsers();
-  const listOutlet = await getOutlet();
-
   if (checkUids.length < 1) {
     return redirect("/");
   }
@@ -53,8 +50,6 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
-    users: users,
-    listOutlet: listOutlet,
   });
 },
 sessionOptions);
@@ -67,24 +62,17 @@ const ManageReport = () => {
   const [perPage, setPerPage] = useState(10);
   const router = useRouter();
   const [newBody, setNewBody] = useState({});
-  // console.log(dataReport);
 
   const handlePageChange = (page) => {
-    console.log("page", page);
-    console.log("index", (page - 1) * perPage);
     setNewBody({ ...newBody, index: (page - 1) * perPage });
-    fetchData();
   };
 
   const handlePerRowsChange = (newPerPage, page) => {
-    console.log("new page", newPerPage);
     setNewBody({ ...newBody, index: 0, length: newPerPage });
-    fetchData();
   };
 
   const fetchData = async () => {
     globalAct.setIsFetch(true);
-    // console.log("body", newBody);
     try {
       const res = await fetchJson("/api/prot/post", {
         method: "POST",
@@ -106,7 +94,7 @@ const ManageReport = () => {
   };
 
   useEffect(() => {
-    fetchData(); // fetch page 1 of users
+    fetchData();
   }, [newBody]);
   return (
     <div className="w-full p-3 flex flex-col gap-y-2 space-y-3">
@@ -129,7 +117,6 @@ const ManageReport = () => {
             };
 
             setNewBody(body);
-            // console.log("body", body);
 
             try {
               const res = await fetchJson("/api/prot/post", {

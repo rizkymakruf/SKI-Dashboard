@@ -4,12 +4,15 @@ import { useContext } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-const ProdukRekomenTable = (props) => {
+const ProdukRekomenTable = ({
+  data,
+  totalRows,
+  handlePageChange,
+  handlePerRowsChange,
+}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  const recomd = props.recomd;
   const router = useRouter();
 
-  // console.log("o", props.recomd);
   const columns = [
     {
       name: <div className="font-bold text-red-500">Product Recomendation</div>,
@@ -42,8 +45,6 @@ const ProdukRekomenTable = (props) => {
                 key: a.key,
                 action: "remove",
               };
-
-              // console.log("kk", body);
 
               try {
                 await fetchJson("/api/prot/post", {
@@ -96,10 +97,14 @@ const ProdukRekomenTable = (props) => {
       <div className="border-2 rounded-md">
         <DataTable
           columns={columns}
-          data={recomd}
+          data={data}
           responsive={true}
           highlightOnHover={true}
           pagination
+          paginationServer
+          paginationTotalRows={totalRows}
+          onChangeRowsPerPage={handlePerRowsChange}
+          onChangePage={handlePageChange}
         />
       </div>
     </div>

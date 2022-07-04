@@ -4,13 +4,14 @@ import { useContext } from "react";
 import { useRouter } from "next/router";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
-const OrderTable = (props) => {
+const OrderTable = ({
+  data,
+  totalRows,
+  handlePageChange,
+  handlePerRowsChange,
+}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
-  const data = props.category;
-
-  // console.log("nah", props.category);
-  // console.log("nah", props.globalAct.setSelectedData());
 
   const columns = [
     {
@@ -45,8 +46,6 @@ const OrderTable = (props) => {
                   key: a.key,
                   active: !a.active,
                 };
-
-                // console.log(body);
 
                 try {
                   await fetchJson("/api/prot/patch", {
@@ -84,8 +83,7 @@ const OrderTable = (props) => {
           <button
             onClick={() => {
               globalAct.setModal("editCategory");
-              props.globalAct.setSelectedData(a);
-              // console.log("disini", props.globalAct.setSelectedData(a));
+              globalAct.setSelectedData(a);
             }}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:before:content-['Edit'] border border-blue-300"
@@ -122,6 +120,10 @@ const OrderTable = (props) => {
           responsive={true}
           highlightOnHover={true}
           pagination
+          paginationServer
+          paginationTotalRows={totalRows}
+          onChangeRowsPerPage={handlePerRowsChange}
+          onChangePage={handlePageChange}
         />
       </div>
     </div>
