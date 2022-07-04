@@ -5,11 +5,12 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { topBrand, listBrand, checkUid } from "lib/arangoDb";
+import { topBrand, listBrand, checkUid, getTotalBrand } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import TopBrandTable from "components/table/TopBrand";
 import SearchBrand from "components/search/Brand";
 import TopBrandListTable from "components/table/TopBrandList";
+import Products from "components/table/Products";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
@@ -45,6 +46,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   const tbrand = await topBrand();
   const brand = await listBrand();
+  const totalBrand = await getTotalBrand();
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -55,6 +57,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     fullName: checkUids[0].fullname,
     tbrand: tbrand,
     brand: brand,
+    totalBrand: totalBrand[0].total,
   });
 },
 sessionOptions);
@@ -63,13 +66,44 @@ const ManageTopBrand = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const [inputValue, setInputValue] = useState("");
   const router = useRouter();
-  const [data, setData] = useState(props.tbrand);
+  const [data, setData] = useState(props.brand);
 
-  // console.log(props.category);
+  const [totalRows, setTotalRows] = useState(props.totalBrand);
+  const [perPage, setPerPage] = useState(10);
 
-  useEffect(() => {
-    globalAct.setSelectedData(props.tbrand);
-  }, []);
+  const handlePageChange = (page) => {
+    fetchData((page - 1) * perPage, perPage);
+  };
+
+  const handlePerRowsChange = (newPerPage, page) => {
+    fetchData(0, newPerPage);
+  };
+
+  const fetchData = async (start, page) => {
+    globalAct.setIsFetch(true);
+    const body = {
+      uri: "outlet/other",
+      start: start,
+      length: page,
+    };
+    try {
+      const res = await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      setData(res.data);
+      setTotalRows(res.total);
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+    globalAct.setIsFetch(false);
+  };
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-2">
@@ -77,14 +111,15 @@ const ManageTopBrand = (props) => {
         <TopBrandTable
           globalAct={globalAct}
           globalCtx={globalCtx}
-          tbrand={data}
+          tbrand={props.tbrand}
         />
       </div>
       <div className="bg-white border border-gray-200 rounded-md p-5 shadow-md">
         <TopBrandListTable
-          globalAct={globalAct}
-          globalCtx={globalCtx}
-          brand={data}
+          data={data}
+          totalRows={totalRows}
+          handlePageChange={handlePageChange}
+          handlePerRowsChange={handlePerRowsChange}
         />
       </div>
     </div>
