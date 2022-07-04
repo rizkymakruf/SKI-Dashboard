@@ -1,39 +1,20 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
 import { useContext } from "react";
+import { useRouter } from "next/router";
 
-const TopBrandListTable = ({}) => {
+const TopBrandListTable = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  const data = [
-    {
-      title: "Brand satu",
-    },
-    {
-      title: "Brand dua",
-    },
-    {
-      title: "Brand tiga",
-    },
-    {
-      title: "Brand empat",
-    },
-    {
-      title: "Brand lima",
-    },
-    {
-      title: "Brand enam",
-    },
-    {
-      title: "Brand tuju",
-    },
-  ];
+  const router = useRouter();
+  const data = props.brand;
+
   const columns = [
     {
       name: <div className="font-bold text-red-500">Brand Name</div>,
       grow: 10,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1">
-          <p className="text-xs font-bold">{a.title}</p>
+          <p className="text-xs font-bold">{a.name}</p>
         </div>
       ),
     },
@@ -66,20 +47,6 @@ const TopBrandListTable = ({}) => {
                 d="M12 4v16m8-8H4"
               />
             </svg>
-            {/* <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-red-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg> */}
           </button>
         </div>
       ),
@@ -89,15 +56,10 @@ const TopBrandListTable = ({}) => {
   return (
     <div className="w-full h-auto relative ">
       <div className=" py-3">
-        <p className="text-red-500 font-bold text-md">Top Brand List</p>
+        <p className="text-red-500 font-bold text-md">Brand List</p>
       </div>
       <div className="border-2 rounded-md">
         <DataTable
-          // title={
-          //   <p className="text-red-500 font-bold text-sm bg-red-500/50">
-          //     Recomendation List
-          //   </p>
-          // }
           columns={columns}
           data={data}
           responsive={true}

@@ -66,8 +66,9 @@ const DashboardSKI = (props) => {
   }
   const { globalCtx, globalAct } = useContext(GlobalContext);
   useEffect(() => {
-    globalAct.setIsFetch(false);
-    globalAct.setErrorMsg("");
+    globalAct.setFullname(props.fullName);
+    // globalAct.setIsFetch(false);
+    // globalAct.setErrorMsg("");
   }, []);
   {
     /* Default */
@@ -115,14 +116,6 @@ const DashboardSKI = (props) => {
           );
         })}
       </div>
-      {/* <div>
-        <hr />
-      </div>
-      <div className="w-full flex flex-row items-center gap-x-4">
-        <div className="w-72">
-          <OrderCard />
-        </div>
-      </div> */}
     </div>
   );
 };
