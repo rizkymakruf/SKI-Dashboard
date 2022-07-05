@@ -50,6 +50,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
+    adminMode: checkUids[0].outlet !== "" ? "outlet" : "ski",
   });
 },
 sessionOptions);
@@ -62,6 +63,10 @@ const ManageReport = () => {
   const [perPage, setPerPage] = useState(10);
   const router = useRouter();
   const [newBody, setNewBody] = useState({});
+
+  useEffect(() => {
+    globalAct.setAdminMode(props.adminMode);
+  }, []);
 
   const handlePageChange = (page) => {
     setNewBody({ ...newBody, index: (page - 1) * perPage });

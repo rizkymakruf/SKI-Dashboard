@@ -50,6 +50,15 @@ export default function FormOtlet({
               ></input>
             </div>
             <div className="w-full">
+              <p>Short Name Otlet</p>
+              <input
+                name="shortname"
+                autocomplete="off"
+                className="rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 "
+                placeholder="Short Name Otlet"
+              ></input>
+            </div>
+            <div className="w-full">
               <p>Deskripsi Otlet</p>
               <textarea
                 name="description"

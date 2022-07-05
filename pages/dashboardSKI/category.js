@@ -56,6 +56,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     fullName: checkUids[0].fullname,
     category: category,
     totalCat: totalCat[0].total,
+    adminMode: checkUids[0].outlet !== "" ? "outlet" : "ski",
   });
 },
 sessionOptions);
@@ -67,6 +68,10 @@ const ManageCategory = (props) => {
   const [data, setData] = useState(props.category);
   const [totalRows, setTotalRows] = useState(props.totalCat);
   const [perPage, setPerPage] = useState(10);
+
+  useEffect(() => {
+    globalAct.setAdminMode(props.adminMode);
+  }, []);
 
   const handlePageChange = (page) => {
     fetchData((page - 1) * perPage, perPage);

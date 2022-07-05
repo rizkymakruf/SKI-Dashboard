@@ -1,0 +1,1 @@
+{"c":["webpack"],"r":["pages/dashboard/[pid]"],"m":["./components/card/DashboardCard.js","./components/card/OrderCard.js","./components/table/History.js","./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2Fdashboard%2F%5Bpid%5D&absolutePagePath=G%3A%5CSKI-Dashboard%5Cpages%5Cdashboard%5C%5Bpid%5D.js!","./pages/dashboard/[pid].js"]}

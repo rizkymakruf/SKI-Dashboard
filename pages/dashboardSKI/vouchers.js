@@ -55,6 +55,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     fullName: checkUids[0].fullname,
     voucher: voucher,
     totalVoucher: totalVoucher[0].total,
+    adminMode: checkUids[0].outlet !== "" ? "outlet" : "ski",
   });
 },
 sessionOptions);
@@ -66,6 +67,10 @@ const ManageTopBrand = (props) => {
 
   const [totalRows, setTotalRows] = useState(props.totalVoucher);
   const [perPage, setPerPage] = useState(10);
+
+  useEffect(() => {
+    globalAct.setAdminMode(props.adminMode);
+  }, []);
 
   const handlePageChange = (page) => {
     fetchData((page - 1) * perPage, perPage);

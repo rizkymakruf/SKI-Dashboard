@@ -52,6 +52,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
+    adminMode: checkUids[0].outlet,
   });
 },
 sessionOptions);
@@ -112,11 +113,18 @@ const Administration = (props) => {
                 <p className="text-md">Hi {props.fullName},</p>
                 <p className="text-sm pb-4">You have logged in</p>
                 <div className="w-full h-full relative flex justify-between items-center gap-3">
-                  <Link href="dashboardSKI">
-                    <button className="w-full h-auto bg-blue-50 py-2 overflow-hidden rounded border-2 border-blue-500/50 hover:shadow-md">
-                      Dashboard
-                    </button>
-                  </Link>
+                  <button
+                    onClick={() => {
+                      if (props.adminMode != "") {
+                        router.push(`/dashboard/outlet/${props.adminMode}`);
+                      } else {
+                        router.push("/dashboardSKI");
+                      }
+                    }}
+                    className="w-full h-auto bg-blue-50 py-2 overflow-hidden rounded border-2 border-blue-500/50 hover:shadow-md"
+                  >
+                    Dashboard
+                  </button>
                   <button
                     onClick={() => logout()}
                     disabled={globalCtx.isFetch ? "disabled" : ""}
@@ -144,14 +152,17 @@ const Administration = (props) => {
                   };
 
                   try {
-                    await fetchJson("/api/post", {
+                    const res = await fetchJson("/api/post", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify(body),
                     });
-                    router.push("/dashboardSKI");
+                    if (res.adminMode != "") {
+                      router.push(`/dashboard/outlet/${res.adminMode}`);
+                    } else {
+                      router.push("/dashboardSKI");
+                    }
                   } catch (error) {
-                    // alert("error");
                     if (error instanceof FetchError) {
                       globalAct.setErrorMsg(error.data.message);
                     } else {

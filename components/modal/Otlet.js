@@ -41,11 +41,12 @@ const OtletModal = () => {
 
           const body = {
             name: e.currentTarget.name.value,
-            pict: [],
+            shortname: e.currentTarget.shortname.value,
             description: e.currentTarget.description.value,
+            pict: [],
             uri: "outlet/add",
           };
-
+          // console.log("ww", body);
           try {
             await fetchJson("/api/prot/post", {
               method: "POST",
@@ -62,7 +63,7 @@ const OtletModal = () => {
             }
           }
 
-          router.replace("/dashboardSKI/outlet");
+          router.reload("/dashboardSKI/outlet");
           globalAct.setModal("");
           globalAct.setIsFetch(false);
         }}

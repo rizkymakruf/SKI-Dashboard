@@ -67,6 +67,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     recomd: recomd,
     totalProduct: totalProduct[0].total,
     totalRecomd: totalRecomd[0].total,
+    adminMode: checkUids[0].outlet !== "" ? "outlet" : "ski",
   });
 },
 sessionOptions);
@@ -82,6 +83,10 @@ const ManageProdukRekomen = (props) => {
   const [totalRowsRec, setTotalRowsRec] = useState(props.totalRecomd);
   const [perPage, setPerPage] = useState(10);
   const [perPageRec, setPerPageRec] = useState(10);
+
+  useEffect(() => {
+    globalAct.setAdminMode(props.adminMode);
+  }, []);
 
   const handlePageChange = (page) => {
     fetchData((page - 1) * perPage, perPage, "p");

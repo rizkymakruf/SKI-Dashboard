@@ -22,10 +22,11 @@ export default withIronSessionApiRoute(async (req, res) => {
         isLoggedIn: true,
         access_token: resx.access_token,
         refresh_token: resx.refresh_token,
+        adminOutlet: resx.outlet,
       };
       req.session.user = user;
       await req.session.save();
-      resx = { status: "ok" };
+      resx = { status: "ok", adminMode: user.adminOutlet };
     }
 
     res.status(200).json(resx);

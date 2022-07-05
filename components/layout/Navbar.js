@@ -290,15 +290,23 @@ const SideNav = ({ children, props }) => {
 
           <div className="w-full h-full overflow-y-auto">
             {/* overflow-scroll */}
-            {faqs.map((item, key) => (
+            {globalCtx.adminMode === "ski" ? (
               <Item
-                q={item.name}
-                i={item.ic}
-                a={item.menu}
-                key={key}
+                q={faqs[0].name}
+                i={faqs[0].ic}
+                a={faqs[0].menu}
                 r={router.asPath}
               />
-            ))}
+            ) : (
+              globalCtx.adminMode === "outlet" && (
+                <Item
+                  q={faqs[1].name}
+                  i={faqs[1].ic}
+                  a={faqs[1].menu}
+                  r={router.asPath}
+                />
+              )
+            )}
           </div>
         </div>
         <div className="w-full h-full relative border-l ">

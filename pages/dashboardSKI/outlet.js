@@ -50,6 +50,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     isLogin: true,
     fullName: checkUids[0].fullname,
     allOutlet: outlet,
+    adminMode: checkUids[0].outlet !== "" ? "outlet" : "ski",
   });
 },
 sessionOptions);
@@ -57,6 +58,10 @@ sessionOptions);
 const Otlets = (props) => {
   const router = useRouter();
   const { globalCtx, globalAct } = useContext(GlobalContext);
+
+  useEffect(() => {
+    globalAct.setAdminMode(props.adminMode);
+  }, []);
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-4">
