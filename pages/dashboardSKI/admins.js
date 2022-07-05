@@ -98,7 +98,6 @@ const ManageUsers = (props) => {
         body: JSON.stringify(body),
       });
       setDataUser(res.data);
-      setTotalRows(res.total);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {
@@ -116,11 +115,7 @@ const ManageUsers = (props) => {
         <AddUser globalAct={globalAct} globalCtx={globalCtx} />
       </div>
       <div>
-        <SearchUser
-          globalAct={globalAct}
-          globalCtx={globalCtx}
-          setData={setDataUser}
-        />
+        <SearchUser setData={setDataUser} />
       </div>
       <div>
         <UsersTable

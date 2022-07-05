@@ -128,7 +128,7 @@ const ManageCategory = (props) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
-              await router.replace(router.pathname);
+              await router.reload(router.pathname);
             } catch (error) {
               if (error instanceof FetchError) {
                 globalAct.setErrorMsg(error.data.message);

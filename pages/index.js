@@ -8,7 +8,7 @@ import { GlobalContext } from "context/global";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 
-import { checkUid } from "lib/arangoDb";
+import { checkUid, findOutlet } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 
 import FormLogin from "components/form/FormLogin";
@@ -44,6 +44,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   const uid = JSON.parse(atob(user.access_token.split(".")[1]));
   const checkUids = await checkUid(uid.user_id);
+  const outlet = await findOutlet(checkUids[0].outlet);
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -52,14 +53,13 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
-    adminMode: checkUids[0].outlet,
+    adminMode: outlet ? outlet[0].shortname : "",
   });
 },
 sessionOptions);
 
 const Administration = (props) => {
   const router = useRouter();
-
   // console.log(props.fullName);
   // const [fullname, setfullname] = useState(props.fullName);
 

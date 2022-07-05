@@ -24,6 +24,7 @@
     "react-chartjs-2": "^4.1.0",
     "react-data-table-component": "^7.5.2",
     "react-dom": "18.0.0",
+    "react-hook-form": "^7.33.1",
     "react-image-file-resizer": "^0.4.8",
     "styled-components": "^5.3.5"
   },

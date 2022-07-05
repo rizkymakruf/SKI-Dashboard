@@ -86,7 +86,7 @@ const DashboardCardSKI = (props) => {
           <div className="flex gap-2">
             <button
               onClick={() => {
-                router.push(`/dashboard/outlet/${props.otlet.key}`);
+                router.push(`/dashboard/outlet/${props.otlet.shortname}`);
               }}
               className={
                 "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-orange/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:after:content-['Manage'] "
