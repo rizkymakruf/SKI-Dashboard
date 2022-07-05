@@ -69,6 +69,7 @@ const UsersTable = ({
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                   });
+                  await router.replace("/dashboardSKI/admins");
                 } catch (error) {
                   console.log("error", error);
                   if (error instanceof FetchError) {
@@ -78,7 +79,6 @@ const UsersTable = ({
                   }
                 }
 
-                router.reload("/dashboardSKI/users");
                 globalAct.setModal("");
                 globalAct.setIsFetch(false);
               }}

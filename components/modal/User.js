@@ -60,7 +60,7 @@ const UserModal = (props) => {
             });
             // globalAct.setNewData(res.data[0]);
             // router.push("/dashboardSKI");
-            router.reload();
+            await router.replace("/dashboardSKI/admins");
           } catch (error) {
             console.log("error", error);
             if (error instanceof FetchError) {
@@ -69,7 +69,6 @@ const UserModal = (props) => {
               globalAct.setErrorMsg("An unexpected error happened");
             }
           }
-
           // router.replace("/dashboardSKI/users");
           globalAct.setModal("");
           globalAct.setIsFetch(false);

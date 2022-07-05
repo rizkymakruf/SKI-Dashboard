@@ -59,12 +59,13 @@ const DashboardCardSKI = (props) => {
                   active: !active,
                 };
                 try {
-                  await fetchJson("/api/prot/patch", {
+                  const r = await fetchJson("/api/prot/patch", {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                   });
                   // router.push("/dashboardSKI");
+                  await router.replace("/dashboardSKI/outlet");
                 } catch (error) {
                   console.log("error", error);
                   if (error instanceof FetchError) {
@@ -74,7 +75,7 @@ const DashboardCardSKI = (props) => {
                     globalAct.setErrorMsg("An unexpected error happened");
                   }
                 }
-                router.reload("/dashboardSKI/outlet");
+
                 globalAct.setModal("");
                 globalAct.setIsFetch(false);
               }}
