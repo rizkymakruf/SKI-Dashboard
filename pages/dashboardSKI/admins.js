@@ -59,7 +59,6 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     users: users,
     listOutlet: listOutlet,
     totalAdmin: totalUser[0].total,
-    adminMode: checkUids[0].outlet !== "" ? "outlet" : "ski",
   });
 },
 sessionOptions);
@@ -73,7 +72,8 @@ const ManageUsers = (props) => {
 
   useEffect(() => {
     globalAct.setListOutlet(props.listOutlet);
-    globalAct.setAdminMode(props.adminMode);
+    globalAct.setFullname(props.fullName);
+    globalAct.setAdminMode("ski");
   }, []);
 
   const handlePageChange = (page) => {

@@ -56,7 +56,6 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     fullName: checkUids[0].fullname,
     category: category,
     totalCat: totalCat[0].total,
-    adminMode: checkUids[0].outlet !== "" ? "outlet" : "ski",
   });
 },
 sessionOptions);
@@ -70,7 +69,8 @@ const ManageCategory = (props) => {
   const [perPage, setPerPage] = useState(10);
 
   useEffect(() => {
-    globalAct.setAdminMode(props.adminMode);
+    globalAct.setFullname(props.fullName);
+    globalAct.setAdminMode("ski");
   }, []);
 
   const handlePageChange = (page) => {
@@ -121,6 +121,8 @@ const ManageCategory = (props) => {
               name: e.currentTarget.category.value,
               uri: "category/add",
             };
+
+            console.log("ni", body);
 
             try {
               const aa = await fetchJson("/api/prot/post", {

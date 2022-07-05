@@ -15,12 +15,6 @@ export default function FormOtlet({
   handleImage,
   removeMe,
 }) {
-  //   const [detail, setDetail] = useState(false);
-  //   const [infoLengkap, setInfoLengkap] = useState(false);
-
-  //   useEffect(() => {
-  //     !detail && setInfoLengkap(false);
-  //   });
   const [imageFile, setImageFile] = useState([]);
   const inputFileImage = useRef(null);
 

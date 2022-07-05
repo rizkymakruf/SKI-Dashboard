@@ -55,7 +55,6 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     allOutlet: outlet,
     qty: qty,
     rp: rp,
-    adminMode: checkUids[0].outlet !== "" ? "outlet" : "ski",
   });
 },
 sessionOptions);
@@ -68,7 +67,7 @@ const DashboardSKI = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   useEffect(() => {
     globalAct.setFullname(props.fullName);
-    globalAct.setAdminMode(props.adminMode);
+    globalAct.setAdminMode("ski");
     // globalAct.setIsFetch(false);
     // globalAct.setErrorMsg("");
   }, []);

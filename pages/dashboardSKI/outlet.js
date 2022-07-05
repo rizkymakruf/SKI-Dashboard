@@ -50,7 +50,6 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     isLogin: true,
     fullName: checkUids[0].fullname,
     allOutlet: outlet,
-    adminMode: checkUids[0].outlet !== "" ? "outlet" : "ski",
   });
 },
 sessionOptions);
@@ -60,7 +59,8 @@ const Otlets = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
 
   useEffect(() => {
-    globalAct.setAdminMode(props.adminMode);
+    globalAct.setFullname(props.fullName);
+    globalAct.setAdminMode("ski");
   }, []);
 
   return (

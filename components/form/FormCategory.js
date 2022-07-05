@@ -11,20 +11,22 @@ export default function FormCategory() {
     trigger,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (e) => {
+    // api goes here
+
     reset();
     clearErrors("category");
   };
 
   useEffect(() => {
     // validate onMount
-    handleSubmit(onSubmit)();
+    // handleSubmit(onSubmit)();
     // eslint-disable-next-line
   }, []);
 
   return (
     <div className="w-full h-auto">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={() => onSubmit()}>
         <div className="w-full h-full select-none">
           <div className="w-full h-full p-3 backdrop-blur bg-white/30 rounded-md border border-gray-300 shadow-md">
             <div className="w-full h-auto relative mb-4">
@@ -55,7 +57,7 @@ export default function FormCategory() {
               </div>
               <div className="w-auto h-full flex items-center gap-x-2">
                 <button
-                  type="submit"
+                  // type="submit"
                   // disabled={globalCtx.isFetch ? "disabled" : ""}
                   className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                 >

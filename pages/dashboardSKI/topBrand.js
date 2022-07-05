@@ -58,7 +58,6 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     tbrand: tbrand,
     brand: brand,
     totalBrand: totalBrand[0].total,
-    adminMode: checkUids[0].outlet !== "" ? "outlet" : "ski",
   });
 },
 sessionOptions);
@@ -73,7 +72,8 @@ const ManageTopBrand = (props) => {
   const [perPage, setPerPage] = useState(10);
 
   useEffect(() => {
-    globalAct.setAdminMode(props.adminMode);
+    globalAct.setFullname(props.fullName);
+    globalAct.setAdminMode("ski");
   }, []);
 
   const handlePageChange = (page) => {

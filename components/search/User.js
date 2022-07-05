@@ -27,7 +27,6 @@ const SearchUser = (props) => {
           });
           console.log(res);
           props.setData(res.data);
-          props.setTotalRows(res.total);
         } catch (error) {
           console.log("error", error);
           if (error instanceof FetchError) {
