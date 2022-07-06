@@ -18,6 +18,8 @@ function FormCategory() {
     },
   });
 
+  console.log("te", formik);
+
   return (
     <div className="w-full h-auto">
       <form onSubmit={onSubmit}>
@@ -30,7 +32,10 @@ function FormCategory() {
               <input
                 type="text"
                 name="name"
+                id="name"
                 autoComplete="off"
+                value={formik.value.name}
+                onChange={formik.handleChange}
                 placeholder="Category Name"
                 className={`w-full shadow py-3 px-4 placeholder-gray-500 border-gray-300 rounded-md focus:outline-none focus:ring-2 `}
                 // {...register("name", { required: "password is required!" })}
