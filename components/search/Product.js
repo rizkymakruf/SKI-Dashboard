@@ -1,8 +1,47 @@
-const SearchProduct = () => {
+import { GlobalContext } from "context/global";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useContext } from "react";
+
+const SearchProduct = (props) => {
+  const { globalCtx, globalAct } = useContext(GlobalContext);
   return (
-    <div
+    <form
       className="w-full flex items-center justify-between  border-b-2 border-gray-200 pb-4"
-      onSubmit={null}
+      onSubmit={async function handleSubmit(e) {
+        e.preventDefault();
+        globalAct.setIsFetch(true);
+
+        const find = {
+          name: "%" + e.currentTarget.name.value + "%",
+          uri: "product/search",
+        };
+        const check = e.currentTarget.name.value !== "" ? true : false;
+        try {
+          const res = await fetchJson("/api/prot/post", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(find),
+          });
+          console.log(res);
+          props.setSearchData(res.data);
+          if (!check) {
+            props.setIsSearch(false);
+            props.setSearchData([]);
+          } else {
+            props.setIsSearch(true);
+          }
+        } catch (error) {
+          console.log("error", error);
+          if (error instanceof FetchError) {
+            globalAct.setErrorMsg(error.data.message);
+          } else {
+            globalAct.setErrorMsg("An unexpected error happened");
+          }
+        }
+
+        globalAct.setModal("");
+        globalAct.setIsFetch(false);
+      }}
     >
       <p className="text-md font-bold text-red-600 w-2/6">
         Product Recomendation
@@ -25,13 +64,13 @@ const SearchProduct = () => {
           </button>
         </div>
         <input
-          name="search-product"
+          name="name"
           placeholder="Search..."
           autoComplete="off"
           className="placeholder-gray-400 px-2 w-full h-10 bg-white outline-none focus:ring-2 duration-500 focus:ring-blue-500 border-2 border-gray-300 rounded-md"
         />
       </div>
-    </div>
+    </form>
   );
 };
 

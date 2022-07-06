@@ -14,21 +14,32 @@ const SearchUserCst = (props) => {
         e.preventDefault();
         globalAct.setIsFetch(true);
 
-        const body = {
+        const find = {
           username: "%" + e.currentTarget.usernamecst.value + "%",
           uri: "customer/search",
         };
 
-        // console.log(body);
+        const body = {
+          uri: "customer",
+          start: 0,
+          length: 10,
+        };
 
+        const check = e.currentTarget.usernamecst.value !== "" ? true : false;
         try {
           const res = await fetchJson("/api/prot/post", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
+            body: JSON.stringify(check ? find : body),
           });
           console.log(res);
           props.setData(res.data);
+          if (!check) {
+            props.setTotalRows(res.total);
+            props.setIsSearch(false);
+          } else {
+            props.setIsSearch(true);
+          }
         } catch (error) {
           console.log("error", error);
           if (error instanceof FetchError) {

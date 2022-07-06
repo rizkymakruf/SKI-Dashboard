@@ -77,16 +77,22 @@ const ManageProdukRekomen = (props) => {
   const router = useRouter();
   const [data, setData] = useState(props.product);
   const [recomd, setRecomd] = useState(props.recomd);
+  const [searchData, setSearchData] = useState([]);
 
   const [totalRows, setTotalRows] = useState(props.totalProduct);
   const [totalRowsRec, setTotalRowsRec] = useState(props.totalRecomd);
   const [perPage, setPerPage] = useState(10);
   const [perPageRec, setPerPageRec] = useState(10);
+  const [isSearch, setIsSearch] = useState(false);
 
   useEffect(() => {
     globalAct.setFullname(props.fullName);
     globalAct.setAdminMode("ski");
   }, []);
+
+  useEffect(() => {
+    console.log(searchData);
+  }, [searchData]);
 
   const handlePageChange = (page) => {
     fetchData((page - 1) * perPage, perPage, "p");
@@ -137,23 +143,31 @@ const ManageProdukRekomen = (props) => {
   return (
     <div className="w-full flex flex-col p-5 gap-y-5">
       <div className="w-full p-4 border border-gray-200 rounded-md shadow-md">
-        <SearchProduct />
-        <div className="flex gap-6 my-4">
-          <ProdukRekomenListTable
-            data={data}
-            totalRows={totalRows}
-            handlePageChange={handlePageChange}
-            handlePerRowsChange={handlePerRowsChange}
-          />
-          <ProdukRekomenTable
-            data={recomd}
-            totalRows={totalRowsRec}
-            handlePageChange={handlePageChangeRec}
-            handlePerRowsChange={handlePerRowsChangeRec}
-          />
-        </div>
+        <SearchProduct
+          setSearchData={setSearchData}
+          setIsSearch={setIsSearch}
+        />
+        {!isSearch ? (
+          <div className="flex gap-6 my-4">
+            <ProdukRekomenListTable
+              data={data}
+              totalRows={totalRows}
+              handlePageChange={handlePageChange}
+              handlePerRowsChange={handlePerRowsChange}
+            />
+            <ProdukRekomenTable
+              data={recomd}
+              totalRows={totalRowsRec}
+              handlePageChange={handlePageChangeRec}
+              handlePerRowsChange={handlePerRowsChangeRec}
+            />
+          </div>
+        ) : (
+          <div className="flex gap-6 my-4">
+            <Products data={searchData} />
+          </div>
+        )}
       </div>
-      <Products />
     </div>
   );
 };

@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 
 const UsersTableCst = ({
   data,
+  search,
   totalRows,
   handlePageChange,
   handlePerRowsChange,
@@ -125,17 +126,27 @@ const UsersTableCst = ({
   return (
     <div className="w-full h-auto relative ">
       <div className="shadow-md border-2 rounded-md">
-        <DataTable
-          columns={columns}
-          data={data}
-          responsive={true}
-          highlightOnHover={true}
-          pagination
-          paginationServer
-          paginationTotalRows={totalRows}
-          onChangeRowsPerPage={handlePerRowsChange}
-          onChangePage={handlePageChange}
-        />
+        {search ? (
+          <DataTable
+            columns={columns}
+            data={data}
+            responsive={true}
+            highlightOnHover={true}
+            pagination
+          />
+        ) : (
+          <DataTable
+            columns={columns}
+            data={data}
+            responsive={true}
+            highlightOnHover={true}
+            pagination
+            paginationServer
+            paginationTotalRows={totalRows}
+            onChangeRowsPerPage={handlePerRowsChange}
+            onChangePage={handlePageChange}
+          />
+        )}
       </div>
     </div>
   );

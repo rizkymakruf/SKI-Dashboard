@@ -67,6 +67,7 @@ const ManageCategory = (props) => {
   const [data, setData] = useState(props.category);
   const [totalRows, setTotalRows] = useState(props.totalCat);
   const [perPage, setPerPage] = useState(10);
+  const [isSearch, setIsSearch] = useState(false);
 
   useEffect(() => {
     globalAct.setFullname(props.fullName);
@@ -111,48 +112,49 @@ const ManageCategory = (props) => {
     <div className="w-full p-3 flex flex-col gap-y-2">
       <div>
         <FormCategory
-          globalAct={globalAct}
-          globalCtx={globalCtx}
-          onSubmit={async function handleSubmit(e) {
-            e.preventDefault();
-            globalAct.setIsFetch(true);
+        // globalAct={globalAct}
+        // globalCtx={globalCtx}
+        // onSubmit={async function handleSubmit(e) {
+        //   e.preventDefault();
+        //   globalAct.setIsFetch(true);
 
-            const body = {
-              name: e.currentTarget.category.value,
-              uri: "category/add",
-            };
+        //   const body = {
+        //     name: e.currentTarget.category.value,
+        //     uri: "category/add",
+        //   };
 
-            console.log("ni", body);
+        //   console.log("ni", body);
 
-            try {
-              const aa = await fetchJson("/api/prot/post", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-              });
-              await router.reload(router.pathname);
-            } catch (error) {
-              if (error instanceof FetchError) {
-                globalAct.setErrorMsg(error.data.message);
-              } else {
-                console.log(error);
-                globalAct.setErrorMsg("An unexpected error happened");
-              }
-            }
-            globalAct.setIsFetch(false);
-          }}
+        //   try {
+        //     const aa = await fetchJson("/api/prot/post", {
+        //       method: "POST",
+        //       headers: { "Content-Type": "application/json" },
+        //       body: JSON.stringify(body),
+        //     });
+        //     await router.reload(router.pathname);
+        //   } catch (error) {
+        //     if (error instanceof FetchError) {
+        //       globalAct.setErrorMsg(error.data.message);
+        //     } else {
+        //       console.log(error);
+        //       globalAct.setErrorMsg("An unexpected error happened");
+        //     }
+        //   }
+        //   globalAct.setIsFetch(false);
+        // }}
         />
       </div>
       <div>
         <SearchCategory
-          globalAct={globalAct}
-          globalCtx={globalCtx}
           setData={setData}
+          setTotalRows={setTotalRows}
+          setIsSearch={setIsSearch}
         />
       </div>
       <div>
         <CategoryTable
           data={data}
+          search={isSearch}
           totalRows={totalRows}
           handlePageChange={handlePageChange}
           handlePerRowsChange={handlePerRowsChange}

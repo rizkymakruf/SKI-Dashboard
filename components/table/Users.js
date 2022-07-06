@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 
 const UsersTable = ({
   data,
+  search,
   totalRows,
   handlePerRowsChange,
   handlePageChange,
@@ -20,6 +21,15 @@ const UsersTable = ({
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
           <p className="text-xs font-bold">{a.username}</p>
+        </div>
+      ),
+    },
+    {
+      name: <div className="font-bold text-red-500">Full Name</div>,
+      grow: 2,
+      cell: (a) => (
+        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
+          <p className="text-xs font-bold">{a.fullname}</p>
         </div>
       ),
     },
@@ -149,17 +159,27 @@ const UsersTable = ({
   return (
     <div className="w-full h-auto relative ">
       <div className="shadow-md border-2 rounded-md">
-        <DataTable
-          columns={columns}
-          data={data}
-          responsive={true}
-          highlightOnHover={true}
-          pagination
-          paginationServer
-          paginationTotalRows={totalRows}
-          onChangeRowsPerPage={handlePerRowsChange}
-          onChangePage={handlePageChange}
-        />
+        {search ? (
+          <DataTable
+            columns={columns}
+            data={data}
+            responsive={true}
+            highlightOnHover={true}
+            pagination
+          />
+        ) : (
+          <DataTable
+            columns={columns}
+            data={data}
+            responsive={true}
+            highlightOnHover={true}
+            pagination
+            paginationServer
+            paginationTotalRows={totalRows}
+            onChangeRowsPerPage={handlePerRowsChange}
+            onChangePage={handlePageChange}
+          />
+        )}
       </div>
     </div>
   );

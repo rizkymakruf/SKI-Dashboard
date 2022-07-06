@@ -14,19 +14,32 @@ const SearchUser = (props) => {
         e.preventDefault();
         globalAct.setIsFetch(true);
 
-        const body = {
+        const find = {
           username: "%" + e.currentTarget.username.value + "%",
           uri: "user/search",
         };
 
+        const body = {
+          uri: "user",
+          start: 0,
+          length: 10,
+        };
+
+        const check = e.currentTarget.username.value !== "" ? true : false;
         try {
           const res = await fetchJson("/api/prot/post", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
+            body: JSON.stringify(check ? find : body),
           });
           console.log(res);
           props.setData(res.data);
+          if (!check) {
+            props.setTotalRows(res.total);
+            props.setIsSearch(false);
+          } else {
+            props.setIsSearch(true);
+          }
         } catch (error) {
           console.log("error", error);
           if (error instanceof FetchError) {
@@ -35,7 +48,6 @@ const SearchUser = (props) => {
             globalAct.setErrorMsg("An unexpected error happened");
           }
         }
-
         globalAct.setModal("");
         globalAct.setIsFetch(false);
       }}

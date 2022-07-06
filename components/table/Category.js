@@ -6,6 +6,7 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 
 const OrderTable = ({
   data,
+  search,
   totalRows,
   handlePageChange,
   handlePerRowsChange,
@@ -111,20 +112,33 @@ const OrderTable = ({
   return (
     <div className="w-full h-auto relative ">
       <div className="shadow-md border-2 rounded-md">
-        <DataTable
-          // title={
-          //   <p className="text-red-500 font-bold text-sm">Category List</p>
-          // }
-          columns={columns}
-          data={data}
-          responsive={true}
-          highlightOnHover={true}
-          pagination
-          paginationServer
-          paginationTotalRows={totalRows}
-          onChangeRowsPerPage={handlePerRowsChange}
-          onChangePage={handlePageChange}
-        />
+        {search ? (
+          <DataTable
+            // title={
+            //   <p className="text-red-500 font-bold text-sm">Category List</p>
+            // }
+            columns={columns}
+            data={data}
+            responsive={true}
+            highlightOnHover={true}
+            pagination
+          />
+        ) : (
+          <DataTable
+            // title={
+            //   <p className="text-red-500 font-bold text-sm">Category List</p>
+            // }
+            columns={columns}
+            data={data}
+            responsive={true}
+            highlightOnHover={true}
+            pagination
+            paginationServer
+            paginationTotalRows={totalRows}
+            onChangeRowsPerPage={handlePerRowsChange}
+            onChangePage={handlePageChange}
+          />
+        )}
       </div>
     </div>
   );

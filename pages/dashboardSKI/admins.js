@@ -69,12 +69,17 @@ const ManageUsers = (props) => {
   const [dataUser, setDataUser] = useState(props.users);
   const [totalRows, setTotalRows] = useState(props.totalAdmin);
   const [perPage, setPerPage] = useState(10);
+  const [isSearch, setIsSearch] = useState(false);
 
   useEffect(() => {
     globalAct.setListOutlet(props.listOutlet);
     globalAct.setFullname(props.fullName);
     globalAct.setAdminMode("ski");
   }, []);
+
+  useEffect(() => {
+    console.log(isSearch);
+  }, [isSearch]);
 
   const handlePageChange = (page) => {
     fetchData((page - 1) * perPage, perPage);
@@ -115,11 +120,16 @@ const ManageUsers = (props) => {
         <AddUser globalAct={globalAct} globalCtx={globalCtx} />
       </div>
       <div>
-        <SearchUser setData={setDataUser} />
+        <SearchUser
+          setData={setDataUser}
+          setTotalRows={setTotalRows}
+          setIsSearch={setIsSearch}
+        />
       </div>
       <div>
         <UsersTable
           data={dataUser}
+          search={isSearch}
           totalRows={totalRows}
           handlePageChange={handlePageChange}
           handlePerRowsChange={handlePerRowsChange}

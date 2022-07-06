@@ -14,21 +14,31 @@ const SearchCategory = (props) => {
         e.preventDefault();
         globalAct.setIsFetch(true);
 
-        const body = {
+        const find = {
           name: "%" + e.currentTarget.name.value + "%",
           uri: "category/search",
         };
+        const body = {
+          uri: "category",
+          start: 0,
+          length: 10,
+        };
 
-        console.log(body);
-
+        const check = e.currentTarget.name.value !== "" ? true : false;
         try {
           const res = await fetchJson("/api/prot/post", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
+            body: JSON.stringify(check ? find : body),
           });
           console.log(res);
           props.setData(res.data);
+          if (!check) {
+            props.setTotalRows(res.total);
+            props.setIsSearch(false);
+          } else {
+            props.setIsSearch(true);
+          }
         } catch (error) {
           console.log("error", error);
           if (error instanceof FetchError) {

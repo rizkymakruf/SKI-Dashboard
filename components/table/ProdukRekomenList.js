@@ -38,7 +38,6 @@ const ProdukRekomenListTable = ({
             onClick={async function handleSubmit(e) {
               e.preventDefault();
               globalAct.setIsFetch(true);
-              globalAct.setSelectedData(a);
 
               const body = {
                 uri: "product/recommend",
@@ -61,9 +60,9 @@ const ProdukRekomenListTable = ({
                 }
               }
 
-              router.reload("/dashboardSKI/produkRekomen");
               globalAct.setModal("addedRekomen");
               globalAct.setIsFetch(false);
+              router.reload("/dashboardSKI/produkRekomen");
             }}
             className={
               "bg-green-500/30 items-center justify-center h-8 w-8 rounded-md flex gap-x-2 text-xs text-green-500 hover:w-24 duration-150 hover:before:content-['Add'] border border-green-300"

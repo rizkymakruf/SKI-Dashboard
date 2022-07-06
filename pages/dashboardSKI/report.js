@@ -54,7 +54,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 },
 sessionOptions);
 
-const ManageReport = () => {
+const ManageReport = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const [mode, setMode] = useState("");
   const [dataReport, setDataReport] = useState([]);

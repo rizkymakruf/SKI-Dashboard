@@ -65,6 +65,7 @@ const ManageUsersCst = (props) => {
   const router = useRouter();
   const [totalRows, setTotalRows] = useState(props.totalCust);
   const [perPage, setPerPage] = useState(10);
+  const [isSearch, setIsSearch] = useState(false);
 
   useEffect(() => {
     globalAct.setFullname(props.fullName);
@@ -109,14 +110,15 @@ const ManageUsersCst = (props) => {
     <div className="w-full p-3 flex flex-col gap-y-3">
       <div>
         <SearchUserCst
-          globalAct={globalAct}
-          globalCtx={globalCtx}
           setData={setData}
+          setTotalRows={setTotalRows}
+          setIsSearch={setIsSearch}
         />
       </div>
       <div>
         <UsersTableCst
           data={data}
+          search={isSearch}
           handlePageChange={handlePageChange}
           handlePerRowsChange={handlePerRowsChange}
           totalRows={totalRows}

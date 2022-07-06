@@ -53,7 +53,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
-    adminMode: outlet ? outlet[0].shortname : "",
+    adminMode: outlet.length > 0 ? outlet[0]?.shortname : "",
   });
 },
 sessionOptions);

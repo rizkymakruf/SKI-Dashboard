@@ -61,6 +61,7 @@ const Dashboard = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   useEffect(() => {
     globalAct.setAdminMode("outlet");
+    globalAct.setFullname(props.fullName);
     globalAct.setIsFetch(false);
     globalAct.setErrorMsg("");
     // router.prefetch("/config/dashboard");
