@@ -2,7 +2,7 @@ import { getLayout } from "components/layout/Navbar";
 import DashboardCardSKI from "components/card/DashboardCardSKI";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { allOutlet, checkUid, PenjualanQty, PenjualanRp } from "lib/arangoDb";
 import { useRouter } from "next/router";
 import { redirect, retObject, checkerToken } from "lib/listFunct";

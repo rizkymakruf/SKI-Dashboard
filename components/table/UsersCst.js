@@ -1,6 +1,6 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext, useEffect, useState } from "react";
+import { useContext, memo } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
@@ -152,4 +152,4 @@ const UsersTableCst = ({
   );
 };
 
-export default UsersTableCst;
+export default memo(UsersTableCst);

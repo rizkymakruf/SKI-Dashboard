@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useMemo, useCallback } from "react";
 import { getLayout } from "components/layout/Navbar";
 import { GlobalContext } from "context/global";
 import UsersTable from "components/table/Users";
@@ -72,15 +72,15 @@ const ManageUsersCst = (props) => {
     globalAct.setAdminMode("ski");
   }, []);
 
-  const handlePageChange = (page) => {
+  const handlePageChange = useCallback((page) => {
     fetchData((page - 1) * perPage, perPage);
-  };
+  }, []);
 
-  const handlePerRowsChange = (newPerPage, page) => {
+  const handlePerRowsChange = useCallback((newPerPage, page) => {
     fetchData(0, newPerPage);
-  };
+  }, []);
 
-  const fetchData = async (start, page) => {
+  const fetchData = useCallback(async (start, page) => {
     globalAct.setIsFetch(true);
     const body = {
       uri: "customer",
@@ -104,25 +104,35 @@ const ManageUsersCst = (props) => {
       }
     }
     globalAct.setIsFetch(false);
-  };
+  }, []);
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">
       <div>
-        <SearchUserCst
-          setData={setData}
-          setTotalRows={setTotalRows}
-          setIsSearch={setIsSearch}
-        />
+        {useMemo(() => {
+          console.log("search");
+          return (
+            <SearchUserCst
+              setData={setData}
+              setTotalRows={setTotalRows}
+              setIsSearch={setIsSearch}
+            />
+          );
+        }, [])}
       </div>
       <div>
-        <UsersTableCst
-          data={data}
-          search={isSearch}
-          handlePageChange={handlePageChange}
-          handlePerRowsChange={handlePerRowsChange}
-          totalRows={totalRows}
-        />
+        {useMemo(() => {
+          console.log("tabel");
+          return (
+            <UsersTableCst
+              data={data}
+              search={isSearch}
+              handlePageChange={handlePageChange}
+              handlePerRowsChange={handlePerRowsChange}
+              totalRows={totalRows}
+            />
+          );
+        }, [data])}
       </div>
     </div>
   );
