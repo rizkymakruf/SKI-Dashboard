@@ -30,6 +30,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/dashboardSKI/category.js"
     ],
+    "/dashboardSKI/content": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboardSKI/content.js"
+    ],
     "/dashboardSKI/outlet": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
