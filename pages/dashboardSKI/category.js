@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useMemo, useCallback } from "react";
 import { getLayout } from "components/layout/Navbar";
 import { GlobalContext } from "context/global";
 
@@ -74,15 +74,15 @@ const ManageCategory = (props) => {
     globalAct.setAdminMode("ski");
   }, []);
 
-  const handlePageChange = (page) => {
+  const handlePageChange = useCallback((page) => {
     fetchData((page - 1) * perPage, perPage);
-  };
+  }, []);
 
-  const handlePerRowsChange = (newPerPage, page) => {
+  const handlePerRowsChange = useCallback((newPerPage, page) => {
     fetchData(0, newPerPage);
-  };
+  }, []);
 
-  const fetchData = async (start, page) => {
+  const fetchData = useCallback(async (start, page) => {
     globalAct.setIsFetch(true);
     const body = {
       uri: "category",
@@ -106,59 +106,41 @@ const ManageCategory = (props) => {
       }
     }
     globalAct.setIsFetch(false);
-  };
+  }, []);
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-2">
       <div>
-        <FormCategory
-        // globalAct={globalAct}
-        // globalCtx={globalCtx}
-        // onSubmit={async function handleSubmit(e) {
-        //   e.preventDefault();
-        //   globalAct.setIsFetch(true);
-
-        //   const body = {
-        //     name: e.currentTarget.category.value,
-        //     uri: "category/add",
-        //   };
-
-        //   console.log("ni", body);
-
-        //   try {
-        //     const aa = await fetchJson("/api/prot/post", {
-        //       method: "POST",
-        //       headers: { "Content-Type": "application/json" },
-        //       body: JSON.stringify(body),
-        //     });
-        //     await router.reload(router.pathname);
-        //   } catch (error) {
-        //     if (error instanceof FetchError) {
-        //       globalAct.setErrorMsg(error.data.message);
-        //     } else {
-        //       console.log(error);
-        //       globalAct.setErrorMsg("An unexpected error happened");
-        //     }
-        //   }
-        //   globalAct.setIsFetch(false);
-        // }}
-        />
+        {useMemo(() => {
+          console.log("form");
+          return <FormCategory />;
+        }, [])}
       </div>
       <div>
-        <SearchCategory
-          setData={setData}
-          setTotalRows={setTotalRows}
-          setIsSearch={setIsSearch}
-        />
+        {useMemo(() => {
+          console.log("search");
+          return (
+            <SearchCategory
+              setData={setData}
+              setTotalRows={setTotalRows}
+              setIsSearch={setIsSearch}
+            />
+          );
+        }, [])}
       </div>
       <div>
-        <CategoryTable
-          data={data}
-          search={isSearch}
-          totalRows={totalRows}
-          handlePageChange={handlePageChange}
-          handlePerRowsChange={handlePerRowsChange}
-        />
+        {useMemo(() => {
+          console.log("tabel");
+          return (
+            <CategoryTable
+              data={data}
+              search={isSearch}
+              totalRows={totalRows}
+              handlePageChange={handlePageChange}
+              handlePerRowsChange={handlePerRowsChange}
+            />
+          );
+        }, [data])}
       </div>
     </div>
   );

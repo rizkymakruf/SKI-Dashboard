@@ -1,56 +1,90 @@
-// import { useForm } from "react-hook-form";
-// import { categorySchema } from "./Validation/category";
-import { useFormik } from "formik";
+import { useForm } from "react-hook-form";
+import { useContext, memo, useCallback } from "react";
+import { GlobalContext } from "context/global";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
 
-function FormCategory() {
-  // const onSubmit = async (event) => {
-  //   event.preventDefault();
-  //   let formData = {
-  //     name: event.target[0].value,
-  //   };
-  //   const isValid = await categorySchema.isValid(formData);
-  //   console.log("valid?", isValid);
-  // };
+const FormCategory = () => {
+  const {
+    reset,
+    trigger,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-    },
-  });
+  const { globalAct, globalCtx } = useContext(GlobalContext);
+  const router = useRouter();
 
-  console.log("te", formik);
+  const onSubmit = useCallback(async (data) => {
+    const body = {
+      name: data.name,
+      uri: "category/add",
+    };
+
+    try {
+      const res = await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      reset();
+      router.replace("/dashboardSKI/category");
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+
+    globalAct.setIsFetch(false);
+  }, []);
 
   return (
     <div className="w-full h-auto">
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full h-full select-none">
-          <div className="w-full h-full p-3 backdrop-blur bg-white/30 rounded-md border border-gray-300 shadow-md">
-            <div className="w-full h-auto relative mb-4">
-              <p className="text-sm font-bold text-red-600 mb-2">
-                Create Main Category
-              </p>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                autoComplete="off"
-                value={formik.value.name}
-                onChange={formik.handleChange}
-                placeholder="Category Name"
-                className={`w-full shadow py-3 px-4 placeholder-gray-500 border-gray-300 rounded-md focus:outline-none focus:ring-2 `}
-                // {...register("name", { required: "password is required!" })}
-              />
-              {/* ${errors.name ? "ring-2 ring-red-500" : null} */}
-              {/* <p className="text-xs text-red-500 pt-2">
-                {errors.name?.message}
-              </p> */}
-            </div>
+          <div className="p-3 backdrop-blur bg-white/30 rounded-md border border-gray-300 shadow-md space-y-3">
+            <p className="text-md font-bold text-red-600">
+              Create Main Category
+            </p>
+            <div className="w-full h-full flex gap-3">
+              <div className="w-full h-auto relative">
+                <input
+                  autoComplete="off"
+                  placeholder="Category Name"
+                  className={`rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
+                    errors.name ? "focus:outline-red-500 outline-red-500" : null
+                  }`}
+                  {...register("name", {
+                    minLength: {
+                      value: 3,
+                      message: "Nama categori minimal 3 karakter!",
+                    },
+                    required: {
+                      value: true,
+                      message: "Nama categori harus di isi!",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("name");
+                  }}
+                />
 
-            <div className="w-full h-12 flex justify-between gap-2">
-              <div className="w-auto h-full flex items-center gap-x-2">
+                {errors.name && (
+                  <p className="text-xs text-red-500 pt-2">
+                    {errors.name.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="w-auto h-full flex items-center">
                 <button
                   type="submit"
-                  className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
+                  className="px-6 h-10 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                 >
                   Create
                 </button>
@@ -61,6 +95,6 @@ function FormCategory() {
       </form>
     </div>
   );
-}
+};
 
-export default FormCategory;
+export default memo(FormCategory);

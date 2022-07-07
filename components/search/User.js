@@ -1,5 +1,5 @@
 import { GlobalContext } from "context/global";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, memo } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
@@ -55,11 +55,7 @@ const SearchUser = (props) => {
       <p className="text-sm font-bold text-red-600 w-1/6">Find User</p>
       <div className="w-full">
         <div className="relative">
-          <button
-            className="absolute top-1.5 right-1.5 bg-blue-500/30 p-1 rounded-md shadow-md hover:bg-blue-500/50"
-            globalCtx={globalCtx}
-            globalAct={globalAct}
-          >
+          <button className="absolute top-1.5 right-1.5 bg-blue-500/30 p-1 rounded-md shadow-md hover:bg-blue-500/50">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 text-blue-500"
@@ -85,4 +81,4 @@ const SearchUser = (props) => {
   );
 };
 
-export default SearchUser;
+export default memo(SearchUser);

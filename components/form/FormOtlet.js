@@ -1,19 +1,18 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { GlobalContext } from "context/global";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
 
 export default function FormOtlet({
-  myRef,
   globalCtx,
-  globalAct,
   onSubmit,
-  update,
   setUpdate,
-  slide,
   setSlide,
   isFetch,
   errorMessage,
-  cancelRemove,
   handleImage,
-  removeMe,
 }) {
   const [imageFile, setImageFile] = useState([]);
   const inputFileImage = useRef(null);
@@ -29,9 +28,18 @@ export default function FormOtlet({
     setUpdate([]);
   };
 
+  // useform mulai dari sini
+  const {
+    reset,
+    trigger,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   return (
     <div className="w-full h-auto">
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full h-full grid grid-cols-2 gap-4 select-none p-5">
           <div className="w-full space-y-2">
             <div className="w-full">
@@ -39,18 +47,59 @@ export default function FormOtlet({
               <input
                 name="name"
                 autocomplete="off"
-                className="rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 "
                 placeholder="Nama Otlet"
+                className={`rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
+                  errors.name ? "focus:outline-red-500 outline-red-500" : null
+                }`}
+                {...register("name", {
+                  required: {
+                    value: true,
+                    message: "Nama outlet harus di isi!",
+                  },
+                })}
+                onKeyUp={() => {
+                  trigger("name");
+                }}
               ></input>
+
+              {errors.name && (
+                <p className="text-xs text-red-500 pt-2">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
+
             <div className="w-full">
               <p>Short Name Otlet</p>
               <input
                 name="shortname"
                 autocomplete="off"
-                className="rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 "
                 placeholder="Short Name Otlet"
+                className={`rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
+                  errors.shortname
+                    ? "focus:outline-red-500 outline-red-500"
+                    : null
+                }`}
+                {...register("shortname", {
+                  required: {
+                    value: true,
+                    message: "Short name outlet harus di isi!",
+                  },
+                  minLength: {
+                    value: 3,
+                    message: "Short name minimal 3 karakter!",
+                  },
+                })}
+                onKeyUp={() => {
+                  trigger("shortname");
+                }}
               ></input>
+
+              {errors.shortname && (
+                <p className="text-xs text-red-500 pt-2">
+                  {errors.shortname.message}
+                </p>
+              )}
             </div>
             <div className="w-full">
               <p>Deskripsi Otlet</p>
@@ -127,14 +176,6 @@ export default function FormOtlet({
                   >
                     Save
                   </button>
-                  <span
-                    className={`${
-                      !isFetch && "invisible"
-                    } flex absolute h-4 w-4 top-3 right-4 -mt-1 -mr-1`}
-                  >
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-50 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-4 w-4 bg-red-300"></span>
-                  </span>
                 </div>
               </div>
             </div>

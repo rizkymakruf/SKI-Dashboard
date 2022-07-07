@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useMemo, useCallback } from "react";
 import { getLayout } from "components/layout/Navbar";
 import { GlobalContext } from "context/global";
 
@@ -77,19 +77,15 @@ const ManageUsers = (props) => {
     globalAct.setAdminMode("ski");
   }, []);
 
-  useEffect(() => {
-    console.log(isSearch);
-  }, [isSearch]);
-
-  const handlePageChange = (page) => {
+  const handlePageChange = useCallback((page) => {
     fetchData((page - 1) * perPage, perPage);
-  };
+  }, []);
 
-  const handlePerRowsChange = (newPerPage, page) => {
+  const handlePerRowsChange = useCallback((newPerPage, page) => {
     fetchData(0, newPerPage);
-  };
+  }, []);
 
-  const fetchData = async (start, page) => {
+  const fetchData = useCallback(async (start, page) => {
     globalAct.setIsFetch(true);
     const body = {
       uri: "user",
@@ -112,28 +108,41 @@ const ManageUsers = (props) => {
       }
     }
     globalAct.setIsFetch(false);
-  };
+  }, []);
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">
       <div>
-        <AddUser globalAct={globalAct} globalCtx={globalCtx} />
+        {useMemo(() => {
+          console.log("adduser");
+          return <AddUser globalAct={globalAct} globalCtx={globalCtx} />;
+        }, [])}
       </div>
       <div>
-        <SearchUser
-          setData={setDataUser}
-          setTotalRows={setTotalRows}
-          setIsSearch={setIsSearch}
-        />
+        {useMemo(() => {
+          console.log("searchuser");
+          return (
+            <SearchUser
+              setData={setDataUser}
+              setTotalRows={setTotalRows}
+              setIsSearch={setIsSearch}
+            />
+          );
+        }, [])}
       </div>
       <div>
-        <UsersTable
-          data={dataUser}
-          search={isSearch}
-          totalRows={totalRows}
-          handlePageChange={handlePageChange}
-          handlePerRowsChange={handlePerRowsChange}
-        />
+        {useMemo(() => {
+          console.log("tabel");
+          return (
+            <UsersTable
+              data={dataUser}
+              search={isSearch}
+              totalRows={totalRows}
+              handlePageChange={handlePageChange}
+              handlePerRowsChange={handlePerRowsChange}
+            />
+          );
+        }, [dataUser])}
       </div>
     </div>
   );

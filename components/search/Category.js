@@ -1,5 +1,5 @@
 import { GlobalContext } from "context/global";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, memo } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
@@ -85,4 +85,4 @@ const SearchCategory = (props) => {
   );
 };
 
-export default SearchCategory;
+export default memo(SearchCategory);

@@ -32,42 +32,7 @@ const CategoryModal = () => {
           </svg>
         </button>
       </div>
-      <FormUpdateCategory
-        globalCtx={globalCtx}
-        globalAct={globalAct}
-        onSubmit={async function handleSubmit(e) {
-          e.preventDefault();
-          globalAct.setIsFetch(true);
-
-          const body = {
-            key: e.currentTarget.key.value,
-            name: e.currentTarget.name.value,
-            uri: "category/update",
-          };
-
-          try {
-            const res = await fetchJson("/api/prot/patch", {
-              method: "PATCH",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            });
-            // globalAct.setNewData(res.data[0]);
-            router.push("/dashboardSKI/category");
-            router.reload();
-          } catch (error) {
-            console.log("error", error);
-            if (error instanceof FetchError) {
-              globalAct.setErrorMsg(error.data.message);
-            } else {
-              globalAct.setErrorMsg("An unexpected error happened");
-            }
-          }
-
-          // router.replace("/dashboardSKI/users");
-          globalAct.setModal("");
-          globalAct.setIsFetch(false);
-        }}
-      />
+      <FormUpdateCategory />
     </div>
   );
 };
