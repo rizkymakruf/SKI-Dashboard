@@ -90,8 +90,8 @@ export default function FormOtlet({
                     message: "Short name minimal 3 karakter!",
                   },
                   pattern: {
-                    value: "^[A-Za-z]+$",
-                    message: "Entered value does not match email format",
+                    value: /^[A-Za-z]+$/i,
+                    message: "Entered value does not match format",
                   },
                 })}
                 onKeyUp={() => {
