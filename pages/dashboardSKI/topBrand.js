@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useMemo, useCallback } from "react";
 import { getLayout } from "components/layout/Navbar";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -64,7 +64,6 @@ sessionOptions);
 
 const ManageTopBrand = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
-  const [inputValue, setInputValue] = useState("");
   const router = useRouter();
   const [data, setData] = useState(props.brand);
 
@@ -76,15 +75,16 @@ const ManageTopBrand = (props) => {
     globalAct.setAdminMode("ski");
   }, []);
 
-  const handlePageChange = (page) => {
+  const handlePageChange = useCallback((page) => {
     fetchData((page - 1) * perPage, perPage);
-  };
+  }, []);
 
-  const handlePerRowsChange = (newPerPage, page) => {
+  const handlePerRowsChange = useCallback((newPerPage, page) => {
+    setPerPage(newPerPage);
     fetchData(0, newPerPage);
-  };
+  }, []);
 
-  const fetchData = async (start, page) => {
+  const fetchData = useCallback(async (start, page) => {
     globalAct.setIsFetch(true);
     const body = {
       uri: "outlet/other",
@@ -99,6 +99,7 @@ const ManageTopBrand = (props) => {
       });
       setData(res.data);
       setTotalRows(res.total);
+      setPerPage(page);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {
@@ -108,24 +109,32 @@ const ManageTopBrand = (props) => {
       }
     }
     globalAct.setIsFetch(false);
-  };
+  }, []);
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-2">
       <div className="border-2 border-orange-200 rounded-md p-5 shadow-md mb-3">
-        <TopBrandTable
-          globalAct={globalAct}
-          globalCtx={globalCtx}
-          tbrand={props.tbrand}
-        />
+        {useMemo(() => {
+          return (
+            <TopBrandTable
+              globalAct={globalAct}
+              globalCtx={globalCtx}
+              tbrand={props.tbrand}
+            />
+          );
+        }, [props.tbrand])}
       </div>
       <div className="bg-white border border-gray-200 rounded-md p-5 shadow-md">
-        <TopBrandListTable
-          data={data}
-          totalRows={totalRows}
-          handlePageChange={handlePageChange}
-          handlePerRowsChange={handlePerRowsChange}
-        />
+        {useMemo(() => {
+          return (
+            <TopBrandListTable
+              data={data}
+              totalRows={totalRows}
+              handlePageChange={handlePageChange}
+              handlePerRowsChange={handlePerRowsChange}
+            />
+          );
+        }, [data])}
       </div>
     </div>
   );

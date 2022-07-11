@@ -1,5 +1,5 @@
 import FormProduct from "components/form/FormProduct";
-import { useContext } from "react";
+import { useContext, memo, useMemo } from "react";
 import { GlobalContext } from "context/global";
 import FormContent from "components/form/FormContent";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -33,9 +33,11 @@ const ContentModal = () => {
           </svg>
         </button>
       </div>
-      <FormContent />
+      {useMemo(() => {
+        return <FormContent />;
+      }, [])}
     </div>
   );
 };
 
-export default ContentModal;
+export default memo(ContentModal);
