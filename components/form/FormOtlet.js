@@ -1,41 +1,69 @@
-import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-export default function FormOtlet({
-  globalCtx,
-  onSubmit,
-  setUpdate,
-  setSlide,
-  isFetch,
-  errorMessage,
-  handleImage,
-}) {
-  const [imageFile, setImageFile] = useState([]);
-  const inputFileImage = useRef(null);
+export default function FormOtlet() {
+  // const [imageFile, setImageFile] = useState([]);
+  // const inputFileImage = useRef(null);
 
-  const upLoad = (props, ref) => {
-    inputFileImage.current.click();
-  };
+  // const upLoad = (props, ref) => {
+  //   inputFileImage.current.click();
+  // };
 
-  const resetForm = (e) => {
-    e.preventDefault();
-    document.querySelector("form").reset();
-    setSlide([]);
-    setUpdate([]);
-  };
+  // const resetForm = (e) => {
+  //   e.preventDefault();
+  //   document.querySelector("form").reset();
+  //   setSlide([]);
+  //   setUpdate([]);
+  // };
 
   // useform mulai dari sini
   const {
     reset,
     trigger,
+    isFetch,
+    setValue,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const { globalAct, globalCtx } = useContext(GlobalContext);
+  const router = useRouter();
+
+  const onSubmit = async (data) => {
+    console.log("outlet", data);
+
+    const body = {
+      pict: [],
+      name: data.name,
+      shortname: data.shortname,
+      description: data.description,
+      uri: "outlet/add",
+    };
+
+    try {
+      await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      router.replace("/dashboardSKI/outlet");
+      reset();
+      globalAct.setModal("");
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+    globalAct.setIsFetch(false);
+  };
 
   return (
     <div className="w-full h-auto">
@@ -49,7 +77,9 @@ export default function FormOtlet({
                 autocomplete="off"
                 placeholder="Nama Otlet"
                 className={`rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
-                  errors.name ? "focus:outline-red-500 outline-red-500" : null
+                  errors.name
+                    ? "focus:outline-red-500 border-2 border-red-500"
+                    : null
                 }`}
                 {...register("name", {
                   required: {
@@ -77,7 +107,7 @@ export default function FormOtlet({
                 placeholder="Short Name Otlet"
                 className={`rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
                   errors.shortname
-                    ? "focus:outline-red-500 outline-red-500"
+                    ? "focus:outline-red-500 border-2 border-red-500"
                     : null
                 }`}
                 {...register("shortname", {
@@ -91,7 +121,7 @@ export default function FormOtlet({
                   },
                   pattern: {
                     value: /^[A-Za-z]+$/i,
-                    message: "Entered value does not match format",
+                    message: "Format shortname tidak sesuai!",
                   },
                 })}
                 onKeyUp={() => {
@@ -110,8 +140,16 @@ export default function FormOtlet({
               <textarea
                 name="description"
                 autocomplete="off"
-                className="rounded-md p-2 border-2 border-orange-500/50 w-full h-40"
                 placeholder="Deskripsi Otlet"
+                className="rounded-md p-2 border-2 border-orange-500/50 w-full h-40"
+                {...register("description", {
+                  required: {
+                    value: false,
+                  },
+                })}
+                onKeyUp={() => {
+                  trigger("description");
+                }}
               ></textarea>
             </div>
           </div>
@@ -122,15 +160,20 @@ export default function FormOtlet({
                 type="file"
                 name="pict"
                 id="fileContract"
-                ref={inputFileImage}
+                // ref={inputFileImage}
                 style={{ display: "none" }}
-                onChange={(e) => handleImage(e)}
+                // onChange={(e) => handleImage(e)}
                 disabled={isFetch ? "disabled" : ""}
+                {...register("pict", {
+                  required: {
+                    value: false,
+                  },
+                })}
               />
 
               <div className="w-full h-auto relative flex-row gap-2 flex items-center px-4 pt-2">
                 <div
-                  onClick={upLoad}
+                  // onClick={upLoad}
                   className="w-full h-32 relative z-0 flex text-gray-700 flex-col justify-center items-center rounded h-passport border-2 border-dashed bg-white backdrop-filter bg-opacity-20 backdrop-blur-lg"
                 >
                   {isFetch ? (
@@ -168,14 +211,16 @@ export default function FormOtlet({
                 </div>
               </div>
 
-              {errorMessage && (
+              {/* {errorMessage && (
                 <p className="px-4 text-red-600">{errorMessage}</p>
-              )}
+              )} */}
 
               <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                 <div className="w-full h-auto flex justify-end gap-2">
                   <button
-                    disabled={globalCtx.isFetch ? "disabled" : ""}
+                    type="submit"
+                    onClick={() => setValue("pict", [])}
+                    // disabled={globalCtx.isFetch ? "disabled" : ""}
                     className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                   >
                     Save

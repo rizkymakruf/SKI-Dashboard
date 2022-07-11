@@ -90,7 +90,6 @@ export default function FormUserUpdate({
                 <p>Outlet</p>
                 <select
                   name="outlet"
-                  id="outlet"
                   autocomplete="off"
                   className="w-full rounded-md border-2 border-orange-500/50"
                 >

@@ -29,7 +29,9 @@ const DetailContent = (props) => {
               Slider Position
             </p>
             <p className="text-md font-semibold text-gray-500">
-              {props.globalCtx.selectedData.type}
+              {props.globalCtx.selectedData.type === 1
+                ? "Position Top"
+                : "Position Bottom"}
             </p>
           </div>
           <div className="flex">

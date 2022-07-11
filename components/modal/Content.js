@@ -33,44 +33,7 @@ const ContentModal = () => {
           </svg>
         </button>
       </div>
-      <FormContent
-        globalAct={globalAct}
-        globalCtx={globalCtx}
-        onSubmit={async function handleSubmit(e) {
-          e.preventDefault();
-          globalAct.setIsFetch(true);
-
-          const body = {
-            title: e.currentTarget.title.value,
-            description: e.currentTarget.description.value,
-            pict: [],
-            type: parseInt(e.currentTarget.type.value),
-            label: e.currentTarget.label.value,
-            uri: "content/add",
-          };
-
-          // console.log(body);
-
-          try {
-            await fetchJson("/api/prot/post", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            });
-          } catch (error) {
-            if (error instanceof FetchError) {
-              globalAct.setErrorMsg(error.data.message);
-            } else {
-              console.log(error);
-              globalAct.setErrorMsg("An unexpected error happened");
-            }
-          }
-
-          router.reload("/dashboardSKI/content");
-          globalAct.setModal("");
-          globalAct.setIsFetch(false);
-        }}
-      />
+      <FormContent />
     </div>
   );
 };

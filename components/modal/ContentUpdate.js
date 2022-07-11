@@ -32,42 +32,7 @@ const ContentUpdateModal = () => {
           </svg>
         </button>
       </div>
-      <FormContentUpdate
-        globalCtx={globalCtx}
-        globalAct={globalAct}
-        onSubmit={async function handleSubmit(e) {
-          e.preventDefault();
-          globalAct.setIsFetch(true);
-
-          const body = {
-            key: e.currentTarget.key.value,
-            title: e.currentTarget.title.value,
-            description: e.currentTarget.description.value,
-            pict: [],
-            type: parseInt(e.currentTarget.type.value),
-            label: e.currentTarget.label.value,
-            uri: "content/update",
-          };
-
-          try {
-            await fetchJson("/api/post", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            });
-
-            router.reload("/dashboardSKI/content");
-          } catch (error) {
-            if (error instanceof FetchError) {
-              globalAct.setErrorMsg(error.data.message);
-            } else {
-              globalAct.setErrorMsg("An unexpected error happened");
-            }
-          }
-
-          globalAct.setIsFetch(false);
-        }}
-      />
+      <FormContentUpdate />
     </div>
   );
 };

@@ -32,48 +32,7 @@ const UserModal = (props) => {
           </svg>
         </button>
       </div>
-      <FormUser
-        globalCtx={globalCtx}
-        globalAct={globalAct}
-        onSubmit={async function handleSubmit(e) {
-          e.preventDefault();
-          globalAct.setIsFetch(true);
-
-          const body = {
-            username: e.currentTarget.username.value,
-            username: e.currentTarget.username.value,
-            fullname: e.currentTarget.fullname.value,
-            address: e.currentTarget.address.value,
-            password: e.currentTarget.password.value,
-            email: e.currentTarget.email.value,
-            phone: e.currentTarget.phone.value,
-            outlet: e.currentTarget.outlet.value,
-            pict: [],
-            uri: "user/add",
-          };
-
-          try {
-            const res = await fetchJson("/api/prot/post", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            });
-            // globalAct.setNewData(res.data[0]);
-            // router.push("/dashboardSKI");
-            await router.replace("/dashboardSKI/admins");
-          } catch (error) {
-            console.log("error", error);
-            if (error instanceof FetchError) {
-              globalAct.setErrorMsg(error.data.message);
-            } else {
-              globalAct.setErrorMsg("An unexpected error happened");
-            }
-          }
-          // router.replace("/dashboardSKI/users");
-          globalAct.setModal("");
-          globalAct.setIsFetch(false);
-        }}
-      />
+      <FormUser />
     </div>
   );
 };

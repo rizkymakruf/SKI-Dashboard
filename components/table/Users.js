@@ -61,7 +61,7 @@ const UsersTable = ({
           <label className="switch">
             <input
               type="checkbox"
-              checked={a.active}
+              defaultChecked={a.active}
               onClick={async function handleSubmit(e) {
                 e.preventDefault();
                 globalAct.setIsFetch(true);

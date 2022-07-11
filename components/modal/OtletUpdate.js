@@ -34,53 +34,7 @@ const OtletUpdateModal = () => {
           </svg>
         </button>
       </div>
-      <FormOtletUpdate
-        globalCtx={globalCtx}
-        globalAct={globalAct}
-        onSubmit={async function handleSubmit(e) {
-          e.preventDefault();
-          globalAct.setIsFetch(true);
-
-          const body = {
-            key: e.currentTarget.key.value,
-            name: e.currentTarget.name.value,
-            pict: [],
-            description: e.currentTarget.description.value,
-            uri: "outlet/update",
-          };
-
-          try {
-            // const a = await axios.put(
-            //   `http://192.168.254.197:9036/outlet/update`,
-            //   {
-            //     headers: {
-            //       "Content-Type": "application/json",
-            //       Authorization: ``,
-            //     },
-            //     body: JSON.stringify(body),
-            //   }
-            // );
-            // console.log(a);
-            await fetchJson("/api/prot/put", {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            });
-            router.push("/dashboardSKI");
-          } catch (error) {
-            console.log("error", error);
-            if (error instanceof FetchError) {
-              globalAct.setErrorMsg(error.data.message);
-            } else {
-              globalAct.setErrorMsg("An unexpected error happened");
-            }
-          }
-
-          router.replace("/dashboardSKI/outlet");
-          globalAct.setModal("");
-          globalAct.setIsFetch(false);
-        }}
-      />
+      <FormOtletUpdate />
     </div>
   );
 };

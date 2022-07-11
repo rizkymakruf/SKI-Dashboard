@@ -9,7 +9,7 @@ const AddedBrandModal = () => {
   const router = useRouter();
 
   return (
-    <div className="bg-white w-full h-auto rounded-md shadow-sm shadow-black p-6 space-y-4">
+    <div className="w-full h-auto space-y-4">
       <TopBrand
         globalCtx={globalCtx}
         globalAct={globalAct}

@@ -32,42 +32,7 @@ const OtletModal = () => {
           </svg>
         </button>
       </div>
-      <FormOtlet
-        globalCtx={globalCtx}
-        globalAct={globalAct}
-        onSubmit={async function handleSubmit(e) {
-          e.preventDefault();
-          globalAct.setIsFetch(true);
-
-          const body = {
-            name: e.currentTarget.name.value,
-            shortname: e.currentTarget.shortname.value,
-            description: e.currentTarget.description.value,
-            pict: [],
-            uri: "outlet/add",
-          };
-          // console.log("ww", body);
-          try {
-            await fetchJson("/api/prot/post", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            });
-            // router.push("/dashboardSKI");
-          } catch (error) {
-            console.log("error", error);
-            if (error instanceof FetchError) {
-              globalAct.setErrorMsg(error.data.message);
-            } else {
-              globalAct.setErrorMsg("An unexpected error happened");
-            }
-          }
-
-          router.reload("/dashboardSKI/outlet");
-          globalAct.setModal("");
-          globalAct.setIsFetch(false);
-        }}
-      />
+      <FormOtlet />
     </div>
   );
 };

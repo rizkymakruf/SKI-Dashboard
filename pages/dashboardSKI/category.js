@@ -62,12 +62,39 @@ sessionOptions);
 
 const ManageCategory = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
-  const [inputValue, setInputValue] = useState("");
   const router = useRouter();
   const [data, setData] = useState(props.category);
   const [totalRows, setTotalRows] = useState(props.totalCat);
   const [perPage, setPerPage] = useState(10);
   const [isSearch, setIsSearch] = useState(false);
+
+  const onSetData = useCallback(
+    (x) => {
+      setData(x);
+    },
+    [data]
+  );
+
+  const onSetTotalRows = useCallback(
+    (x) => {
+      setTotalRows(x);
+    },
+    [totalRows]
+  );
+
+  const onSetPerPage = useCallback(
+    (x) => {
+      setPerPage(x);
+    },
+    [perPage]
+  );
+
+  const onSetIsSearch = useCallback(
+    (x) => {
+      setIsSearch(x);
+    },
+    [isSearch]
+  );
 
   useEffect(() => {
     globalAct.setFullname(props.fullName);
@@ -75,15 +102,18 @@ const ManageCategory = (props) => {
   }, []);
 
   const handlePageChange = useCallback((page) => {
+    console.log("perpage oke", perPage);
     fetchData((page - 1) * perPage, perPage);
   }, []);
 
-  const handlePerRowsChange = useCallback((newPerPage, page) => {
+  const handlePerRowsChange = useCallback((newPerPage) => {
     fetchData(0, newPerPage);
   }, []);
 
   const fetchData = useCallback(async (start, page) => {
     globalAct.setIsFetch(true);
+    console.log("perpage", perPage);
+    onSetPerPage(page);
     const body = {
       uri: "category",
       start: start,
@@ -95,8 +125,10 @@ const ManageCategory = (props) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      setData(res.data);
-      setTotalRows(res.total);
+      console.log(res);
+      onSetData(res.data);
+      onSetTotalRows(res.total);
+      onSetPerPage(page);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {
@@ -121,9 +153,9 @@ const ManageCategory = (props) => {
           console.log("search");
           return (
             <SearchCategory
-              setData={setData}
-              setTotalRows={setTotalRows}
-              setIsSearch={setIsSearch}
+              setData={onSetData}
+              setTotalRows={onSetTotalRows}
+              setIsSearch={onSetIsSearch}
             />
           );
         }, [])}

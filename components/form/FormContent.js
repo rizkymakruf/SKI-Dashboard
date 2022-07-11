@@ -1,48 +1,75 @@
-import { useState, useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { GlobalContext } from "context/global";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
 
-export default function FormContent({
-  myRef,
-  globalCtx,
-  globalAct,
-  onSubmit,
-  update,
-  setUpdate,
-  slide,
-  setSlide,
-  isFetch,
-  errorMessage,
-  cancelRemove,
-  handleImage,
-  removeMe,
-}) {
-  const [imageFile, setImageFile] = useState([]);
-  const inputFileImage = useRef(null);
+export default function FormContent() {
+  // const [imageFile, setImageFile] = useState([]);
+  // const inputFileImage = useRef(null);
 
-  const upLoad = (props, ref) => {
-    inputFileImage.current.click();
+  // const upLoad = (props, ref) => {
+  //   inputFileImage.current.click();
+  // };
+
+  // const resetForm = (e) => {
+  //   e.preventDefault();
+  //   document.querySelector("form").reset();
+  //   setSlide([]);
+  //   setUpdate([]);
+  // };
+
+  // useform mulai dari sini
+  const {
+    reset,
+    trigger,
+    isFetch,
+    setValue,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const { globalAct, globalCtx } = useContext(GlobalContext);
+  const router = useRouter();
+
+  const onSubmit = async (data) => {
+    const body = {
+      pict: [],
+      title: data.title,
+      label: data.label,
+      type: parseInt(data.type),
+      description: data.description,
+      uri: "content/add",
+    };
+
+    console.log("add content", body);
+
+    try {
+      await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      router.replace("/dashboardSKI/content");
+      reset();
+      globalAct.setModal("");
+    } catch (error) {
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        console.log(error);
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+
+    globalAct.setIsFetch(false);
   };
-
-  const resetForm = (e) => {
-    e.preventDefault();
-    document.querySelector("form").reset();
-    setSlide([]);
-    setUpdate([]);
-  };
-
-  const tb = [
-    {
-      p: 1,
-      title: "Top Slider",
-    },
-    {
-      title: "Bottom Slider",
-      p: 2,
-    },
-  ];
 
   return (
     <div className="w-full h-auto">
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full h-full select-none">
           <div className="w-full grid grid-cols-2 gap-3 h-full p-3 backdrop-blur bg-white/30 rounded-md border border-gray-300 shadow-md">
             <div className="w-full">
@@ -52,11 +79,28 @@ export default function FormContent({
                 </p>
                 <input
                   name="title"
-                  type="text"
-                  className="placeholder-gray-400 h-10 bg-gray-500/20 form-input mt-1 rounded-md border border-gray-300 w-full focus:ring-2 duration-500 focus:ring-blue-500"
                   placeholder="Title content"
-                  // disabled={globalCtx.isFetch ? "disabled" : ""}
-                />
+                  className={`rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
+                    errors.title
+                      ? "focus:outline-red-500 border-2 border-red-500"
+                      : null
+                  }`}
+                  {...register("title", {
+                    required: {
+                      value: true,
+                      message: "Title content harus di isi!",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("title");
+                  }}
+                ></input>
+
+                {errors.title && (
+                  <p className="text-xs text-red-500 pt-2">
+                    {errors.title.message}
+                  </p>
+                )}
               </div>
 
               <div className="w-full h-auto relative mb-4">
@@ -65,12 +109,29 @@ export default function FormContent({
                 </p>
                 <input
                   name="label"
-                  type="text"
                   autocomplete="off"
-                  className="placeholder-gray-400 h-10 bg-gray-500/20 form-input mt-1 rounded-md border border-gray-300 w-full focus:ring-2 duration-500 focus:ring-blue-500"
                   placeholder="Button content"
-                  // disabled={globalCtx.isFetch ? "disabled" : ""}
-                />
+                  className={`rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
+                    errors.label
+                      ? "focus:outline-red-500 border-2 border-red-500"
+                      : null
+                  }`}
+                  {...register("label", {
+                    required: {
+                      value: true,
+                      message: "Label content harus di isi!",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("label");
+                  }}
+                ></input>
+
+                {errors.title && (
+                  <p className="text-xs text-red-500 pt-2">
+                    {errors.title.message}
+                  </p>
+                )}
               </div>
 
               <div className="w-full h-auto relative mb-4">
@@ -78,14 +139,30 @@ export default function FormContent({
                 <select
                   name="type"
                   id="type"
-                  className="w-full rounded-md border-2 border-orange-500/50"
+                  className={`rounded-md p-2 border-2  border-orange-500/50 w-full ${
+                    errors.type
+                      ? "focus:outline-red-500 border-2 border-red-500"
+                      : null
+                  }`}
+                  {...register("type", {
+                    required: {
+                      value: true,
+                      message: "Type content harus di isi!",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("type");
+                  }}
                 >
-                  {/* {tb.map((dat, idx) => {
-                    return <option value={dat.p}>{dat.title}</option>;
-                  })} */}
                   <option value={1}>Top Slider</option>
                   <option value={2}>Bottom Slider</option>
                 </select>
+
+                {errors.type && (
+                  <p className="text-xs text-red-500 pt-2">
+                    {errors.type.message}
+                  </p>
+                )}
               </div>
 
               <div className="w-full h-auto relative mb-4">
@@ -94,11 +171,28 @@ export default function FormContent({
                 </p>
                 <textarea
                   name="description"
-                  type="text"
-                  className="placeholder-gray-400 h-32 bg-gray-500/20 form-input mt-1 rounded-md border border-gray-300 w-full focus:ring-2 duration-500 focus:ring-blue-500"
                   placeholder="Description content"
-                  // disabled={globalCtx.isFetch ? "disabled" : ""}
+                  className={`rounded-md p-2 border-2  border-orange-500/50 w-full h-32 ${
+                    errors.description
+                      ? "focus:outline-red-500 border-2 border-red-500"
+                      : null
+                  }`}
+                  {...register("description", {
+                    required: {
+                      value: true,
+                      message: "Description content harus di isi!",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("description");
+                  }}
                 />
+
+                {errors.description && (
+                  <p className="text-xs text-red-500 pt-2">
+                    {errors.description.message}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -111,15 +205,21 @@ export default function FormContent({
                 type="file"
                 name="pict"
                 id="fileContract"
-                ref={inputFileImage}
                 style={{ display: "none" }}
-                onChange={(e) => handleImage(e)}
                 disabled={isFetch ? "disabled" : ""}
+                // ref={inputFileImage}
+                // onChange={(e) => handleImage(e)}
+                {...register("pict", {
+                  required: {
+                    value: false,
+                    message: "pict",
+                  },
+                })}
               />
 
               <div className="w-full h-auto relative flex-row gap-2 flex items-center pt-2">
                 <div
-                  onClick={upLoad}
+                  // onClick={upLoad}
                   className="w-full h-32 relative z-0 flex text-gray-700 flex-col justify-center items-center rounded h-passport border-2 border-dashed bg-white backdrop-filter bg-opacity-20 backdrop-blur-lg"
                 >
                   {isFetch ? (
@@ -157,26 +257,20 @@ export default function FormContent({
                 </div>
               </div>
 
-              {errorMessage && (
+              {/* {errorMessage && (
                 <p className="px-4 text-red-600">{errorMessage}</p>
-              )}
+              )} */}
 
               <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                 <div className="w-full h-auto flex justify-end gap-2">
                   <button
+                    type="submit"
+                    onClick={() => setValue("pict", [])}
                     disabled={globalCtx.isFetch ? "disabled" : ""}
                     className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                   >
                     Save
                   </button>
-                  <span
-                    className={`${
-                      !isFetch && "invisible"
-                    } flex absolute h-4 w-4 top-3 right-4 -mt-1 -mr-1`}
-                  >
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-50 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-4 w-4 bg-red-300"></span>
-                  </span>
                 </div>
               </div>
             </div>
