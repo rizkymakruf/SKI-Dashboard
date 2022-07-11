@@ -71,6 +71,7 @@ const UsersTableCst = ({
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                   });
+                  router.reload("/dashboardSKI/customers");
                 } catch (error) {
                   console.log("error", error);
                   if (error instanceof FetchError) {
@@ -79,8 +80,6 @@ const UsersTableCst = ({
                     globalAct.setErrorMsg("An unexpected error happened");
                   }
                 }
-
-                router.reload("/dashboardSKI/customers");
               }}
             />
             <span className="slider round"></span>
@@ -98,7 +97,7 @@ const UsersTableCst = ({
           <button
             onClick={() => {
               globalAct.setModal("detailUserCst");
-              props.globalAct.setSelectedData(a);
+              globalAct.setSelectedData(a);
             }}
             className={
               "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-orange-500/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:before:content-['Detail'] border border-orange-300"

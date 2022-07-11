@@ -1,5 +1,5 @@
 import DataTable from "react-data-table-component";
-
+import { memo } from "react";
 const LastOrderTable = ({}) => {
   const data = [
     {
@@ -65,4 +65,4 @@ const LastOrderTable = ({}) => {
   );
 };
 
-export default LastOrderTable;
+export default memo(LastOrderTable);

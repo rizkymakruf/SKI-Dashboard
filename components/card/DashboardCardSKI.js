@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, memo } from "react";
 import { GlobalContext } from "context/global";
 
 const DashboardCardSKI = (props) => {
@@ -12,6 +12,8 @@ const DashboardCardSKI = (props) => {
   const { setModal } = props.globalAct;
   const { setSelectedData } = props.globalAct;
   const [active, setActive] = useState(props.otlet.active);
+  const [toggle, setToggle] = useState(props.otlet.active);
+
   return (
     <>
       <div className="duration-300 bg-white border-gray-300 border shadow-md w-full h-44 rounded-md p-4 flex flex-col justify-between hover:shadow-red-500 hover:scale-95">
@@ -46,7 +48,7 @@ const DashboardCardSKI = (props) => {
           <label className="switch">
             <input
               type="checkbox"
-              checked={active}
+              checked={toggle}
               globalCtx={globalCtx}
               globalAct={globalAct}
               onClick={async function handleSubmit(e) {
@@ -66,6 +68,7 @@ const DashboardCardSKI = (props) => {
                   });
                   // router.push("/dashboardSKI");
                   await router.reload("/dashboardSKI/outlet");
+                  // toggle ? setToggle(false) : setToggle(true);
                 } catch (error) {
                   console.log("error", error);
                   if (error instanceof FetchError) {
@@ -145,4 +148,4 @@ const DashboardCardSKI = (props) => {
   );
 };
 
-export default DashboardCardSKI;
+export default memo(DashboardCardSKI);

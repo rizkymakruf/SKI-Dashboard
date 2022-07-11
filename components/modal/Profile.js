@@ -1,5 +1,4 @@
-import FormProduct from "components/form/FormProduct";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, memo, useCallback } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { GlobalContext } from "context/global";
 import Link from "next/link";
@@ -12,7 +11,7 @@ const Profile = () => {
     console.log("fetch data status : ", globalCtx.isFetch);
   }, [globalCtx]);
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     const body = {
       uri: "logout",
     };
@@ -31,7 +30,7 @@ const Profile = () => {
       // }
     }
     await router.push("/");
-  };
+  }, []);
   return (
     <div
       className="bg-white w-full h-auto rounded-md shadow-sm shadow-black"
@@ -114,4 +113,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default memo(Profile);

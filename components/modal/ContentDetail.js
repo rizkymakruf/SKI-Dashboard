@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, memo, useMemo } from "react";
 import { GlobalContext } from "context/global";
 import DetailUser from "components/card/DetailUser";
 import DetailContent from "components/card/DetailContent";
@@ -30,9 +30,11 @@ const ContentDetailModal = () => {
           </svg>
         </button>
       </div>
-      <DetailContent globalCtx={globalCtx} globalAct={globalAct} />
+      {useMemo(() => {
+        return <DetailContent globalCtx={globalCtx} globalAct={globalAct} />;
+      }, [])}
     </div>
   );
 };
 
-export default ContentDetailModal;
+export default memo(ContentDetailModal);

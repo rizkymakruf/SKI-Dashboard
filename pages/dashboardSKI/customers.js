@@ -77,6 +77,7 @@ const ManageUsersCst = (props) => {
   }, []);
 
   const handlePerRowsChange = useCallback((newPerPage, page) => {
+    setPerPage(newPerPage);
     fetchData(0, newPerPage);
   }, []);
 
@@ -95,6 +96,7 @@ const ManageUsersCst = (props) => {
       });
       setData(res.data);
       setTotalRows(res.total);
+      setPerPage(page);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {

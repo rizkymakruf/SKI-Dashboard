@@ -1,6 +1,6 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext } from "react";
+import { useContext, memo } from "react";
 
 const VoucherTable = ({
   data,
@@ -71,4 +71,4 @@ const VoucherTable = ({
   );
 };
 
-export default VoucherTable;
+export default memo(VoucherTable);

@@ -44,8 +44,10 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   const uid = JSON.parse(atob(user.access_token.split(".")[1]));
   const checkUids = await checkUid(uid.user_id);
-  const outlet = await findOutlet(checkUids[0].outlet);
-
+  let outlet = [];
+  if (checkUids[0].outlet != "") {
+    outlet = await findOutlet(checkUids[0]?.outlet);
+  }
   if (checkUids.length < 1) {
     return redirect("/");
   }

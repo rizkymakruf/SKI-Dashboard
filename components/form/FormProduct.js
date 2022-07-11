@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 
-export default function FormProduct({ myRef, globalCtx, globalAct, onSubmit }) {
+const FormProduct = ({ myRef, globalCtx, globalAct, onSubmit }) => {
   const [detail, setDetail] = useState(false);
   const [infoLengkap, setInfoLengkap] = useState(false);
 
@@ -173,4 +173,6 @@ export default function FormProduct({ myRef, globalCtx, globalAct, onSubmit }) {
       </form>
     </div>
   );
-}
+};
+
+export default memo(FormProduct);

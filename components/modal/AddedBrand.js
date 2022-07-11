@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, memo, useMemo } from "react";
 import { GlobalContext } from "context/global";
 import TopBrand from "components/form/TopBrand";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -10,42 +10,46 @@ const AddedBrandModal = () => {
 
   return (
     <div className="w-full h-auto space-y-4">
-      <TopBrand
-        globalCtx={globalCtx}
-        globalAct={globalAct}
-        onSubmit={async function handleSubmit(e) {
-          e.preventDefault();
-          globalAct.setIsFetch(true);
+      {useMemo(() => {
+        return (
+          <TopBrand
+            globalCtx={globalCtx}
+            globalAct={globalAct}
+            onSubmit={async function handleSubmit(e) {
+              e.preventDefault();
+              globalAct.setIsFetch(true);
 
-          const body = {
-            key: e.currentTarget.key.value,
-            position: parseInt(e.currentTarget.position.value),
-            uri: "outlet/brand",
-          };
+              const body = {
+                key: e.currentTarget.key.value,
+                position: parseInt(e.currentTarget.position.value),
+                uri: "outlet/brand",
+              };
 
-          try {
-            await fetchJson("/api/prot/patch", {
-              method: "PATCH",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            });
-            // router.push("/dashboardSKI");
-          } catch (error) {
-            console.log("error", error);
-            if (error instanceof FetchError) {
-              globalAct.setErrorMsg(error.data.message);
-            } else {
-              globalAct.setErrorMsg("An unexpected error happened");
-            }
-          }
+              try {
+                await fetchJson("/api/prot/patch", {
+                  method: "PATCH",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                });
+                // router.push("/dashboardSKI");
+              } catch (error) {
+                console.log("error", error);
+                if (error instanceof FetchError) {
+                  globalAct.setErrorMsg(error.data.message);
+                } else {
+                  globalAct.setErrorMsg("An unexpected error happened");
+                }
+              }
 
-          router.reload("/dashboardSKI/topBrand");
-          globalAct.setModal("");
-          globalAct.setIsFetch(false);
-        }}
-      />
+              router.reload("/dashboardSKI/topBrand");
+              globalAct.setModal("");
+              globalAct.setIsFetch(false);
+            }}
+          />
+        );
+      }, [])}
     </div>
   );
 };
 
-export default AddedBrandModal;
+export default memo(AddedBrandModal);

@@ -1,6 +1,6 @@
 import { getLayout } from "components/layout/Navbar";
 import DashboardCardSKI from "components/card/DashboardCardSKI";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo, useCallback } from "react";
 import { useRouter } from "next/router";
 import { GlobalContext } from "context/global";
 import AddOtlet from "components/card/AddOtlet";
@@ -65,23 +65,28 @@ const Otlets = (props) => {
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-4">
-      <AddOtlet globalAct={globalAct} globalCtx={globalCtx} />
+      {useMemo(() => {
+        console.log("add");
+        return <AddOtlet globalAct={globalAct} globalCtx={globalCtx} />;
+      }, [])}
       <div>
         <hr />
       </div>
 
       <div className="w-full grid grid-cols-3 items-center gap-4">
-        {props.allOutlet.map((dat, idx) => {
-          return (
-            <div className="w-full">
-              <DashboardCardSKI
-                globalAct={globalAct}
-                globalCtx={globalCtx}
-                otlet={dat}
-              />
-            </div>
-          );
-        })}
+        {useMemo(() => {
+          return props.allOutlet.map((dat, idx) => {
+            return (
+              <div className="w-full">
+                <DashboardCardSKI
+                  globalAct={globalAct}
+                  globalCtx={globalCtx}
+                  otlet={dat}
+                />
+              </div>
+            );
+          });
+        }, [props.allOutlet])}
       </div>
     </div>
   );

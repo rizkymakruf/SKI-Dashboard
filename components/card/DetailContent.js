@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const DetailContent = (props) => {
   // const { modal } = props.globalCtx;
   // const { setModal } = props.globalAct;
@@ -48,4 +50,4 @@ const DetailContent = (props) => {
   );
 };
 
-export default DetailContent;
+export default memo(DetailContent);

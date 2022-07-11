@@ -1,5 +1,5 @@
 import FormProduct from "components/form/FormProduct";
-import { useContext } from "react";
+import { useContext, memo, useMemo } from "react";
 import { GlobalContext } from "context/global";
 import FormContent from "components/form/FormContent";
 import FormContentUpdate from "components/form/FormContentUpdate";
@@ -32,9 +32,11 @@ const ContentUpdateModal = () => {
           </svg>
         </button>
       </div>
-      <FormContentUpdate />
+      {useMemo(() => {
+        return <FormContentUpdate />;
+      }, [])}
     </div>
   );
 };
 
-export default ContentUpdateModal;
+export default memo(ContentUpdateModal);

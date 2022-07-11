@@ -1,6 +1,6 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext } from "react";
+import { useContext, memo } from "react";
 import { useRouter } from "next/router";
 
 const TopBrandListTable = ({
@@ -80,4 +80,4 @@ const TopBrandListTable = ({
   );
 };
 
-export default TopBrandListTable;
+export default memo(TopBrandListTable);

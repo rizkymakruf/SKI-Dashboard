@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useContext } from "react";
+import { useContext, memo, useCallback } from "react";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-export default function FormUpdateCategory() {
+const FormUpdateCategory = () => {
   const {
     reset,
     trigger,
@@ -17,7 +17,7 @@ export default function FormUpdateCategory() {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback(async (data) => {
     console.log("disi", data);
 
     const body = {
@@ -45,7 +45,7 @@ export default function FormUpdateCategory() {
       }
     }
     globalAct.setIsFetch(false);
-  };
+  }, []);
 
   return (
     <div className="w-full h-auto">
@@ -112,4 +112,6 @@ export default function FormUpdateCategory() {
       </form>
     </div>
   );
-}
+};
+
+export default memo(FormUpdateCategory);

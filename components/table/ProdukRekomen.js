@@ -1,6 +1,6 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext } from "react";
+import { useContext, memo } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
@@ -110,4 +110,4 @@ const ProdukRekomenTable = ({
   );
 };
 
-export default ProdukRekomenTable;
+export default memo(ProdukRekomenTable);

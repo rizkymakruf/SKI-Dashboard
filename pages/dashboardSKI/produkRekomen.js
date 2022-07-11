@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useMemo, useCallback } from "react";
 import { getLayout } from "components/layout/Navbar";
 import { GlobalContext } from "context/global";
 import ProdukRekomenTable from "components/table/ProdukRekomen";
@@ -73,7 +73,6 @@ sessionOptions);
 
 const ManageProdukRekomen = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
-  const [inputValue, setInputValue] = useState("");
   const router = useRouter();
   const [data, setData] = useState(props.product);
   const [recomd, setRecomd] = useState(props.recomd);
@@ -90,25 +89,25 @@ const ManageProdukRekomen = (props) => {
     globalAct.setAdminMode("ski");
   }, []);
 
-  useEffect(() => {
-    console.log(searchData);
-  }, [searchData]);
-
-  const handlePageChange = (page) => {
+  const handlePageChange = useCallback((page) => {
     fetchData((page - 1) * perPage, perPage, "p");
-  };
-  const handlePageChangeRec = (page) => {
+  }, []);
+
+  const handlePageChangeRec = useCallback((page) => {
     fetchData((page - 1) * perPage, perPage, "r");
-  };
+  }, []);
 
-  const handlePerRowsChange = (newPerPage, page) => {
+  const handlePerRowsChange = useCallback((newPerPage, page) => {
+    setPerPage(newPerPage);
     fetchData(0, newPerPage, "p");
-  };
-  const handlePerRowsChangeRec = (newPerPage, page) => {
-    fetchData(0, newPerPage, "r");
-  };
+  }, []);
 
-  const fetchData = async (start, page, type) => {
+  const handlePerRowsChangeRec = useCallback((newPerPage, page) => {
+    setPerPageRec(newPerPage);
+    fetchData(0, newPerPage, "r");
+  }, []);
+
+  const fetchData = useCallback(async (start, page, type) => {
     globalAct.setIsFetch(true);
     const body = {
       uri: type === "p" ? "product/other" : type === "r" && "product/recommend",
@@ -138,33 +137,47 @@ const ManageProdukRekomen = (props) => {
       }
     }
     globalAct.setIsFetch(false);
-  };
+  }, []);
 
   return (
     <div className="w-full flex flex-col p-5 gap-y-5">
       <div className="w-full p-4 border border-gray-200 rounded-md shadow-md">
-        <SearchProduct
-          setSearchData={setSearchData}
-          setIsSearch={setIsSearch}
-        />
+        {useMemo(() => {
+          return (
+            <SearchProduct
+              setSearchData={setSearchData}
+              setIsSearch={setIsSearch}
+            />
+          );
+        }, [])}
         {!isSearch ? (
           <div className="flex gap-6 my-4">
-            <ProdukRekomenListTable
-              data={data}
-              totalRows={totalRows}
-              handlePageChange={handlePageChange}
-              handlePerRowsChange={handlePerRowsChange}
-            />
-            <ProdukRekomenTable
-              data={recomd}
-              totalRows={totalRowsRec}
-              handlePageChange={handlePageChangeRec}
-              handlePerRowsChange={handlePerRowsChangeRec}
-            />
+            {useMemo(() => {
+              return (
+                <ProdukRekomenListTable
+                  data={data}
+                  totalRows={totalRows}
+                  handlePageChange={handlePageChange}
+                  handlePerRowsChange={handlePerRowsChange}
+                />
+              );
+            }, [data])}
+            {useMemo(() => {
+              return (
+                <ProdukRekomenTable
+                  data={recomd}
+                  totalRows={totalRowsRec}
+                  handlePageChange={handlePageChangeRec}
+                  handlePerRowsChange={handlePerRowsChangeRec}
+                />
+              );
+            }, [recomd])}
           </div>
         ) : (
           <div className="flex gap-6 my-4">
-            <Products data={searchData} />
+            {useMemo(() => {
+              return <Products data={searchData} />;
+            }, [searchData])}
           </div>
         )}
       </div>

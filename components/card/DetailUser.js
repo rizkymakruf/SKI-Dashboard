@@ -1,6 +1,6 @@
 import { GlobalContext } from "context/global";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useContext, useState, memo } from "react";
 
 const DetailUser = (props) => {
   // const { globalCtx, globalAct } = useContext(GlobalContext);
@@ -68,4 +68,4 @@ const DetailUser = (props) => {
   );
 };
 
-export default DetailUser;
+export default memo(DetailUser);

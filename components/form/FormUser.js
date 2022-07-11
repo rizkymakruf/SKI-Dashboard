@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useContext } from "react";
+import { useContext, memo, useCallback } from "react";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-export default function FormUser() {
+const FormUser = () => {
   // const [imageFile, setImageFile] = useState([]);
   // const inputFileImage = useRef(null);
 
@@ -34,7 +34,7 @@ export default function FormUser() {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback(async (data) => {
     const body = {
       username: data.username,
       fullname: data.fullname,
@@ -69,7 +69,7 @@ export default function FormUser() {
     }
 
     globalAct.setIsFetch(false);
-  };
+  }, []);
 
   return (
     <>
@@ -417,4 +417,6 @@ export default function FormUser() {
       </div>
     </>
   );
-}
+};
+
+export default memo(FormUser);

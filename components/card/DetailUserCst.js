@@ -1,6 +1,6 @@
 import { GlobalContext } from "context/global";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useContext, useState, memo } from "react";
 
 const DetailUserCst = (props) => {
   return (
@@ -33,7 +33,7 @@ const DetailUserCst = (props) => {
             <div className="grid grid-cols-2">
               <p className="text-md font-semibold text-red-500">Address</p>
               <p className="text-md font-semibold text-gray-500">
-                {props.globalCtx.selectedData.address}
+                {/* {props.globalCtx.selectedData.address?.detail} */}
               </p>
             </div>
           </div>
@@ -56,4 +56,4 @@ const DetailUserCst = (props) => {
   );
 };
 
-export default DetailUserCst;
+export default memo(DetailUserCst);

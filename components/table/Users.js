@@ -61,7 +61,9 @@ const UsersTable = ({
           <label className="switch">
             <input
               type="checkbox"
-              defaultChecked={a.active}
+              checked={a.active}
+              globalCtx={globalCtx}
+              globalAct={globalAct}
               onClick={async function handleSubmit(e) {
                 e.preventDefault();
                 globalAct.setIsFetch(true);
@@ -79,7 +81,7 @@ const UsersTable = ({
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                   });
-                  await router.replace("/dashboardSKI/admins");
+                  router.reload("/dashboardSKI/admins");
                 } catch (error) {
                   console.log("error", error);
                   if (error instanceof FetchError) {
@@ -88,9 +90,6 @@ const UsersTable = ({
                     globalAct.setErrorMsg("An unexpected error happened");
                   }
                 }
-
-                globalAct.setModal("");
-                globalAct.setIsFetch(false);
               }}
             />
             <span className="slider round"></span>

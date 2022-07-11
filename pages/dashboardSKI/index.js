@@ -68,8 +68,6 @@ const DashboardSKI = (props) => {
   useEffect(() => {
     globalAct.setFullname(props.fullName);
     globalAct.setAdminMode("ski");
-    // globalAct.setIsFetch(false);
-    // globalAct.setErrorMsg("");
   }, []);
   {
     /* Default */
@@ -77,45 +75,48 @@ const DashboardSKI = (props) => {
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-4">
-      {/* <div>
-        <hr />
-      </div> */}
       <div className="flex items-center gap-x-4">
-        <div className="w-full grid grid-cols-2 gap-4">
-          <div className="w-full border border-gray-200 rounded-md hover:shadow-md px-3 py-6">
-            <p className="pb-2 text-red-500 font-semibold">
-              Pendapatan Perbulan
-            </p>
-            <div className="bg-white w-full h-44 rounded-md flex flex-col justify-between">
-              <Line1 qty={props.qty} />
+        {useMemo(() => {
+          return (
+            <div className="w-full grid grid-cols-2 gap-4">
+              <div className="w-full border border-gray-200 rounded-md hover:shadow-md px-3 py-6">
+                <p className="pb-2 text-red-500 font-semibold">
+                  Pendapatan Perbulan
+                </p>
+                <div className="bg-white w-full h-44 rounded-md flex flex-col justify-between">
+                  <Line1 qty={props.qty} />
+                </div>
+              </div>
+              <div className="w-full border border-gray-200 rounded-md hover:shadow-md px-3 py-6">
+                <p className="pb-2 text-red-500 font-semibold">
+                  Penjualan Perbulan
+                </p>
+                <div className="bg-white  w-full h-44 rounded-md flex flex-col justify-between">
+                  <Line rp={props.rp} />
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="w-full border border-gray-200 rounded-md hover:shadow-md px-3 py-6">
-            <p className="pb-2 text-red-500 font-semibold">
-              Penjualan Perbulan
-            </p>
-            <div className="bg-white  w-full h-44 rounded-md flex flex-col justify-between">
-              <Line rp={props.rp} />
-            </div>
-          </div>
-        </div>
+          );
+        }, [props.qty, props.rp])}
       </div>
       <div>
         <hr />
       </div>
 
       <div className="w-full grid grid-cols-3 items-center gap-4">
-        {props.allOutlet.map((dat, idx) => {
-          return (
-            <div className="w-full">
-              <DashboardCardSKI
-                globalAct={globalAct}
-                globalCtx={globalCtx}
-                otlet={dat}
-              />
-            </div>
-          );
-        })}
+        {useMemo(() => {
+          return props.allOutlet.map((dat, idx) => {
+            return (
+              <div className="w-full">
+                <DashboardCardSKI
+                  globalAct={globalAct}
+                  globalCtx={globalCtx}
+                  otlet={dat}
+                />
+              </div>
+            );
+          });
+        }, [props.allOutlet])}
       </div>
     </div>
   );

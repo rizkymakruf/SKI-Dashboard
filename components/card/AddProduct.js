@@ -1,3 +1,4 @@
+import { memo } from "react";
 const AddCard = (props) => {
   const { modal } = props.globalCtx;
   const { setModal } = props.globalAct;
@@ -15,4 +16,4 @@ const AddCard = (props) => {
   );
 };
 
-export default AddCard;
+export default memo(AddCard);

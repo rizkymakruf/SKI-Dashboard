@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useContext } from "react";
+import { useContext, memo, useCallback } from "react";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-export default function FormContentUpdate() {
+const FormContentUpdate = () => {
   // const [imageFile, setImageFile] = useState([]);
   // const inputFileImage = useRef(null);
 
@@ -44,7 +44,7 @@ export default function FormContentUpdate() {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback(async (data) => {
     const body = {
       pict: [],
       key: data.key,
@@ -77,7 +77,7 @@ export default function FormContentUpdate() {
     }
 
     globalAct.setIsFetch(false);
-  };
+  }, []);
 
   return (
     <div className="w-full h-auto">
@@ -184,8 +184,6 @@ export default function FormContentUpdate() {
                       </option>
                     );
                   })}
-                  {/* <option value={1}>Top Slider</option>
-                  <option value={2}>Bottom Slider</option> */}
 
                   {errors.type && (
                     <p className="text-xs text-red-500 pt-2">
@@ -314,4 +312,6 @@ export default function FormContentUpdate() {
       </form>
     </div>
   );
-}
+};
+
+export default memo(FormContentUpdate);

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, memo, useMemo } from "react";
 import { GlobalContext } from "context/global";
 import FormUpdateCategory from "components/form/FormUpdateCategory";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -32,9 +32,10 @@ const CategoryModal = () => {
           </svg>
         </button>
       </div>
-      <FormUpdateCategory />
+      {useMemo(() => {
+      return <FormUpdateCategory />},[])}
     </div>
   );
 };
 
-export default CategoryModal;
+export default memo(CategoryModal);

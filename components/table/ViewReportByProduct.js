@@ -1,4 +1,4 @@
-import React from "react";
+import { memo, useCallback } from "react";
 import DataTable from "react-data-table-component";
 
 const ViewReportByProductTable = ({
@@ -7,17 +7,17 @@ const ViewReportByProductTable = ({
   handlePageChange,
   handlePerRowsChange,
 }) => {
-  const CountIncome = (a) => {
+  const CountIncome = useCallback((a) => {
     var x = 0;
     a.map((e) => (x += e.order));
     return x;
-  };
+  }, []);
 
-  const CountProduct = (a) => {
+  const CountProduct = useCallback((a) => {
     var x = 0;
     a.map((e) => (x += e.qty));
     return x;
-  };
+  }, []);
 
   const columns = [
     {
@@ -93,4 +93,4 @@ const ViewReportByProductTable = ({
   );
 };
 
-export default React.memo(ViewReportByProductTable);
+export default memo(ViewReportByProductTable);

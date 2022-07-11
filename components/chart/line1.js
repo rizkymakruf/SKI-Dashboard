@@ -14,7 +14,7 @@ ChartJS.register(LineController, LineElement, PointElement, LinearScale, Title);
 
 import { ConfigLine } from "components/chart/chartConfig";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, memo } from "react";
 
 const CoinPriceChart = (props) => {
   const data = {
@@ -46,4 +46,4 @@ const CoinPriceChart = (props) => {
   );
 };
 
-export default CoinPriceChart;
+export default memo(CoinPriceChart);

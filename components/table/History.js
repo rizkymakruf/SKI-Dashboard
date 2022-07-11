@@ -1,6 +1,6 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext } from "react";
+import { useContext, memo } from "react";
 
 const OrderTable = ({}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
@@ -34,28 +34,28 @@ const OrderTable = ({}) => {
   ];
   const columns = [
     {
-      name: <div className='font-bold text-red-500'>User Order</div>,
+      name: <div className="font-bold text-red-500">User Order</div>,
       grow: 2,
       cell: (a) => (
-        <div className='w-full h-full py-1 flex flex-row gap-1 items-center'>
-          <p className='text-xs font-bold'>{a.order_by}</p>
+        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
+          <p className="text-xs font-bold">{a.order_by}</p>
         </div>
       ),
     },
     {
-      name: <div className='font-bold text-red-500'>Destinasi Order</div>,
+      name: <div className="font-bold text-red-500">Destinasi Order</div>,
       grow: 4,
       cell: (a) => (
-        <div className='w-full h-full py-1 flex flex-row gap-1 items-center'>
-          <p className='text-xs font-bold'>{a.tujuan}</p>
+        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
+          <p className="text-xs font-bold">{a.tujuan}</p>
         </div>
       ),
     },
     {
-      name: <div className='font-bold text-red-500'>Status</div>,
+      name: <div className="font-bold text-red-500">Status</div>,
       grow: 1,
       cell: (a) => (
-        <div className='w-full h-full py-1 flex flex-row gap-1 items-center'>
+        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
           <p
             className={`text-xs font-bold px-2 shadow-md py-1 rounded-xl ${
               a.status === "PENDING"
@@ -72,11 +72,11 @@ const OrderTable = ({}) => {
     },
     {
       name: (
-        <div className='w-full text-center font-bold text-red-500'>Action</div>
+        <div className="w-full text-center font-bold text-red-500">Action</div>
       ),
       grow: 2,
       cell: (a) => (
-        <div className='flex flex-row items-center justify-center gap-x-2 w-full'>
+        <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button
             onClick={() => globalAct.setModal("userOrder")}
             className={
@@ -84,16 +84,16 @@ const OrderTable = ({}) => {
             }
           >
             <svg
-              xmlns='http://www.w3.org/2000/svg'
-              className='h-5 w-5 text-orange-500'
-              viewBox='0 0 20 20'
-              fill='currentColor'
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-orange-500"
+              viewBox="0 0 20 20"
+              fill="currentColor"
             >
-              <path d='M10 12a2 2 0 100-4 2 2 0 000 4z' />
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
               <path
-                fillRule='evenodd'
-                d='M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z'
-                clipRule='evenodd'
+                fillRule="evenodd"
+                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                clipRule="evenodd"
               />
             </svg>
           </button>
@@ -103,7 +103,7 @@ const OrderTable = ({}) => {
   ];
 
   return (
-    <div className='w-full h-auto relative border shadow rounded'>
+    <div className="w-full h-auto relative border shadow rounded">
       <DataTable
         // title={<p className="text-red-500 font-bold">Order List</p>}
         columns={columns}
@@ -116,4 +116,4 @@ const OrderTable = ({}) => {
   );
 };
 
-export default OrderTable;
+export default memo(OrderTable);

@@ -68,34 +68,6 @@ const ManageCategory = (props) => {
   const [perPage, setPerPage] = useState(10);
   const [isSearch, setIsSearch] = useState(false);
 
-  const onSetData = useCallback(
-    (x) => {
-      setData(x);
-    },
-    [data]
-  );
-
-  const onSetTotalRows = useCallback(
-    (x) => {
-      setTotalRows(x);
-    },
-    [totalRows]
-  );
-
-  const onSetPerPage = useCallback(
-    (x) => {
-      setPerPage(x);
-    },
-    [perPage]
-  );
-
-  const onSetIsSearch = useCallback(
-    (x) => {
-      setIsSearch(x);
-    },
-    [isSearch]
-  );
-
   useEffect(() => {
     globalAct.setFullname(props.fullName);
     globalAct.setAdminMode("ski");
@@ -106,14 +78,14 @@ const ManageCategory = (props) => {
     fetchData((page - 1) * perPage, perPage);
   }, []);
 
-  const handlePerRowsChange = useCallback((newPerPage) => {
+  const handlePerRowsChange = useCallback((newPerPage, page) => {
+    setPerPage(newPerPage);
     fetchData(0, newPerPage);
   }, []);
 
   const fetchData = useCallback(async (start, page) => {
     globalAct.setIsFetch(true);
     console.log("perpage", perPage);
-    onSetPerPage(page);
     const body = {
       uri: "category",
       start: start,
@@ -126,9 +98,9 @@ const ManageCategory = (props) => {
         body: JSON.stringify(body),
       });
       console.log(res);
-      onSetData(res.data);
-      onSetTotalRows(res.total);
-      onSetPerPage(page);
+      setData(res.data);
+      setTotalRows(res.total);
+      setPerPage(page);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {
@@ -153,9 +125,9 @@ const ManageCategory = (props) => {
           console.log("search");
           return (
             <SearchCategory
-              setData={onSetData}
-              setTotalRows={onSetTotalRows}
-              setIsSearch={onSetIsSearch}
+              setData={setData}
+              setTotalRows={setTotalRows}
+              setIsSearch={setIsSearch}
             />
           );
         }, [])}

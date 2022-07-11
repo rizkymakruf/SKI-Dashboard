@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, memo, useMemo } from "react";
 import { GlobalContext } from "context/global";
 import FormUser from "components/form/FormUser";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -32,9 +32,11 @@ const UserModal = (props) => {
           </svg>
         </button>
       </div>
-      <FormUser />
+      {useMemo(() => {
+        return <FormUser />;
+      }, [])}
     </div>
   );
 };
 
-export default UserModal;
+export default memo(UserModal);

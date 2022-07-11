@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import DataTable from "react-data-table-component";
 
 const ViewReportByBrandTable = ({
@@ -59,4 +59,4 @@ const ViewReportByBrandTable = ({
   );
 };
 
-export default React.memo(ViewReportByBrandTable);
+export default memo(ViewReportByBrandTable);

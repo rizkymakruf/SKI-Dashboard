@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, memo, useMemo } from "react";
 import { GlobalContext } from "context/global";
 import FormUserUpdate from "components/form/FormUserUpdate";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -32,49 +32,53 @@ const UserUpdateModal = (props) => {
           </svg>
         </button>
       </div>
-      <FormUserUpdate
-        globalCtx={globalCtx}
-        globalAct={globalAct}
-        onSubmit={async function handleSubmit(e) {
-          e.preventDefault();
-          globalAct.setIsFetch(true);
+      {useMemo(() => {
+        return (
+          <FormUserUpdate
+            globalCtx={globalCtx}
+            globalAct={globalAct}
+            onSubmit={async function handleSubmit(e) {
+              e.preventDefault();
+              globalAct.setIsFetch(true);
 
-          const body = {
-            key: e.currentTarget.key.value,
-            username: e.currentTarget.username.value,
-            fullname: e.currentTarget.fullname.value,
-            address: e.currentTarget.address.value,
-            email: e.currentTarget.email.value,
-            phone: e.currentTarget.phone.value,
-            outlet: e.currentTarget.outlet.value,
-            pict: [],
-            uri: "user/update",
-          };
+              const body = {
+                key: e.currentTarget.key.value,
+                username: e.currentTarget.username.value,
+                fullname: e.currentTarget.fullname.value,
+                address: e.currentTarget.address.value,
+                email: e.currentTarget.email.value,
+                phone: e.currentTarget.phone.value,
+                outlet: e.currentTarget.outlet.value,
+                pict: [],
+                uri: "user/update",
+              };
 
-          try {
-            await fetchJson("/api/prot/put", {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            });
-            // router.push("/dashboardSKI");
-            router.reload();
-          } catch (error) {
-            console.log("error", error);
-            if (error instanceof FetchError) {
-              globalAct.setErrorMsg(error.data.message);
-            } else {
-              globalAct.setErrorMsg("An unexpected error happened");
-            }
-          }
+              try {
+                await fetchJson("/api/prot/put", {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                });
+                // router.push("/dashboardSKI");
+                router.reload();
+              } catch (error) {
+                console.log("error", error);
+                if (error instanceof FetchError) {
+                  globalAct.setErrorMsg(error.data.message);
+                } else {
+                  globalAct.setErrorMsg("An unexpected error happened");
+                }
+              }
 
-          // router.replace("/dashboardSKI/users");
-          globalAct.setModal("");
-          globalAct.setIsFetch(false);
-        }}
-      />
+              // router.replace("/dashboardSKI/users");
+              globalAct.setModal("");
+              globalAct.setIsFetch(false);
+            }}
+          />
+        );
+      }, [])}
     </div>
   );
 };
 
-export default UserUpdateModal;
+export default memo(UserUpdateModal);

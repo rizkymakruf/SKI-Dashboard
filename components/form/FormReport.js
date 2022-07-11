@@ -1,4 +1,5 @@
-export default function FormReport({
+import { memo } from "react";
+const FormReport = (
   myRef,
   globalCtx,
   globalAct,
@@ -11,8 +12,8 @@ export default function FormReport({
   errorMessage,
   cancelRemove,
   handleImage,
-  removeMe,
-}) {
+  removeMe
+) => {
   const data = [
     {
       key: "brand",
@@ -86,4 +87,6 @@ export default function FormReport({
       </div>
     </>
   );
-}
+};
+
+export default memo(FormReport);

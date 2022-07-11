@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import { memo } from "react";
 const DashboardCard = (props) => {
   return (
     <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-full h-44 rounded-md p-4 flex flex-col justify-between hover:shadow-red-500 hover:scale-95">
@@ -38,4 +38,4 @@ const DashboardCard = (props) => {
   );
 };
 
-export default DashboardCard;
+export default memo(DashboardCard);

@@ -1,4 +1,6 @@
-export default function TopBrand({ globalCtx, globalAct, onSubmit }) {
+import { memo } from "react";
+
+const TopBrand = ({ globalCtx, globalAct, onSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
       <div className="w-full flex-row justify-between items-center gap-6">
@@ -33,4 +35,6 @@ export default function TopBrand({ globalCtx, globalAct, onSubmit }) {
       </div>
     </form>
   );
-}
+};
+
+export default memo(TopBrand);

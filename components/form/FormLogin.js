@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 
-export default function FormLogin({ myRef, globalCtx, globalAct, onSubmit }) {
+const FormLogin = ({ myRef, globalCtx, globalAct, onSubmit }) => {
   const [formType, setFormType] = useState(false);
   return (
     <div className="w-full h-auto">
@@ -65,4 +65,6 @@ export default function FormLogin({ myRef, globalCtx, globalAct, onSubmit }) {
       </form>
     </div>
   );
-}
+};
+
+export default memo(FormLogin);

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Link from "next/link";
 
 const OrderCard = (props) => {
@@ -44,4 +45,4 @@ const OrderCard = (props) => {
   );
 };
 
-export default OrderCard;
+export default memo(OrderCard);

@@ -71,34 +71,6 @@ const ManageUsers = (props) => {
   const [perPage, setPerPage] = useState(10);
   const [isSearch, setIsSearch] = useState(false);
 
-  const onSetDataUser = useCallback(
-    (x) => {
-      setDataUser(x);
-    },
-    [dataUser]
-  );
-
-  const onSetTotalRows = useCallback(
-    (x) => {
-      setTotalRows(x);
-    },
-    [totalRows]
-  );
-
-  const onSetIsSearch = useCallback(
-    (x) => {
-      setIsSearch(x);
-    },
-    [isSearch]
-  );
-
-  const onSetPerPage = useCallback(
-    (x) => {
-      setPerPage(x);
-    },
-    [perPage]
-  );
-
   useEffect(() => {
     globalAct.setListOutlet(props.listOutlet);
     globalAct.setFullname(props.fullName);
@@ -110,7 +82,7 @@ const ManageUsers = (props) => {
   }, []);
 
   const handlePerRowsChange = useCallback((newPerPage, page) => {
-    onSetPerPage(newPerPage);
+    setPerPage(newPerPage);
     fetchData(0, newPerPage);
   }, []);
 
@@ -127,7 +99,9 @@ const ManageUsers = (props) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      onSetDataUser(res.data);
+      setDataUser(res.data);
+      setTotalRows(res.total);
+      setPerPage(page);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {
@@ -152,9 +126,9 @@ const ManageUsers = (props) => {
           console.log("searchuser");
           return (
             <SearchUser
-              setData={onSetDataUser}
-              setTotalRows={onSetTotalRows}
-              setIsSearch={onSetIsSearch}
+              setData={setDataUser}
+              setTotalRows={setTotalRows}
+              setIsSearch={setIsSearch}
             />
           );
         }, [])}

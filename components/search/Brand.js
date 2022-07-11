@@ -1,3 +1,4 @@
+import { memo } from "react";
 const SearchBrand = () => {
   return (
     <div
@@ -33,4 +34,4 @@ const SearchBrand = () => {
   );
 };
 
-export default SearchBrand;
+export default memo(SearchBrand);

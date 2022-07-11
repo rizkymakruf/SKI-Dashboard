@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, memo, useMemo } from "react";
 import { GlobalContext } from "context/global";
 import DetailUser from "components/card/DetailUser";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -33,9 +33,11 @@ const UserDetailCstModal = () => {
           </svg>
         </button>
       </div>
-      <DetailUserCst globalCtx={globalCtx} globalAct={globalAct} />
+      {useMemo(() => {
+        return <DetailUserCst globalCtx={globalCtx} globalAct={globalAct} />;
+      }, [])}
     </div>
   );
 };
 
-export default UserDetailCstModal;
+export default memo(UserDetailCstModal);

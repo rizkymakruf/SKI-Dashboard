@@ -60,10 +60,8 @@ sessionOptions);
 
 const ManageContent = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
-  const [inputValue, setInputValue] = useState("");
   const router = useRouter();
   const [data, setData] = useState(props.content);
-
   const [totalRows, setTotalRows] = useState(props.totalCat);
   const [perPage, setPerPage] = useState(10);
 
@@ -77,6 +75,7 @@ const ManageContent = (props) => {
   }, []);
 
   const handlePerRowsChange = useCallback((newPerPage, page) => {
+    setPerPage(newPerPage);
     fetchData(0, newPerPage);
   }, []);
 
@@ -95,6 +94,7 @@ const ManageContent = (props) => {
       });
       setData(res.data);
       setTotalRows(res.total);
+      setPerPage(page);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {

@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useContext } from "react";
+import { useContext, memo, useCallback } from "react";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-export default function FormOtletUpdate() {
+const FormOtletUpdate = () => {
   // const [imageFile, setImageFile] = useState([]);
   // const inputFileImage = useRef(null);
   // const { globalCtx, globalAct } = useContext(GlobalContext);
@@ -34,7 +34,7 @@ export default function FormOtletUpdate() {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback(async (data) => {
     console.log("update outlet", data);
 
     const body = {
@@ -65,7 +65,7 @@ export default function FormOtletUpdate() {
       }
     }
     globalAct.setIsFetch(false);
-  };
+  }, []);
 
   return (
     <div className="w-full h-auto">
@@ -246,4 +246,6 @@ export default function FormOtletUpdate() {
       </form>
     </div>
   );
-}
+};
+
+export default memo(FormOtletUpdate);

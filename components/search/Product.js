@@ -1,6 +1,6 @@
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import { useContext } from "react";
+import { useContext, memo } from "react";
 
 const SearchProduct = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
@@ -74,4 +74,4 @@ const SearchProduct = (props) => {
   );
 };
 
-export default SearchProduct;
+export default memo(SearchProduct);

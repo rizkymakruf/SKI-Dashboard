@@ -1,6 +1,6 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext } from "react";
+import { useContext, memo } from "react";
 
 const OrderTable = ({}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
@@ -166,4 +166,4 @@ const OrderTable = ({}) => {
   );
 };
 
-export default OrderTable;
+export default memo(OrderTable);

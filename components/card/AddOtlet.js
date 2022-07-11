@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const AddOtlet = (props) => {
   const { modal } = props.globalCtx;
   const { setModal } = props.globalAct;
@@ -31,4 +33,4 @@ const AddOtlet = (props) => {
   );
 };
 
-export default AddOtlet;
+export default memo(AddOtlet);

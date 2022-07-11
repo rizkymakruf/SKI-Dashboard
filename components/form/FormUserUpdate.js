@@ -1,49 +1,93 @@
-import { useState, useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { useContext, useCallback, memo } from "react";
+import { GlobalContext } from "context/global";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
 
-export default function FormUserUpdate({
-  myRef,
-  globalCtx,
-  globalAct,
-  onSubmit,
-  update,
-  setUpdate,
-  slide,
-  setSlide,
-  isFetch,
-  errorMessage,
-  cancelRemove,
-  handleImage,
-  removeMe,
-}) {
+const FormUserUpdate = () => {
   //   const [detail, setDetail] = useState(false);
   //   const [infoLengkap, setInfoLengkap] = useState(false);
 
   //   useEffect(() => {
   //     !detail && setInfoLengkap(false);
   //   });
-  const [imageFile, setImageFile] = useState([]);
-  const inputFileImage = useRef(null);
+  // const [imageFile, setImageFile] = useState([]);
+  // const inputFileImage = useRef(null);
 
-  const upLoad = (props, ref) => {
-    inputFileImage.current.click();
-  };
+  // const upLoad = (props, ref) => {
+  //   inputFileImage.current.click();
+  // };
 
-  const resetForm = (e) => {
-    e.preventDefault();
-    document.querySelector("form").reset();
-    setSlide([]);
-    setUpdate([]);
-  };
+  // const resetForm = (e) => {
+  //   e.preventDefault();
+  //   document.querySelector("form").reset();
+  //   setSlide([]);
+  //   setUpdate([]);
+  // };
+
+  const {
+    reset,
+    trigger,
+    isFetch,
+    setValue,
+    getValues,
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const { globalAct, globalCtx } = useContext(GlobalContext);
+  const router = useRouter();
+
+  const onSubmit = useCallback(async (data) => {
+    const body = {
+      pict: [],
+      key: data.key,
+      email: data.email,
+      phone: data.phone,
+      outlet: data.outlet,
+      address: data.address,
+      username: data.username,
+      fullname: data.fullname,
+      password: data.password,
+      uri: "user/update",
+    };
+
+    console.log("update admin", body);
+
+    try {
+      const res = await fetchJson("/api/prot/put", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      await router.replace("/dashboardSKI/admins");
+      reset();
+      globalAct.setModal("");
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+
+    globalAct.setIsFetch(false);
+  }, []);
 
   return (
     <>
       <div className="w-full h-auto">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="w-full h-full grid grid-cols-2 gap-4 select-none p-5">
             <div className="w-full space-y-2">
               <input
                 name="key"
                 defaultValue={globalCtx.selectedData.key}
+                {...register("key", { required: true })}
                 type="hidden"
               ></input>
               <div className="w-full">
@@ -51,47 +95,157 @@ export default function FormUserUpdate({
                 <input
                   name="username"
                   autocomplete="off"
-                  className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   defaultValue={globalCtx.selectedData.username}
                   placeholder={globalCtx.selectedData.username}
+                  className={`rounded-md p-1 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
+                    errors.username
+                      ? "focus:outline-red-500 border-2 border-red-500"
+                      : null
+                  }`}
+                  {...register("username", {
+                    required: {
+                      value: true,
+                      message: "Short name outlet harus di isi!",
+                    },
+                    minLength: {
+                      value: 3,
+                      message: "Short name minimal 3 karakter!",
+                    },
+                    pattern: {
+                      value: /^[A-Za-z]+$/i,
+                      message: "Format username tidak sesuai!",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("username");
+                  }}
                 ></input>
+
+                {errors.username && (
+                  <p className="text-xs text-red-500 pt-2">
+                    {errors.username.message}
+                  </p>
+                )}
               </div>
               <div className="w-full">
                 <p>Fullname</p>
                 <input
                   name="fullname"
                   autocomplete="off"
-                  className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   defaultValue={globalCtx.selectedData.fullname}
                   placeholder={globalCtx.selectedData.fullname}
+                  className={`rounded-md p-1 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
+                    errors.fullname
+                      ? "focus:outline-red-500 border-2 border-red-500"
+                      : null
+                  }`}
+                  {...register("fullname", {
+                    required: {
+                      value: true,
+                      message: "Fullname harus di isi!",
+                    },
+                    minLength: {
+                      value: 3,
+                      message: "Fullname minimal 3 karakter!",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("fullname");
+                  }}
                 ></input>
+
+                {errors.fullname && (
+                  <p className="text-xs text-red-500 pt-2">
+                    {errors.fullname.message}
+                  </p>
+                )}
               </div>
               <div className="w-full">
                 <p>Email</p>
                 <input
                   name="email"
                   autocomplete="off"
-                  className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   defaultValue={globalCtx.selectedData.email}
                   placeholder={globalCtx.selectedData.email}
+                  className={`rounded-md p-1 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
+                    errors.email
+                      ? "focus:outline-red-500 border-2 border-red-500"
+                      : null
+                  }`}
+                  {...register("email", {
+                    required: {
+                      value: true,
+                      message: "Email harus di isi!",
+                    },
+                    pattern: {
+                      value:
+                        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      message: "Format email tidak sesuai!",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("email");
+                  }}
                 ></input>
+
+                {errors.email && (
+                  <p className="text-xs text-red-500 pt-2">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
               <div className="w-full">
                 <p>Phone Number</p>
                 <input
                   name="phone"
                   autocomplete="off"
-                  className="rounded-md p-1 border-2 border-orange-500/50 w-full focus:outline-blue-500 "
                   defaultValue={globalCtx.selectedData.phone}
                   placeholder={globalCtx.selectedData.phone}
+                  className={`rounded-md p-1 border-2  border-orange-500/50 w-full focus:outline-none ${
+                    errors.phone
+                      ? "focus:border-red-500 border-red-500 focus:ring-0"
+                      : null
+                  }`}
+                  {...register("phone", {
+                    required: {
+                      value: true,
+                      message: "Nomor hp harus di isi!",
+                    },
+                    minLength: {
+                      value: 11,
+                      message: "Nomor hp minimal 11 karakter!",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("phone");
+                  }}
                 ></input>
+
+                {errors.phone && (
+                  <p className="text-xs text-red-500 pt-2">
+                    {errors.phone.message}
+                  </p>
+                )}
               </div>
               <div className="w-full">
                 <p>Outlet</p>
                 <select
                   name="outlet"
                   autocomplete="off"
-                  className="w-full rounded-md border-2 border-orange-500/50"
+                  className={`rounded-md p-1 border-2  border-orange-500/50 w-full focus:outline-none ${
+                    errors.outlet
+                      ? "focus:border-red-500 border-red-500 focus:ring-0"
+                      : null
+                  }`}
+                  {...register("outlet", {
+                    required: {
+                      value: true,
+                      message: "",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("outlet");
+                  }}
                 >
                   {globalCtx.listOutlet.map((dat, idx) => {
                     return (
@@ -104,6 +258,12 @@ export default function FormUserUpdate({
                     );
                   })}
                 </select>
+
+                {errors.outlet && (
+                  <p className="text-xs text-red-500 pt-2">
+                    {errors.outlet.message}
+                  </p>
+                )}
               </div>
             </div>
             <div className="w-full">
@@ -111,10 +271,33 @@ export default function FormUserUpdate({
                 <p>Alamat</p>
                 <textarea
                   name="address"
-                  className="rounded-md p-1 border-2 border-orange-500/50 w-full h-32"
                   defaultValue={globalCtx.selectedData.address}
                   placeholder={globalCtx.selectedData.address}
+                  className={`rounded-md p-1 border-2  border-orange-500/50 w-full h-32 focus:outline-none ${
+                    errors.address
+                      ? "focus:border-red-500 border-red-500 focus:ring-0"
+                      : null
+                  }`}
+                  {...register("address", {
+                    required: {
+                      value: true,
+                      message: "Alamat harus di isi!",
+                    },
+                    maxLength: {
+                      value: 120,
+                      message: "Alamat maximal 100 karakter!",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("address");
+                  }}
                 ></textarea>
+
+                {errors.address && (
+                  <p className="text-xs text-red-500 pt-2">
+                    {errors.address.message}
+                  </p>
+                )}
               </div>
               <div className="w-full h-auto relative pt-2">
                 <p>Foto user</p>
@@ -123,15 +306,15 @@ export default function FormUserUpdate({
                   type="file"
                   name="pict"
                   id="fileContract"
-                  ref={inputFileImage}
+                  // ref={inputFileImage}
+                  // onChange={(e) => handleImage(e)}
                   style={{ display: "none" }}
-                  onChange={(e) => handleImage(e)}
                   disabled={isFetch ? "disabled" : ""}
                 />
 
                 <div className="w-full h-auto relative flex-row gap-2 flex items-center  pt-2">
                   <div
-                    onClick={upLoad}
+                    // onClick={upLoad}
                     className="w-full h-32 relative z-0 flex text-gray-700 flex-col justify-center items-center rounded h-passport border-2 border-dashed bg-white backdrop-filter bg-opacity-20 backdrop-blur-lg"
                   >
                     {isFetch ? (
@@ -169,27 +352,23 @@ export default function FormUserUpdate({
                   </div>
                 </div>
 
-                {errorMessage && (
+                {/* {errorMessage && (
                   <p className="px-4 text-red-600">{errorMessage}</p>
-                )}
+                )} */}
 
                 <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                   <div className="w-full h-auto flex justify-end gap-2">
                     <button
-                      // onClick={onSubmit}
+                      type="submit"
+                      onClick={() => {
+                        setValue("key", globalCtx.selectedData.key),
+                          setValue("pict", []);
+                      }}
                       // disabled={globalCtx.isFetch ? "disabled" : ""}
                       className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                     >
                       Save
                     </button>
-                    <span
-                      className={`${
-                        !isFetch && "invisible"
-                      } flex absolute h-4 w-4 top-3 right-4 -mt-1 -mr-1`}
-                    >
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-50 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-4 w-4 bg-red-300"></span>
-                    </span>
                   </div>
                 </div>
               </div>
@@ -199,4 +378,6 @@ export default function FormUserUpdate({
       </div>
     </>
   );
-}
+};
+
+export default memo(FormUserUpdate);

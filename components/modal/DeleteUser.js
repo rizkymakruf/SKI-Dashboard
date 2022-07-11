@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, memo } from "react";
 import { GlobalContext } from "context/global";
 const DeleteUserModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
@@ -30,4 +30,4 @@ const DeleteUserModal = () => {
   );
 };
 
-export default DeleteUserModal;
+export default memo(DeleteUserModal);

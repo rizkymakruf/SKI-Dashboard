@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, memo, useMemo } from "react";
 import { GlobalContext } from "context/global";
 import FormOtlet from "components/form/FormOtlet";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -32,9 +32,11 @@ const OtletModal = () => {
           </svg>
         </button>
       </div>
-      <FormOtlet />
+      {useMemo(() => {
+        return <FormOtlet />;
+      }, [])}
     </div>
   );
 };
 
-export default OtletModal;
+export default memo(OtletModal);

@@ -1,5 +1,4 @@
-import FormProduct from "components/form/FormProduct";
-import { useContext } from "react";
+import { useContext, memo } from "react";
 import { GlobalContext } from "context/global";
 const UserOrderModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
@@ -64,4 +63,4 @@ const UserOrderModal = () => {
   );
 };
 
-export default UserOrderModal;
+export default memo(UserOrderModal);

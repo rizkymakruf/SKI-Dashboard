@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useMemo, useCallback } from "react";
 import { getLayout } from "components/layout/Navbar";
 import { GlobalContext } from "context/global";
 
@@ -71,15 +71,16 @@ const ManageTopBrand = (props) => {
     globalAct.setAdminMode("ski");
   }, []);
 
-  const handlePageChange = (page) => {
+  const handlePageChange = useCallback((page) => {
     fetchData((page - 1) * perPage, perPage);
-  };
+  }, []);
 
-  const handlePerRowsChange = (newPerPage, page) => {
+  const handlePerRowsChange = useCallback((newPerPage, page) => {
+    setPerPage(newPerPage);
     fetchData(0, newPerPage);
-  };
+  }, []);
 
-  const fetchData = async (start, page) => {
+  const fetchData = useCallback(async (start, page) => {
     globalAct.setIsFetch(true);
     const body = {
       uri: "voucher",
@@ -94,6 +95,7 @@ const ManageTopBrand = (props) => {
       });
       setData(res.data);
       setTotalRows(res.total);
+      setPerPage(page);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {
@@ -103,17 +105,21 @@ const ManageTopBrand = (props) => {
       }
     }
     globalAct.setIsFetch(false);
-  };
+  }, []);
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-2">
       <div className="bg-white border border-gray-200 rounded-md p-5 shadow-md mb-3">
-        <VoucherTable
-          data={data}
-          totalRows={totalRows}
-          handlePageChange={handlePageChange}
-          handlePerRowsChange={handlePerRowsChange}
-        />
+        {useMemo(() => {
+          return (
+            <VoucherTable
+              data={data}
+              totalRows={totalRows}
+              handlePageChange={handlePageChange}
+              handlePerRowsChange={handlePerRowsChange}
+            />
+          );
+        }, [data])}
       </div>
     </div>
   );
