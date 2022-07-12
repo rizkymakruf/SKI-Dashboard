@@ -48,7 +48,7 @@ const DashboardCardSKI = (props) => {
           <label className="switch">
             <input
               type="checkbox"
-              checked={toggle}
+              checked={active}
               globalCtx={globalCtx}
               globalAct={globalAct}
               onClick={async function handleSubmit(e) {
@@ -67,8 +67,8 @@ const DashboardCardSKI = (props) => {
                     body: JSON.stringify(body),
                   });
                   // router.push("/dashboardSKI");
-                  await router.reload("/dashboardSKI/outlet");
-                  // toggle ? setToggle(false) : setToggle(true);
+                  // await router.reload("/dashboardSKI/outlet");
+                  active ? setActive(false) : setActive(true);
                 } catch (error) {
                   console.log("error", error);
                   if (error instanceof FetchError) {

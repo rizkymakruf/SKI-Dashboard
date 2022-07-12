@@ -54,7 +54,8 @@ const OrderTable = ({
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                   });
-                  router.reload();
+                  await router.reload(router.pathname);
+                  // a.active ? (a.active = false) : (a.active = false);
                 } catch (error) {
                   console.log("error", error);
                   if (error instanceof FetchError) {
