@@ -32,7 +32,7 @@ const FormReport = (
   return (
     <>
       <div className="w-full h-auto">
-        <form onSubmit={onSubmit}>
+        <form>
           <div className="w-full h-full grid grid-cols-1 gap-4 select-none p-3">
             <div className="w-full space-y-2">
               <div className="w-full">
