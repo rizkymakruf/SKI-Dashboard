@@ -33,7 +33,8 @@ const CategoryModal = () => {
         </button>
       </div>
       {useMemo(() => {
-      return <FormUpdateCategory />},[])}
+        return <FormUpdateCategory />;
+      }, [globalCtx.modal])}
     </div>
   );
 };

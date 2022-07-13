@@ -35,6 +35,7 @@ const TopBrand = () => {
       });
 
       reset();
+      globalAct.setModal("");
       router.replace("/dashboardSKI/topBrand");
     } catch (error) {
       console.log("error", error);

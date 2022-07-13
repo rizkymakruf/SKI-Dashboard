@@ -44,7 +44,10 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   // naaaaa
 
-  const category = await mainCategory();
+  const category = await mainCategory(
+    query.start ? parseInt(query.start) : 0,
+    query.length ? parseInt(query.length) : 10
+  );
   const totalCat = await getTotalCategory();
 
   if (checkUids.length < 1) {
@@ -63,7 +66,8 @@ sessionOptions);
 const ManageCategory = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
-  const [data, setData] = useState(props.category);
+  const data = props.category;
+  const [dataSearch, setDataSearch] = useState([]);
   const [totalRows, setTotalRows] = useState(props.totalCat);
   const [perPage, setPerPage] = useState(10);
   const [isSearch, setIsSearch] = useState(false);
@@ -123,7 +127,7 @@ const ManageCategory = (props) => {
           console.log("search");
           return (
             <SearchCategory
-              setData={setData}
+              setData={setDataSearch}
               setTotalRows={setTotalRows}
               setIsSearch={setIsSearch}
             />
@@ -135,14 +139,19 @@ const ManageCategory = (props) => {
           console.log("tabel");
           return (
             <CategoryTable
-              data={data}
+              data={isSearch ? dataSearch : data}
               search={isSearch}
               totalRows={totalRows}
-              handlePageChange={handlePageChange}
-              handlePerRowsChange={handlePerRowsChange}
+              handlePageChange={(page) => {
+                router.replace(
+                  `/dashboardSKI/category?start=${
+                    (page - 1) * perPage
+                  }&length=${perPage}`
+                );
+              }}
             />
           );
-        }, [data])}
+        }, [data, isSearch])}
       </div>
     </div>
   );

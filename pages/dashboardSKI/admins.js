@@ -49,7 +49,10 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     return redirect("/");
   }
 
-  const users = await allUsers();
+  const users = await allUsers(
+    query.start ? parseInt(query.start) : 0,
+    query.length ? parseInt(query.length) : 10
+  );
   const listOutlet = await getOutlet();
   const totalUser = await getTotalAdmin();
 
@@ -66,7 +69,8 @@ sessionOptions);
 const ManageUsers = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
-  const [dataUser, setDataUser] = useState(props.users);
+  const dataUser = props.users;
+  const [dataSearch, setDataSearch] = useState([]);
   const [totalRows, setTotalRows] = useState(props.totalAdmin);
   const [perPage, setPerPage] = useState(10);
   const [isSearch, setIsSearch] = useState(false);
@@ -75,41 +79,6 @@ const ManageUsers = (props) => {
     globalAct.setListOutlet(props.listOutlet);
     globalAct.setFullname(props.fullName);
     globalAct.setAdminMode("ski");
-  }, []);
-
-  const handlePageChange = useCallback((page) => {
-    fetchData((page - 1) * perPage, perPage);
-  }, []);
-
-  const handlePerRowsChange = useCallback((newPerPage, page) => {
-    setPerPage(newPerPage);
-    fetchData(0, newPerPage);
-  }, []);
-
-  const fetchData = useCallback(async (start, page) => {
-    globalAct.setIsFetch(true);
-    const body = {
-      uri: "user",
-      start: start,
-      length: page,
-    };
-    try {
-      const res = await fetchJson("/api/prot/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      setDataUser(res.data);
-      setTotalRows(res.total);
-    } catch (error) {
-      console.log("error", error);
-      if (error instanceof FetchError) {
-        globalAct.setErrorMsg(error.data.message);
-      } else {
-        globalAct.setErrorMsg("An unexpected error happened");
-      }
-    }
-    globalAct.setIsFetch(false);
   }, []);
 
   return (
@@ -125,7 +94,7 @@ const ManageUsers = (props) => {
           console.log("searchuser");
           return (
             <SearchUser
-              setData={setDataUser}
+              setData={setDataSearch}
               setTotalRows={setTotalRows}
               setIsSearch={setIsSearch}
             />
@@ -137,14 +106,19 @@ const ManageUsers = (props) => {
           console.log("tabel");
           return (
             <UsersTable
-              data={dataUser}
+              data={isSearch ? dataSearch : dataUser}
               search={isSearch}
               totalRows={totalRows}
-              handlePageChange={handlePageChange}
-              handlePerRowsChange={handlePerRowsChange}
+              handlePageChange={(page) => {
+                router.replace(
+                  `/dashboardSKI/admins?start=${
+                    (page - 1) * perPage
+                  }&length=${perPage}`
+                );
+              }}
             />
           );
-        }, [dataUser])}
+        }, [dataUser, isSearch])}
       </div>
     </div>
   );

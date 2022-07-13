@@ -106,85 +106,88 @@ const ManageReport = (props) => {
       <div className="bg-white rounded-md p-5 shadow-md border-2 border-gray-200">
         <p className="text-orange-500 text-lg font-bold p-3">Report</p>
         <hr />
-        {useMemo(() => {
-          <FormReport
-            onSubmit={async function handleSubmit(e) {
-              e.preventDefault();
-              globalAct.setIsFetch(true);
-              const startDate = new Date(e.currentTarget.start.value);
-              const endDate = new Date(e.currentTarget.end.value);
-              const body = {
-                method: e.currentTarget.report.value,
-                start: startDate.getTime() / 1000,
-                end: endDate.getTime() / 1000,
-                index: 0,
-                length: perPage,
-                uri: "report",
-              };
+        {/* {useMemo(() => { */}
+        {/* return ( */}
+        <FormReport
+          onSubmit={async function handleSubmit(e) {
+            e.preventDefault();
+            globalAct.setIsFetch(true);
+            const startDate = new Date(e.currentTarget.start.value);
+            const endDate = new Date(e.currentTarget.end.value);
+            const body = {
+              method: e.currentTarget.report.value,
+              start: startDate.getTime() / 1000,
+              end: endDate.getTime() / 1000,
+              index: 0,
+              length: perPage,
+              uri: "report",
+            };
 
-              setNewBody(body);
+            setNewBody(body);
 
-              try {
-                const res = await fetchJson("/api/prot/post", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(body),
-                });
-                setMode(body.method);
-                setDataReport(res.data);
-                setTotalRows(res.total);
-              } catch (error) {
-                console.log("error", error);
-                if (error instanceof FetchError) {
-                  globalAct.setErrorMsg(error.data.message);
-                } else {
-                  globalAct.setErrorMsg("An unexpected error happened");
-                }
+            try {
+              const res = await fetchJson("/api/prot/post", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+              });
+              setMode(body.method);
+              console.log(res.data);
+              setDataReport(res.data);
+              setTotalRows(res.total);
+            } catch (error) {
+              console.log("error", error);
+              if (error instanceof FetchError) {
+                globalAct.setErrorMsg(error.data.message);
+              } else {
+                globalAct.setErrorMsg("An unexpected error happened");
               }
-              globalAct.setIsFetch(false);
-            }}
-          />;
-        }, [])}
+            }
+            globalAct.setIsFetch(false);
+          }}
+        />
+        {/* );
+        }, [])} */}
       </div>
-      {useMemo(() => {
-        return (
-          mode !== "" && (
-            <div className="bg-white rounded-md p-5 shadow-md border-2 border-gray-200">
-              <p className="text-red-500 py-2 text-lg font-bold">
-                {mode === "brand"
-                  ? "Report By Brand"
-                  : mode === "category"
-                  ? "Report By Category"
-                  : mode === "product" && "Report By Product"}
-              </p>
-              {mode === "brand" ? (
-                <ViewReportByBrandTable
-                  data={dataReport}
-                  totalRows={totalRows}
-                  handlePageChange={handlePageChange}
-                  handlePerRowsChange={handlePerRowsChange}
-                />
-              ) : mode === "category" ? (
-                <ViewReportByCategoryTable
-                  data={dataReport}
-                  totalRows={totalRows}
-                  handlePageChange={handlePageChange}
-                  handlePerRowsChange={handlePerRowsChange}
-                />
-              ) : (
-                mode === "product" && (
-                  <ViewReportByProductTable
-                    data={dataReport}
-                    totalRows={totalRows}
-                    handlePageChange={handlePageChange}
-                    handlePerRowsChange={handlePerRowsChange}
-                  />
-                )
-              )}
-            </div>
-          )
-        );
-      }, [dataReport])}
+      {/* {useMemo(() => {
+        return ( */}
+      {mode !== "" && (
+        <div className="bg-white rounded-md p-5 shadow-md border-2 border-gray-200">
+          <p className="text-red-500 py-2 text-lg font-bold">
+            {mode === "brand"
+              ? "Report By Brand"
+              : mode === "category"
+              ? "Report By Category"
+              : mode === "product" && "Report By Product"}
+          </p>
+          {mode === "brand" ? (
+            <ViewReportByBrandTable
+              data={dataReport}
+              totalRows={totalRows}
+              handlePageChange={handlePageChange}
+              handlePerRowsChange={handlePerRowsChange}
+            />
+          ) : mode === "category" ? (
+            <ViewReportByCategoryTable
+              data={dataReport}
+              totalRows={totalRows}
+              handlePageChange={handlePageChange}
+              handlePerRowsChange={handlePerRowsChange}
+            />
+          ) : (
+            mode === "product" && (
+              <ViewReportByProductTable
+                data={dataReport}
+                totalRows={totalRows}
+                handlePageChange={handlePageChange}
+                handlePerRowsChange={handlePerRowsChange}
+              />
+            )
+          )}
+        </div>
+      )}
+      {/* );
+       }, [dataReport, mode])} */}
     </div>
   );
 };

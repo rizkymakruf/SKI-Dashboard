@@ -33,7 +33,7 @@ const DetailUserCst = (props) => {
             <div className="grid grid-cols-2">
               <p className="text-md font-semibold text-red-500">Address</p>
               <p className="text-md font-semibold text-gray-500">
-                {/* {props.globalCtx.selectedData.address?.detail} */}
+                {props.globalCtx.selectedData.address}
               </p>
             </div>
           </div>

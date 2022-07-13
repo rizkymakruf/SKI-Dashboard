@@ -6,7 +6,6 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useForm } from "react-hook-form";
 
 const ContentTable = ({
-  method,
   setMethod,
   data,
   reset,
@@ -122,10 +121,10 @@ const ContentTable = ({
           </button>
           <button
             onClick={() => {
-              setMethod("update");
               // set update
               // globalAct.setModal("editContent");
               // globalAct.setSelectedData(a);
+              setMethod(true);
               reset({
                 key: a.key,
                 title: a.title,
