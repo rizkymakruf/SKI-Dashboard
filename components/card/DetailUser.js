@@ -18,32 +18,34 @@ const DetailUser = (props) => {
         </div>
         <div className="ml-4">
           <div className="space-y-2">
-            <div className="grid grid-cols-2">
-              <p className="text-md font-semibold text-red-500">Fullname</p>
+            <div className="flex">
+              <p className="w-32 text-md font-semibold text-red-500">
+                Fullname
+              </p>
               <p className="text-md font-semibold text-gray-500">
                 {props.globalCtx.selectedData.fullname}
               </p>
             </div>
-            <div className="grid grid-cols-2">
-              <p className="text-md font-semibold text-red-500">Email</p>
+            <div className="flex">
+              <p className="w-32 text-md font-semibold text-red-500">Email</p>
               <p className="text-md font-semibold text-gray-500">
                 {props.globalCtx.selectedData.email}
               </p>
             </div>
-            <div className="grid grid-cols-2">
-              <p className="text-md font-semibold text-red-500">Phone</p>
+            <div className="flex">
+              <p className="w-32 text-md font-semibold text-red-500">Phone</p>
               <p className="text-md font-semibold text-gray-500">
                 {props.globalCtx.selectedData.phone}
               </p>
             </div>
-            <div className="grid grid-cols-2">
-              <p className="text-md font-semibold text-red-500">Address</p>
+            <div className="flex">
+              <p className="w-32 text-md font-semibold text-red-500">Address</p>
               <p className="text-md font-semibold text-gray-500">
                 {props.globalCtx.selectedData.address}
               </p>
             </div>
-            <div className="grid grid-cols-2">
-              <p className="text-md font-semibold text-red-500">Outlet</p>
+            <div className="flex">
+              <p className="w-32 text-md font-semibold text-red-500">Outlet</p>
               <p className="text-md font-semibold text-gray-500">
                 {props.globalCtx.selectedData.outlet?.name}
               </p>

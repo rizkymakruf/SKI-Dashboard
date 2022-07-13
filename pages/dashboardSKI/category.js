@@ -74,7 +74,6 @@ const ManageCategory = (props) => {
   }, []);
 
   const handlePageChange = useCallback((page) => {
-    console.log("perpage oke", perPage);
     fetchData((page - 1) * perPage, perPage);
   }, []);
 
@@ -100,7 +99,6 @@ const ManageCategory = (props) => {
       console.log(res);
       setData(res.data);
       setTotalRows(res.total);
-      setPerPage(page);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {

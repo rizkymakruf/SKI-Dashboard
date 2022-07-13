@@ -37,7 +37,7 @@ const Modal = (props) => {
     <div className="">
       <div
         onClick={() => setModal("")}
-        className={`bg-black/60 fixed w-full h-screen z-40 ${
+        className={`bg-black/60 fixed w-full h-screen z-10 ${
           modal !== "" ? "" : "hidden"
         }`}
       />
@@ -95,7 +95,7 @@ const Modal = (props) => {
         <UserModal />
       </div>
       <div
-        className={`duration p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "addContent"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"
@@ -122,7 +122,7 @@ const Modal = (props) => {
       >
         <UserUpdateModal />
       </div>
-
+      {/* 
       <div
         className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "editContent"
@@ -131,7 +131,7 @@ const Modal = (props) => {
         }`}
       >
         <ContentUpdateModal />
-      </div>
+      </div> */}
 
       <div
         className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${

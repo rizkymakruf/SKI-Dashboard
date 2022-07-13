@@ -13,7 +13,7 @@ const TopBrand = ({ globalCtx, globalAct, onSubmit }) => {
           <input
             name="key"
             defaultValue={globalCtx.selectedData.key}
-            type="hidden"
+            // type="hidden"
           ></input>
           <select
             className="rounded-md p-2 border-2  border-orange-500/50 w-full "

@@ -174,6 +174,7 @@ const UsersTable = ({
             highlightOnHover={true}
             pagination
             paginationServer
+            paginationRowsPerPageOptions={[10]}
             paginationTotalRows={totalRows}
             onChangeRowsPerPage={handlePerRowsChange}
             onChangePage={handlePageChange}

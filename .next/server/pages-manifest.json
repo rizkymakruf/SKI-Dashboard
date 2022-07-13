@@ -2,6 +2,6 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/dashboardSKI/customers": "pages/dashboardSKI/customers.js",
+  "/dashboardSKI/content": "pages/dashboardSKI/content.js",
   "/api/prot/post": "pages/api/prot/post.js"
 }

@@ -25,20 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboardSKI": [
+    "/dashboardSKI/content": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI.js"
-    ],
-    "/dashboardSKI/customers": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/customers.js"
-    ],
-    "/dashboardSKI/outlet": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/outlet.js"
+      "static/chunks/pages/dashboardSKI/content.js"
     ]
   },
   "ampFirstPages": []

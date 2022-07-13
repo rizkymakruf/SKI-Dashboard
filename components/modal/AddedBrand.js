@@ -25,25 +25,27 @@ const AddedBrandModal = () => {
                 uri: "outlet/brand",
               };
 
-              try {
-                await fetchJson("/api/prot/patch", {
-                  method: "PATCH",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(body),
-                });
-                // router.push("/dashboardSKI");
-              } catch (error) {
-                console.log("error", error);
-                if (error instanceof FetchError) {
-                  globalAct.setErrorMsg(error.data.message);
-                } else {
-                  globalAct.setErrorMsg("An unexpected error happened");
-                }
-              }
+              console.log("addbran", body);
+              // try {
+              //   await fetchJson("/api/prot/patch", {
+              //     method: "PATCH",
+              //     headers: { "Content-Type": "application/json" },
+              //     body: JSON.stringify(body),
+              //   });
+              //   router.reload("/dashboardSKI/topBrand");
+              //   globalAct.setModal("");
+              //   // router.push("/dashboardSKI");
+              // } catch (error) {
+              //   console.log("error", error);
+              //   alert(globalCtx.errorMsg);
+              //   if (error instanceof FetchError) {
+              //     globalAct.setErrorMsg(error.data.message);
+              //   } else {
+              //     globalAct.setErrorMsg("An unexpected error happened");
+              //   }
+              // }
 
-              router.reload("/dashboardSKI/topBrand");
-              globalAct.setModal("");
-              globalAct.setIsFetch(false);
+              // globalAct.setIsFetch(false);
             }}
           />
         );

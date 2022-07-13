@@ -52,7 +52,7 @@ const FormContent = () => {
         body: JSON.stringify(body),
       });
 
-      router.replace("/dashboardSKI/content");
+      await router.replace("/dashboardSKI/content");
       reset();
       globalAct.setModal("");
     } catch (error) {
@@ -71,7 +71,7 @@ const FormContent = () => {
     <div className="w-full h-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full h-full select-none">
-          <div className="w-full grid grid-cols-2 gap-3 h-full p-3 backdrop-blur bg-white/30 rounded-md border border-gray-300 shadow-md">
+          <div className="w-full grid grid-cols-2 gap-3 h-full p-3 ">
             <div className="w-full">
               <div className="w-full h-auto relative mb-4">
                 <p className="text-sm font-bold text-red-600 mb-2">
@@ -80,7 +80,7 @@ const FormContent = () => {
                 <input
                   name="title"
                   placeholder="Title content"
-                  className={`rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
+                  className={`rounded-md p-1 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
                     errors.title
                       ? "focus:outline-red-500 border-2 border-red-500"
                       : null
@@ -111,7 +111,7 @@ const FormContent = () => {
                   name="label"
                   autocomplete="off"
                   placeholder="Button content"
-                  className={`rounded-md p-2 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
+                  className={`rounded-md p-1 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
                     errors.label
                       ? "focus:outline-red-500 border-2 border-red-500"
                       : null
@@ -139,7 +139,7 @@ const FormContent = () => {
                 <select
                   name="type"
                   id="type"
-                  className={`rounded-md p-2 border-2  border-orange-500/50 w-full ${
+                  className={`rounded-md p-1 border-2  border-orange-500/50 w-full ${
                     errors.type
                       ? "focus:outline-red-500 border-2 border-red-500"
                       : null
@@ -172,7 +172,7 @@ const FormContent = () => {
                 <textarea
                   name="description"
                   placeholder="Description content"
-                  className={`rounded-md p-2 border-2  border-orange-500/50 w-full h-32 ${
+                  className={`rounded-md p-1 border-2  border-orange-500/50 w-full h-32 ${
                     errors.description
                       ? "focus:outline-red-500 border-2 border-red-500"
                       : null

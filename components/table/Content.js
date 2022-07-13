@@ -3,13 +3,27 @@ import { GlobalContext } from "context/global";
 import { useContext, memo } from "react";
 import { useRouter } from "next/router";
 import fetchJson, { FetchError } from "lib/fetchJson";
+import { useForm } from "react-hook-form";
 
 const ContentTable = ({
+  method,
+  setMethod,
   data,
+  reset,
   totalRows,
   handlePageChange,
   handlePerRowsChange,
 }) => {
+  // const {
+  //   reset,
+  //   trigger,
+  //   isFetch,
+  //   setValue,
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm();
+
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
 
@@ -108,8 +122,18 @@ const ContentTable = ({
           </button>
           <button
             onClick={() => {
-              globalAct.setModal("editContent");
-              globalAct.setSelectedData(a);
+              setMethod("update");
+              // set update
+              // globalAct.setModal("editContent");
+              // globalAct.setSelectedData(a);
+              reset({
+                key: a.key,
+                title: a.title,
+                description: a.description,
+                pict: [],
+                type: a.type,
+                label: a.label,
+              });
             }}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:before:content-['Edit'] border border-blue-300"
@@ -147,6 +171,7 @@ const ContentTable = ({
           highlightOnHover={true}
           pagination
           paginationServer
+          paginationRowsPerPageOptions={[10]}
           paginationTotalRows={totalRows}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}

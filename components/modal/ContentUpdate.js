@@ -4,16 +4,22 @@ import { GlobalContext } from "context/global";
 import FormContent from "components/form/FormContent";
 import FormContentUpdate from "components/form/FormContentUpdate";
 import fetchJson, { FetchError } from "lib/fetchJson";
+import { useForm } from "react-hook-form";
 
 const ContentUpdateModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
+
+  const { reset } = useForm();
 
   return (
     <div className="bg-white w-full h-full rounded-md shadow-sm shadow-black">
       <div className="bg-red-500 h-12 w-full flex items-center justify-between px-3 rounded-t-md">
         <p className="text-white font-bold">Update content</p>
         <button
-          onClick={() => globalAct.setModal("")}
+          onClick={() => {
+            globalAct.setModal("");
+            reset();
+          }}
           className={
             "bg-white items-center justify-center h-8 w-8 rounded-md shadow-md flex gap-x-2 text-xs text-red-500 hover:w-24 duration-150 hover:after:content-['Cancel']"
           }

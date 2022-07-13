@@ -32,7 +32,7 @@ const ContentDetailModal = () => {
       </div>
       {useMemo(() => {
         return <DetailContent globalCtx={globalCtx} globalAct={globalAct} />;
-      }, [])}
+      }, [globalCtx.selectedData])}
     </div>
   );
 };

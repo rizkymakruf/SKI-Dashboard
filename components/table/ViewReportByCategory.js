@@ -75,6 +75,7 @@ const ViewReportByCategoryTable = ({
           highlightOnHover={true}
           paginationServer
           pagination
+          paginationRowsPerPageOptions={[10]}
           paginationTotalRows={totalRows}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}

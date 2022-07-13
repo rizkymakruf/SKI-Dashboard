@@ -293,7 +293,7 @@ const FormUser = () => {
                   {...register("outlet", {
                     required: {
                       value: true,
-                      message: "Outlet harus di isi!",
+                      message: "",
                     },
                   })}
                   onKeyUp={() => {

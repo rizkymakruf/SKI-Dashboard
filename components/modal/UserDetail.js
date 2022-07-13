@@ -34,7 +34,7 @@ const UserDetailModal = () => {
       </div>
       {useMemo(() => {
         return <DetailUser globalCtx={globalCtx} globalAct={globalAct} />;
-      }, [])}
+      }, [globalCtx.selectedData])}
     </div>
   );
 };

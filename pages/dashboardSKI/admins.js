@@ -101,7 +101,6 @@ const ManageUsers = (props) => {
       });
       setDataUser(res.data);
       setTotalRows(res.total);
-      setPerPage(page);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {

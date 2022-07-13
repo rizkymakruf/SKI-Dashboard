@@ -54,10 +54,11 @@ const OrderTable = ({
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                   });
-                  await router.reload(router.pathname);
-                  // a.active ? (a.active = false) : (a.active = false);
+
+                  router.reload("/dashboardSKI/category");
                 } catch (error) {
                   console.log("error", error);
+                  alert(globalCtx.errorMsg);
                   if (error instanceof FetchError) {
                     globalAct.setErrorMsg(error.data.message);
                   } else {
@@ -65,8 +66,6 @@ const OrderTable = ({
                   }
                 }
 
-                // router.replace("/dashboardSKI/category");
-                globalAct.setModal("");
                 globalAct.setIsFetch(false);
               }}
             />
@@ -135,6 +134,7 @@ const OrderTable = ({
             highlightOnHover={true}
             pagination
             paginationServer
+            paginationRowsPerPageOptions={[10]}
             paginationTotalRows={totalRows}
             onChangeRowsPerPage={handlePerRowsChange}
             onChangePage={handlePageChange}
