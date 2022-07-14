@@ -2,11 +2,11 @@ import Link from "next/link";
 import { memo } from "react";
 const DashboardCard = (props) => {
   return (
-    <div className="duration-500 bg-white border-orange-300 border-2 shadow-md w-full h-44 rounded-md p-4 flex flex-col justify-between hover:shadow-red-500 hover:scale-95">
+    <div className="duration-300 bg-white border-orange-300 border shadow-md w-full h-44 rounded-md p-4 flex flex-col justify-between hover:shadow-red-500 hover:scale-95">
       <div>
-        <p className="text-sm">Currently we have :</p>
+        <p className="text-sm">Saat ini outlet memiliki :</p>
         <div className="flex items-center gap-x-2">
-          <p className="text-red-500 font-bold underline">900</p>
+          <p className="text-red-500 font-bold underline">{props.jml}</p>
           <p className="text-gray-600 text-sm font-semibold">{props.content}</p>
         </div>
       </div>

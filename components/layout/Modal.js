@@ -72,7 +72,7 @@ const Modal = (props) => {
       <div
         className={`${
           modal === "userProfile" ? "translate-x-0" : "translate-x-full"
-        } z-50 fixed right-0 duration-500 w-96 h-fit p-4`}
+        } z-50 fixed right-0 duration-500 w-60 h-fit p-4`}
       >
         <Profile />
       </div>

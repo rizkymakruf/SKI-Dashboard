@@ -60,7 +60,7 @@ const Profile = () => {
       <div className="p-3 w-full flex flex-col gap-y-2">
         <div className="flex items-center flex-col gap-2">
           <div className="bg-black w-full h-40 rounded-md" />
-          <div>
+          <div className="items-center text-center">
             <p className="text-md font-semibold mb-8">{globalCtx.fullname}</p>
           </div>
         </div>

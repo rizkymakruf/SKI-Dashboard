@@ -82,7 +82,7 @@ const DashboardSKI = (props) => {
             <div className="w-full grid grid-cols-2 gap-4">
               <div className="w-full border border-gray-200 rounded-md hover:shadow-md px-3 py-6">
                 <p className="pb-2 text-red-500 font-semibold">
-                  Pendapatan Perbulan
+                  Penjualan Perbulan
                 </p>
                 <div className="bg-white w-full h-44 rounded-md flex flex-col justify-between">
                   <Line1 qty={props.qty} />
@@ -90,7 +90,7 @@ const DashboardSKI = (props) => {
               </div>
               <div className="w-full border border-gray-200 rounded-md hover:shadow-md px-3 py-6">
                 <p className="pb-2 text-red-500 font-semibold">
-                  Penjualan Perbulan
+                  Pendapatan Perbulan
                 </p>
                 <div className="bg-white  w-full h-44 rounded-md flex flex-col justify-between">
                   <Line rp={props.rp} />
