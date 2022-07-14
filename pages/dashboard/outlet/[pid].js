@@ -1,23 +1,16 @@
-import { getLayout } from "components/layout/Navbar";
-import DashboardCard from "components/card/DashboardCard";
-import { withIronSessionSsr } from "iron-session/next";
-import { sessionOptions } from "lib/session";
-import { useContext, useEffect } from "react";
 import { checkUid } from "lib/arangoDb";
 import { useRouter } from "next/router";
-import { redirect, retObject, checkerToken } from "lib/listFunct";
-import OrderCard from "components/card/OrderCard";
 import Line from "components/chart/line";
+import { sessionOptions } from "lib/session";
+import { useContext, useEffect } from "react";
 import { GlobalContext } from "context/global";
-import fetchJson, { FetchError } from "lib/fetchJson";
-import History from "components/table/History";
-import Link from "next/link";
+import OrderCard from "components/card/OrderCard";
+import { getLayout } from "components/layout/Navbar";
+import { withIronSessionSsr } from "iron-session/next";
+import DashboardCard from "components/card/DashboardCard";
+import { redirect, retObject, checkerToken } from "lib/listFunct";
 
-export const getServerSideProps = withIronSessionSsr(async function ({
-  req,
-  res,
-  query,
-}) {
+export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
   var user = await req.session.user;
   if (!user || !user.access_token) {
     return retObject({ isLogin: false });
@@ -50,8 +43,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     isLogin: true,
     fullName: checkUids[0].fullname,
   });
-},
-sessionOptions);
+}, sessionOptions);
 
 const Dashboard = (props) => {
   const router = useRouter();
@@ -64,14 +56,10 @@ const Dashboard = (props) => {
     globalAct.setFullname(props.fullName);
     globalAct.setIsFetch(false);
     globalAct.setErrorMsg("");
-    // router.prefetch("/config/dashboard");
   }, []);
   useEffect(() => {
     console.log("fetch data status : ", globalCtx.isFetch);
   }, [globalCtx]);
-  {
-    /* Default */
-  }
 
   return (
     <div className="w-full p-2 flex flex-col gap-y-4">
