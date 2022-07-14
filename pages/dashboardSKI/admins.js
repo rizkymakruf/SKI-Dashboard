@@ -21,7 +21,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 }) {
   var user = await req.session.user;
   if (!user || !user.access_token) {
-    retObject({ isLogin: false });
+    // retObject({ isLogin: false });
     return redirect("/");
   }
 
