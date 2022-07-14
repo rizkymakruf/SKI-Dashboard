@@ -16,11 +16,7 @@ import { route } from "next/dist/server/router";
 import Image from "next/image";
 import Ilus from "../public/img/ill.png";
 
-export const getServerSideProps = withIronSessionSsr(async function ({
-  req,
-  res,
-  query,
-}) {
+export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
   var user = await req.session.user;
   if (!user || !user.access_token) {
     return retObject({ isLogin: false });
@@ -57,8 +53,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     fullName: checkUids[0].fullname,
     adminMode: outlet.length > 0 ? outlet[0]?.shortname : "",
   });
-},
-sessionOptions);
+}, sessionOptions);
 
 const Administration = (props) => {
   const router = useRouter();

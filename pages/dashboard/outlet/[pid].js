@@ -1,4 +1,4 @@
-import { checkUid } from "lib/arangoDb";
+import { checkUid, findOutlet } from "lib/arangoDb";
 import { useRouter } from "next/router";
 import Line from "components/chart/line";
 import { sessionOptions } from "lib/session";
@@ -10,7 +10,12 @@ import { withIronSessionSsr } from "iron-session/next";
 import DashboardCard from "components/card/DashboardCard";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 
-export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
+// ssr
+export const getServerSideProps = withIronSessionSsr(async function ({
+  req,
+  res,
+  query,
+}) {
   var user = await req.session.user;
   if (!user || !user.access_token) {
     // retObject({ isLogin: false });
@@ -35,6 +40,13 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
 
   const uid = JSON.parse(atob(user.access_token.split(".")[1]));
   const checkUids = await checkUid(uid.user_id);
+  let outlet = [];
+  if (checkUids[0].outlet !== "") {
+    outlet = await findOutlet(checkUids[0]?.outlet);
+    if (outlet[0].shortname !== query.pid) {
+      return redirect("/");
+    }
+  }
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -43,21 +55,23 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
+    adminMode: outlet.length > 0 ? outlet[0]?.shortname : query.pid,
   });
-}, sessionOptions);
+},
+sessionOptions);
 
 const Dashboard = (props) => {
-  const router = useRouter();
-  {
-    /* Default */
-  }
   const { globalCtx, globalAct } = useContext(GlobalContext);
+  const router = useRouter();
+
   useEffect(() => {
     globalAct.setAdminMode("outlet");
     globalAct.setFullname(props.fullName);
     globalAct.setIsFetch(false);
     globalAct.setErrorMsg("");
+    globalAct.setCurrentBrand(props.adminMode);
   }, []);
+
   useEffect(() => {
     console.log("fetch data status : ", globalCtx.isFetch);
   }, [globalCtx]);

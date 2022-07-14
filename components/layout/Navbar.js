@@ -236,7 +236,7 @@ const SideNav = ({ children, props }) => {
       name: "Manage Outlet",
       menu: [
         {
-          link: `/dashboard`,
+          link: `/dashboard/outlet/${globalCtx.currentBrand}`,
           name: "Dashboard",
           ic: (
             <svg
