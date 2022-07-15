@@ -8,6 +8,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { checkUid, findOutlet } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { GlobalContext } from "context/global";
+import Filter from "components/card/Filter";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
@@ -77,6 +78,7 @@ const ManageOrder = (props) => {
 
   return (
     <div className="w-full p-4 flex flex-col gap-y-2">
+      <Filter />
       <OrderTable />
     </div>
   );

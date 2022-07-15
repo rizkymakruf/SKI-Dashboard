@@ -107,9 +107,7 @@ const OrderTable = ({}) => {
     },
     {
       name: (
-        <div className="w-full text-center font-bold text-red-500">
-          Dipacking
-        </div>
+        <div className="w-full text-center font-bold text-red-500">Dikemas</div>
       ),
       grow: 1,
       cell: (a) => (
