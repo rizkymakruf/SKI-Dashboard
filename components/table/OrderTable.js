@@ -101,7 +101,10 @@ const OrderTable = ({}) => {
       grow: 1,
       cell: (a) => (
         <div className="flex justify-center w-full">
-          <input type="checkbox" />
+          <label class="chck">
+            <input type="checkbox" />
+            <span class="checkmark"></span>
+          </label>
         </div>
       ),
     },
@@ -112,7 +115,10 @@ const OrderTable = ({}) => {
       grow: 1,
       cell: (a) => (
         <div className="flex justify-center w-full">
-          <input type="checkbox" />
+          <label class="chck">
+            <input type="checkbox" />
+            <span class="checkmark"></span>
+          </label>
         </div>
       ),
     },
@@ -122,8 +128,11 @@ const OrderTable = ({}) => {
       ),
       grow: 1,
       cell: (a) => (
-        <div className="flex justify-center w-full">
-          <input type="checkbox" className="" />
+        <div className="flex justify-center w-full ">
+          <label class="chck">
+            <input type="checkbox" />
+            <span class="checkmark"></span>
+          </label>
         </div>
       ),
     },
@@ -179,7 +188,7 @@ const OrderTable = ({}) => {
           <button
             onClick={() => alert("Print")}
             className={
-              "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-28 duration-200 hover:before:content-['Cetak_Label'] border border-blue-300"
+              "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-200 hover:before:content-['Cetak'] border border-blue-300"
             }
           >
             <svg

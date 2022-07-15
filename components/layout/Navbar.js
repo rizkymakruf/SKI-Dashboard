@@ -298,7 +298,7 @@ const SideNav = ({ children, props }) => {
           ),
         },
         {
-          link: "/dashboard/voucher",
+          link: `/dashboard/voucher/${globalCtx.currentBrand}`,
           name: "Voucher",
           ic: (
             <svg
@@ -316,7 +316,7 @@ const SideNav = ({ children, props }) => {
           ),
         },
         {
-          link: "/dashboard/Dc",
+          link: `/dashboard/discount/${globalCtx.currentBrand}`,
           name: "Discount",
           ic: (
             <svg
@@ -334,7 +334,7 @@ const SideNav = ({ children, props }) => {
           ),
         },
         {
-          link: "/dashboard/history",
+          link: `/dashboard/hostory/${globalCtx.currentBrand}`,
           name: "History",
           ic: (
             <svg
@@ -348,7 +348,7 @@ const SideNav = ({ children, props }) => {
           ),
         },
         {
-          link: "/dashboard/report",
+          link: `/dashboard/report/${globalCtx.currentBrand}`,
           name: "Report",
           ic: (
             <svg

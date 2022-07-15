@@ -1,6 +1,7 @@
 import { getLayout } from "components/layout/Navbar";
 import OrderTable from "components/table/OrderTable";
 import fetchJson, { FetchError } from "lib/fetchJson";
+import Filter from "components/card/Filter";
 import { useRouter } from "next/router";
 import { sessionOptions } from "lib/session";
 import { useContext, useEffect } from "react";
@@ -8,7 +9,6 @@ import { withIronSessionSsr } from "iron-session/next";
 import { checkUid, findOutlet } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { GlobalContext } from "context/global";
-import Filter from "components/card/Filter";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({

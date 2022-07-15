@@ -189,9 +189,9 @@ const FormProduct = ({ myRef, globalCtx, globalAct, onSubmit, isFetch }) => {
               <div className="flex items-center gap-x-2 pb-2">
                 <p
                   onClick={() => setInfoLengkap(false)}
-                  className={`text-xs  font-bold px-2 py-1 border rounded-md border-gray-500 ${
+                  className={`text-xs  font-bold px-2 py-1 border rounded-md ${
                     infoLengkap
-                      ? "text-gray-700"
+                      ? "text-gray-700 border-gray-500"
                       : "text-orange-700 bg-orange-500/30 border-orange-500"
                   }`}
                 >
@@ -199,10 +199,10 @@ const FormProduct = ({ myRef, globalCtx, globalAct, onSubmit, isFetch }) => {
                 </p>
                 <p
                   onClick={() => setInfoLengkap(true)}
-                  className={`text-xs font-bold text-gray-700 px-2 py-1 border rounded-md border-gray-500 ${
+                  className={`text-xs font-bold text-gray-700 px-2 py-1 border rounded-md ${
                     infoLengkap
                       ? "text-orange-700 bg-orange-500/30 border-orange-500"
-                      : "text-gray-700"
+                      : "text-gray-700 border-gray-500 "
                   } ${detail ? "" : "hidden"}`}
                 >
                   INFO LENGKAP
