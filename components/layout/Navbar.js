@@ -284,7 +284,7 @@ const SideNav = ({ children, props }) => {
           ),
         },
         {
-          link: "/dashboard/order",
+          link: `/dashboard/order/${globalCtx.currentBrand}`,
           name: "Order",
           ic: (
             <svg

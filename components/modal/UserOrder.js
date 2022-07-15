@@ -5,8 +5,8 @@ const UserOrderModal = () => {
 
   return (
     <div className="bg-white w-full h-auto rounded-md shadow-sm shadow-black">
-      <div className="bg-red-500 h-12 w-full flex items-center justify-between px-3">
-        <p className="text-white font-bold">Order Info</p>
+      <div className="bg-red-500 h-12 w-full flex items-center justify-between px-3 rounded-t-md">
+        <p className="text-white font-bold text-sm">ORDER INFO</p>
         <button
           onClick={() => globalAct.setModal("")}
           className={
@@ -28,35 +28,71 @@ const UserOrderModal = () => {
         </button>
       </div>
       <div className="p-3 w-full flex flex-col gap-y-2">
-        <div className="flex items-center flex-row gap-x-2">
-          <div className="bg-black w-20 h-20 rounded-full" />
-          <div>
-            <p className="text-md font-semibold">Karina Salim</p>
+        <p className="text-gray-700 text-sm font-semibold">Produk</p>
+        <div className="border-2 rounded-md p-2">
+          <div className="flex text-sm">
+            <p className="w-10">Item</p>
+            <p className="px-2">:</p>
+            <p>Coffee tubruk gajah</p>
+          </div>
+          <div className="flex text-sm">
+            <p className="w-10">Qty</p>
+            <p className="px-2">:</p>
+            <p>10 items</p>
           </div>
         </div>
+        <p className="text-gray-700 text-sm font-semibold">Pembayaran</p>
         <div className="border-2 rounded-md p-2">
-          <div>
-            <p className="text-sm">Items</p>
-            <p>____________</p>
+          <div className="flex text-sm">
+            <p className="w-12">Total</p>
+            <p className="px-2">:</p>
+            <p>Rp 100.000</p>
           </div>
-          <div>
-            <p className="text-sm">Destination</p>
-            <p>____________</p>
+          <div className="flex text-sm">
+            <p className="w-12">Method</p>
+            <p className="px-2">:</p>
+            <p>Bank Tranfer : BCA</p>
+          </div>
+          <div className="flex text-sm">
+            <p className="w-12">Status</p>
+            <p className="px-2">:</p>
+            <p>Success</p>
           </div>
         </div>
+        <p className="text-gray-700 text-sm font-semibold">Ekspedisi</p>
         <div className="border-2 rounded-md p-2">
-          <div>
-            <p className="text-sm">Payment Method</p>
-            <p>____________</p>
+          <div className="flex text-sm">
+            <p className="w-16">Berat</p>
+            <p className="px-2">:</p>
+            <p>10 Kg</p>
           </div>
-          <div>
-            <p className="text-sm">Payment Code</p>
-            <p>____________</p>
+          <div className="flex text-sm">
+            <p className="w-16">Ekspedisi</p>
+            <p className="px-2">:</p>
+            <p>JNT</p>
           </div>
-          <div>
-            <p className="text-sm">Status</p>
-            <p>____________</p>
+          <div className="flex text-sm">
+            <p className="w-16">Ongkir</p>
+            <p className="px-2">:</p>
+            <p>Rp 25.000</p>
           </div>
+          <div className="flex text-sm">
+            <p className="w-16">Penerima</p>
+            <p className="px-2">:</p>
+            <p>Muhammad Fatah</p>
+          </div>
+          <div className="flex text-sm">
+            <p className="w-16">No. HP</p>
+            <p className="px-2">:</p>
+            <p>089786567677</p>
+          </div>
+          <div className="flex text-sm">
+            <p className="w-16">Alamat</p>
+            <p className="px-2">:</p>
+          </div>
+          <p className="text-sm">
+            Jl. Mawar No.12, Buleleng, Singaraja, Bali, Indonesia
+          </p>
         </div>
       </div>
     </div>

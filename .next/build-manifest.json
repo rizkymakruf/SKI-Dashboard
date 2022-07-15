@@ -25,10 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboard/category/[pid]": [
+    "/dashboard/order/[pid]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/category/[pid].js"
+      "static/chunks/pages/dashboard/order/[pid].js"
     ]
   },
   "ampFirstPages": []
