@@ -35,7 +35,7 @@ const OrderTable = ({}) => {
       ),
     },
     {
-      name: <div className="font-bold text-red-500">Category</div>,
+      name: <div className="font-bold text-red-500">Sub Category</div>,
       grow: 2,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
@@ -135,7 +135,7 @@ const OrderTable = ({}) => {
 
   return (
     <div className="w-full h-auto relative ">
-      <div className="shadow-md border-2 rounded-md">
+      <div className="shadow-md border rounded-md hover:shadow-md hover:shadow-red-500">
         <DataTable
           // title={
           //   <p className="text-red-500 font-bold text-sm">Category List</p>

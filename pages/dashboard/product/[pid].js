@@ -10,6 +10,7 @@ import { useContext, useEffect } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import { checkUid, findOutlet } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
+import FormProduct from "components/form/FormProduct";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
@@ -77,11 +78,11 @@ const ManageProduct = (props) => {
     console.log("fetch data status : ", globalCtx.isFetch);
   }, [globalCtx]);
   return (
-    <div className="w-full p-4 flex flex-col gap-y-3">
-      <div className="w-full border border-gray-300 rounded-md p-4 shadow-md">
-        <AddCard globalAct={globalAct} globalCtx={globalCtx} />
+    <div className="w-full p-4 flex flex-col gap-y-4">
+      <div className="w-full border border-gray-300 rounded-md p-4 shadow-sm hover:shadow-md hover:shadow-red-500">
+        <FormProduct />
       </div>
-      <div className="w-full p-4 border border-gray-200 rounded-md shadow-md">
+      <div className="w-full p-4 border border-gray-200 rounded-md shadow-sm hover:shadow-md hover:shadow-red-500">
         <SearchProductOutlet />
       </div>
       <div>

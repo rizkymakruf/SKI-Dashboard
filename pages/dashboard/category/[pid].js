@@ -1,21 +1,26 @@
-import { useRouter } from "next/router";
-import { useContext, useState } from "react";
 import { GlobalContext } from "context/global";
 import { getLayout } from "components/layout/Navbar";
-import CategoryTable from "components/table/Category";
+import SubCategoryTable from "components/table/SubCategory";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import SearchCategory from "components/search/Categoy";
-import FormCategory from "components/form/FormUpdateCategory";
+import SearchSubCategory from "components/search/SubCategory";
+import { useRouter } from "next/router";
+import { sessionOptions } from "lib/session";
+import { useContext, useEffect } from "react";
+import { withIronSessionSsr } from "iron-session/next";
 import { checkUid, findOutlet } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
-import { withIronSessionSsr } from "iron-session/next";
-import { sessionOptions } from "lib/session";
+import FormSubCategory from "components/form/FormSubCategory";
 
 // ssr
-export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
+export const getServerSideProps = withIronSessionSsr(async function ({
+  req,
+  res,
+  query,
+}) {
   var user = await req.session.user;
   if (!user || !user.access_token) {
-    return retObject({ isLogin: false });
+    // retObject({ isLogin: false });
+    return redirect("/");
   }
 
   const validationToken = await checkerToken(user);
@@ -37,9 +42,13 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
   const uid = JSON.parse(atob(user.access_token.split(".")[1]));
   const checkUids = await checkUid(uid.user_id);
   let outlet = [];
-  if (checkUids[0].outlet != "") {
+  if (checkUids[0].outlet !== "") {
     outlet = await findOutlet(checkUids[0]?.outlet);
+    if (outlet[0].shortname !== query.pid) {
+      return redirect("/");
+    }
   }
+
   if (checkUids.length < 1) {
     return redirect("/");
   }
@@ -47,37 +56,37 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
-    adminMode: outlet.length > 0 ? outlet[0]?.shortname : "",
+    adminMode: outlet.length > 0 ? outlet[0]?.shortname : query.pid,
   });
-}, sessionOptions);
-// end-ssr
+},
+sessionOptions);
 
 const ManageCategory = (props) => {
-  const router = useRouter();
-  {
-    /* Default */
-  }
   const { globalCtx, globalAct } = useContext(GlobalContext);
+  const router = useRouter();
+
   useEffect(() => {
     globalAct.setAdminMode("outlet");
     globalAct.setFullname(props.fullName);
     globalAct.setIsFetch(false);
     globalAct.setErrorMsg("");
+    globalAct.setCurrentBrand(props.adminMode);
   }, []);
+
   useEffect(() => {
     console.log("fetch data status : ", globalCtx.isFetch);
   }, [globalCtx]);
 
   return (
-    <div className="w-full p-2 flex flex-col gap-y-2">
+    <div className="w-full p-4 flex flex-col gap-y-4">
       <div>
-        <FormCategory />
+        <FormSubCategory />
       </div>
       <div>
-        <SearchCategory />
+        <SearchSubCategory />
       </div>
       <div>
-        <CategoryTable />
+        <SubCategoryTable />
       </div>
     </div>
   );

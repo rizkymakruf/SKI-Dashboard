@@ -1,4 +1,5 @@
 import Line from "components/chart/line";
+import Line1 from "components/chart/line1";
 import { getLayout } from "components/layout/Navbar";
 import DashboardCard from "components/card/DashboardCard";
 import { useRouter } from "next/router";
@@ -8,7 +9,6 @@ import { useContext, useEffect } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import { checkUid, findOutlet } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
-import Line1 from "components/chart/line1";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
@@ -79,13 +79,13 @@ const Dashboard = (props) => {
   return (
     <div className="w-full p-4 flex flex-col gap-y-4">
       <div className="w-full grid grid-cols-2 gap-4">
-        <div className="w-full border border-gray-200 rounded-md hover:shadow-md px-3 py-6">
+        <div className="w-full border border-gray-200 rounded-md hover:shadow-md hover:shadow-red-500 px-3 py-6">
           <p className="pb-2 text-red-500 font-semibold">Penjualan Perbulan</p>
           <div className="bg-white w-full h-44 rounded-md flex flex-col justify-between">
             <Line1 qty={props.qty} />
           </div>
         </div>
-        <div className="w-full border border-gray-200 rounded-md hover:shadow-md px-3 py-6">
+        <div className="w-full border border-gray-200 rounded-md hover:shadow-md hover:shadow-red-500 px-3 py-6">
           <p className="pb-2 text-red-500 font-semibold">Pendapatan Perbulan</p>
           <div className="bg-white  w-full h-44 rounded-md flex flex-col justify-between">
             <Line rp={props.rp} />
@@ -123,7 +123,7 @@ const Dashboard = (props) => {
         <div className="w-full">
           <DashboardCard
             title={"Manage Order"}
-            content={"Order"}
+            content={"Order Masuk"}
             jml={"230"}
             routes={"/dashboard/order"}
           />
