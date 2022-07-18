@@ -393,7 +393,7 @@ const SideNav = ({ children, props }) => {
                 q={faqs[0].name}
                 i={faqs[0].ic}
                 a={faqs[0].menu}
-                r={router.asPath}
+                r={router.pathname}
               />
             ) : (
               globalCtx.adminMode === "outlet" && (
@@ -401,7 +401,7 @@ const SideNav = ({ children, props }) => {
                   q={faqs[1].name}
                   i={faqs[1].ic}
                   a={faqs[1].menu}
-                  r={router.asPath}
+                  r={router.pathname}
                 />
               )
             )}
