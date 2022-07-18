@@ -24,6 +24,21 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
+    ],
+    "/dashboard/discount/[pid]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboard/discount/[pid].js"
+    ],
+    "/dashboard/history/[pid]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboard/history/[pid].js"
+    ],
+    "/dashboard/order/[pid]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboard/order/[pid].js"
     ]
   },
   "ampFirstPages": []

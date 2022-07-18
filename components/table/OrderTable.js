@@ -6,88 +6,88 @@ const OrderTable = ({}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const data = [
     {
-      order_by: "Fandy",
+      inv: "INV1234567",
       tujuan: "Jln rusa no.44",
       status: "SUCCESS",
     },
     {
-      order_by: "Wiliam",
+      inv: "INV1234567",
       tujuan: "Jln rusa no.44",
       status: "DIBAYAR",
     },
     {
-      order_by: "Agus",
+      inv: "INV1234567",
       tujuan: "Jln ikan no.34",
       status: "DIPACKING",
     },
     {
-      order_by: "Made",
+      inv: "INV1234567",
       tujuan: "Jln burung no.34",
       status: "DIPACKING",
     },
     {
-      order_by: "Rizky",
+      inv: "INV1234567",
       tujuan: "Jln kaki no.34",
       status: "DIBAYAR",
     },
     {
-      order_by: "Fandy",
+      inv: "INV1234567",
       tujuan: "Gng eek",
       status: "SUCCESS",
     },
     {
-      order_by: "Wiliam",
+      inv: "INV1234567",
       tujuan: "Jln rusa no.44",
       status: "DIBAYAR",
     },
     {
-      order_by: "Agus",
+      inv: "INV1234567",
       tujuan: "Jln ikan no.34",
       status: "DIPACKING",
     },
     {
-      order_by: "Made",
+      inv: "INV1234567",
       tujuan: "Jln burung no.34",
       status: "DIPACKING",
     },
     {
-      order_by: "Rizky",
+      inv: "INV1234567",
       tujuan: "Jln kaki no.34",
       status: "DIBAYAR",
     },
     {
-      order_by: "Fandy",
+      inv: "INV1234567",
       tujuan: "Gng eek",
       status: "SUCCESS",
     },
     {
-      order_by: "Wiliam",
+      inv: "INV1234567",
       tujuan: "Jln rusa no.44",
       status: "DIBAYAR",
     },
     {
-      order_by: "Agus",
+      inv: "INV1234567",
       tujuan: "Jln ikan no.34",
       status: "DIPACKING",
     },
     {
-      order_by: "Made",
+      inv: "INV1234567",
       tujuan: "Jln burung no.34",
       status: "DIBAYAR",
     },
     {
-      order_by: "Rizky",
+      inv: "INV1234567",
       tujuan: "Jln kaki no.34",
       status: "DIBAYAR",
     },
   ];
   const columns = [
     {
-      name: <div className="font-bold text-red-500">User Order</div>,
+      name: <div className="font-bold text-red-500">INVOICE</div>,
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.order_by}</p>
+          <p className="text-xs font-bold text-blue-800">#{a.inv}</p>
         </div>
       ),
     },
@@ -95,7 +95,7 @@ const OrderTable = ({}) => {
     {
       name: (
         <div className="w-full text-center font-bold text-red-500">
-          Konfirmasi
+          KONFIRMASI
         </div>
       ),
       grow: 1,
@@ -110,7 +110,7 @@ const OrderTable = ({}) => {
     },
     {
       name: (
-        <div className="w-full text-center font-bold text-red-500">Dikemas</div>
+        <div className="w-full text-center font-bold text-red-500">DIKEMAS</div>
       ),
       grow: 1,
       cell: (a) => (
@@ -124,7 +124,7 @@ const OrderTable = ({}) => {
     },
     {
       name: (
-        <div className="w-full text-center font-bold text-red-500">Dikirim</div>
+        <div className="w-full text-center font-bold text-red-500">DIKIRIM</div>
       ),
       grow: 1,
       cell: (a) => (
@@ -139,7 +139,7 @@ const OrderTable = ({}) => {
 
     {
       name: (
-        <div className="w-full text-center font-bold text-red-500">Status</div>
+        <div className="w-full text-center font-bold text-red-500">STATUS</div>
       ),
       grow: 1,
       cell: (a) => (
@@ -160,7 +160,7 @@ const OrderTable = ({}) => {
     },
     {
       name: (
-        <div className="w-full text-center font-bold text-red-500">Action</div>
+        <div className="w-full text-center font-bold text-red-500">ACTION</div>
       ),
       grow: 2,
       cell: (a) => (

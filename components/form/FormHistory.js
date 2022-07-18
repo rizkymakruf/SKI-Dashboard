@@ -6,11 +6,11 @@ const FormHistory = ({ myRef, globalCtx, globalAct, onSubmit }) => {
     <div className="w-full h-auto">
       <form onSubmit={onSubmit}>
         <div className="w-full h-full select-none">
-          <div className="w-full h-full p-3 backdrop-blur bg-white/50 shadow-md rounded-md border">
+          <div className="w-full h-full p-3 backdrop-blur bg-white/50 shadow-md rounded-md border space-y-2">
             <p className="text-sm font-extrabold text-red-500 pb-2">
               Filter Tanggal
             </p>
-            <div className="w-full h-auto relative mb-4">
+            <div className="w-full h-auto relative">
               <p className="text-sm font-extrabold">Dari</p>
               <input
                 name="dari"
@@ -20,7 +20,7 @@ const FormHistory = ({ myRef, globalCtx, globalAct, onSubmit }) => {
                 disabled={globalCtx.isFetch ? "disabled" : ""}
               />
             </div>
-            <div className="w-full h-auto relative mb-4">
+            <div className="w-full h-auto relative">
               <p className="text-sm font-extrabold">Sampai</p>
               <input
                 name="sampai"
@@ -31,18 +31,13 @@ const FormHistory = ({ myRef, globalCtx, globalAct, onSubmit }) => {
               />
             </div>
 
-            <div className="w-full h-12 flex justify-between gap-2">
-              <div className="w-full h-full flex items-center text-xs text-red-400">
-                {globalCtx.errorMsg}
-              </div>
-              <div className="w-72 h-full flex items-center">
-                <button
-                  disabled={globalCtx.isFetch ? "disabled" : ""}
-                  className="px-8 h-10 bg-gray-50 border-2 border-gray-300 rounded overflow-hidden"
-                >
-                  Fetch out!
-                </button>
-              </div>
+            <div className="w-full">
+              <button
+                disabled={globalCtx.isFetch ? "disabled" : ""}
+                className="w-full h-10 bg-green-500 border-2 border-green-700 text-white hover:bg-green-300 hover:text-green-700  font-semibold rounded overflow-hidden"
+              >
+                FILTER
+              </button>
             </div>
           </div>
         </div>

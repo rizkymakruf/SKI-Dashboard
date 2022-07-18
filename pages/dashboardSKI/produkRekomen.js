@@ -51,6 +51,9 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   const checkUids = await checkUid(uid.user_id);
 
   // naaaaa
+  if (checkUids[0].outlet !== "") {
+    return redirect("/");
+  }
 
   const product = await getProducts();
   const recomd = await getProductsRecomd();
@@ -144,6 +147,7 @@ const ManageProdukRekomen = (props) => {
     <div className="w-full flex flex-col p-5 gap-y-5">
       <div className="w-full p-4 border border-gray-200 rounded-md shadow-md">
         {useMemo(() => {
+          console.log("search");
           return (
             <SearchProduct
               setSearchData={setSearchData}
@@ -151,36 +155,29 @@ const ManageProdukRekomen = (props) => {
             />
           );
         }, [])}
-        {!isSearch ? (
-          <div className="flex gap-6 my-4">
-            {useMemo(() => {
-              return (
-                <ProdukRekomenListTable
-                  data={data}
-                  totalRows={totalRows}
-                  handlePageChange={handlePageChange}
-                  handlePerRowsChange={handlePerRowsChange}
-                />
-              );
-            }, [data])}
-            {useMemo(() => {
-              return (
-                <ProdukRekomenTable
-                  data={recomd}
-                  totalRows={totalRowsRec}
-                  handlePageChange={handlePageChangeRec}
-                  handlePerRowsChange={handlePerRowsChangeRec}
-                />
-              );
-            }, [recomd])}
-          </div>
-        ) : (
-          <div className="flex gap-6 my-4">
-            {useMemo(() => {
-              return <Products data={searchData} />;
-            }, [searchData])}
-          </div>
-        )}
+        {useMemo(() => {
+          console.log("tabel");
+          return !isSearch ? (
+            <div className="flex gap-6 my-4">
+              <ProdukRekomenListTable
+                data={data}
+                totalRows={totalRows}
+                handlePageChange={handlePageChange}
+                handlePerRowsChange={handlePerRowsChange}
+              />
+              <ProdukRekomenTable
+                data={recomd}
+                totalRows={totalRowsRec}
+                handlePageChange={handlePageChangeRec}
+                handlePerRowsChange={handlePerRowsChangeRec}
+              />
+            </div>
+          ) : (
+            <div className="flex gap-6 my-4">
+              <Products data={searchData} />
+            </div>
+          );
+        }, [searchData])}
       </div>
     </div>
   );

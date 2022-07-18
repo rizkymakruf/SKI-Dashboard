@@ -159,7 +159,6 @@ const FormVOucher = () => {
                     ? "focus:border-red-500 border-red-500 focus:ring-0"
                     : null
                 }`}
-                placeholder="Minimum belanja"
                 {...register("start", {
                   required: {
                     value: true,
@@ -190,11 +189,10 @@ const FormVOucher = () => {
                     ? "focus:border-red-500 border-red-500 focus:ring-0"
                     : null
                 }`}
-                placeholder="Minimum belanja"
                 {...register("end", {
                   required: {
                     value: true,
-                    message: "Tanggal muali harus di isi!",
+                    message: "Tanggal berakhir harus di isi!",
                   },
                 })}
                 onKeyUp={() => {

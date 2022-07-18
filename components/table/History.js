@@ -7,35 +7,78 @@ const OrderTable = ({}) => {
   const data = [
     {
       order_by: "Fandy",
-      tujuan:
-        "Gng eekasd damwkd widwdia iaiaaaaaaaaaaaaaaaaaaaaa aksmddw dwdiaid0000m d aksmddw dwdiaid0000m daksmddw dwdiaid0000m",
+      tujuan: "Jl. Jeruk",
       status: "SUCCESS",
+      inv: "INV1234567",
     },
     {
       order_by: "Wiliam",
       tujuan: "Jln rusa no.44",
       status: "PENDING",
+      inv: "INV1234567",
     },
     {
       order_by: "Agus",
       tujuan: "Jln ikan no.34",
       status: "EXPIRED",
+      inv: "INV1234567",
     },
     {
       order_by: "Made",
       tujuan: "Jln burung no.34",
       status: "PENDING",
+      inv: "INV1234567",
     },
     {
       order_by: "Rizky",
       tujuan: "Jln kaki no.34",
       status: "PENDING",
+      inv: "INV1234567",
+    },
+    {
+      order_by: "Fandy",
+      tujuan: "Jl. Jeruk",
+      status: "SUCCESS",
+      inv: "INV1234567",
+    },
+    {
+      order_by: "Wiliam",
+      tujuan: "Jln rusa no.44",
+      status: "PENDING",
+      inv: "INV1234567",
+    },
+    {
+      order_by: "Agus",
+      tujuan: "Jln ikan no.34",
+      status: "EXPIRED",
+      inv: "INV1234567",
+    },
+    {
+      order_by: "Made",
+      tujuan: "Jln burung no.34",
+      status: "PENDING",
+      inv: "INV1234567",
+    },
+    {
+      order_by: "Rizky",
+      tujuan: "Jln kaki no.34",
+      status: "PENDING",
+      inv: "INV1234567",
     },
   ];
   const columns = [
     {
+      name: <div className="font-bold text-red-500">INVOICE</div>,
+      grow: 1,
+      cell: (a) => (
+        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
+          <p className="text-xs font-bold text-blue-800">#{a.inv}</p>
+        </div>
+      ),
+    },
+    {
       name: <div className="font-bold text-red-500">User Order</div>,
-      grow: 2,
+      grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
           <p className="text-xs font-bold">{a.order_by}</p>
@@ -43,19 +86,12 @@ const OrderTable = ({}) => {
       ),
     },
     {
-      name: <div className="font-bold text-red-500">Destinasi Order</div>,
-      grow: 4,
-      cell: (a) => (
-        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.tujuan}</p>
-        </div>
+      name: (
+        <div className="w-full text-center font-bold text-red-500">Status</div>
       ),
-    },
-    {
-      name: <div className="font-bold text-red-500">Status</div>,
       grow: 1,
       cell: (a) => (
-        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
+        <div className="w-full h-full py-1 flex justify-center flex-row gap-1 items-center">
           <p
             className={`text-xs font-bold px-2 shadow-md py-1 rounded-xl ${
               a.status === "PENDING"

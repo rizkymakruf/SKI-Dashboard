@@ -22,7 +22,6 @@ const SearchProduct = (props) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(find),
           });
-          console.log(res);
           props.setSearchData(res.data);
           if (!check) {
             props.setIsSearch(false);
