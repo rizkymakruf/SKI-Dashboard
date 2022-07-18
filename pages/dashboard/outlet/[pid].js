@@ -101,7 +101,7 @@ const Dashboard = (props) => {
             title={"Manage Kategori"}
             content={"Kategori"}
             jml={"20"}
-            routes={"/dashboard/category"}
+            routes={`/dashboard/category/${globalCtx.currentBrand}`}
           />
         </div>
         <div className="w-full">
@@ -109,7 +109,7 @@ const Dashboard = (props) => {
             title={"Manage Produk"}
             content={"Produk"}
             jml={"180"}
-            routes={"/dashboard/product"}
+            routes={`/dashboard/product/${globalCtx.currentBrand}`}
           />
         </div>
         <div className="w-full">
@@ -117,7 +117,7 @@ const Dashboard = (props) => {
             title={"Manage Order"}
             content={"Order belum dikemas"}
             jml={"100"}
-            routes={"/dashboard/order"}
+            routes={`/dashboard/order/${globalCtx.currentBrand}`}
           />
         </div>
         <div className="w-full">
@@ -125,7 +125,7 @@ const Dashboard = (props) => {
             title={"Manage Order"}
             content={"Order Masuk"}
             jml={"230"}
-            routes={"/dashboard/order"}
+            routes={`/dashboard/order/${globalCtx.currentBrand}`}
           />
         </div>
       </div>

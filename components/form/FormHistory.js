@@ -7,11 +7,11 @@ const FormHistory = ({ myRef, globalCtx, globalAct, onSubmit }) => {
       <form onSubmit={onSubmit}>
         <div className="w-full h-full select-none">
           <div className="w-full h-full p-3 backdrop-blur bg-white/50 shadow-md rounded-md border space-y-2">
-            <p className="text-sm font-extrabold text-red-500 pb-2">
-              Filter Tanggal
+            <p className="text-sm font-semibold text-red-500 pb-2">
+              FILTER HISTORY
             </p>
             <div className="w-full h-auto relative">
-              <p className="text-sm font-extrabold">Dari</p>
+              <p className="text-sm font-semibold">Dari</p>
               <input
                 name="dari"
                 type="date"
@@ -21,7 +21,7 @@ const FormHistory = ({ myRef, globalCtx, globalAct, onSubmit }) => {
               />
             </div>
             <div className="w-full h-auto relative">
-              <p className="text-sm font-extrabold">Sampai</p>
+              <p className="text-sm font-semibold">Sampai</p>
               <input
                 name="sampai"
                 type="date"
@@ -36,7 +36,7 @@ const FormHistory = ({ myRef, globalCtx, globalAct, onSubmit }) => {
                 disabled={globalCtx.isFetch ? "disabled" : ""}
                 className="w-full h-10 bg-green-500 border-2 border-green-700 text-white hover:bg-green-300 hover:text-green-700  font-semibold rounded overflow-hidden"
               >
-                FILTER HISTORY
+                LIHAT HISTORY
               </button>
             </div>
           </div>

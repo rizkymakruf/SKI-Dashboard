@@ -51,10 +51,10 @@ const FormSubCategory = () => {
     <div className="w-full h-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full h-full select-none">
-          <div className="w-full h-full p-3 backdrop-blur bg-white/30 rounded-md border border-gray-300 shadow-md">
+          <div className="w-full h-full p-3 backdrop-blur bg-white/30 rounded-md border border-gray-300 hover:shadow-md hover:shadow-red-500">
             <div className="w-full h-auto relative mb-2">
               <p className="text-xs font-bold text-gray-700 pb-1">
-                SUB CATEGORY
+                SUB KATEGORI
               </p>
               <select
                 name="subCategory"
@@ -93,7 +93,7 @@ const FormSubCategory = () => {
                     ? "focus:outline-red-500 border-2 border-red-500"
                     : null
                 }`}
-                placeholder="Sub Kategori"
+                placeholder="Sub kategori name"
                 {...register("name", {
                   minLength: {
                     value: 3,

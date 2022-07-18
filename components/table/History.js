@@ -72,7 +72,7 @@ const OrderTable = ({}) => {
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold text-blue-800">#{a.inv}</p>
+          <p className="text-xs font-bold">#{a.inv}</p>
         </div>
       ),
     },

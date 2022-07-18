@@ -25,20 +25,20 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboard/order/[pid]": [
+    "/dashboardSKI": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/order/[pid].js"
+      "static/chunks/pages/dashboardSKI.js"
     ],
-    "/dashboard/outlet/[pid]": [
+    "/dashboardSKI/admins": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/outlet/[pid].js"
+      "static/chunks/pages/dashboardSKI/admins.js"
     ],
-    "/dashboard/report/[pid]": [
+    "/dashboardSKI/outlet": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/report/[pid].js"
+      "static/chunks/pages/dashboardSKI/outlet.js"
     ]
   },
   "ampFirstPages": []

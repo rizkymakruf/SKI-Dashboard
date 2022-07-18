@@ -271,7 +271,7 @@ const SideNav = ({ children, props }) => {
         },
         {
           link: `/dashboard/category/${globalCtx.currentBrand}`,
-          name: "Category",
+          name: "Sub Kategori",
           ic: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -343,7 +343,11 @@ const SideNav = ({ children, props }) => {
               viewBox="0 0 20 20"
               fill="currentColor"
             >
-              <path d="M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" />
+              <path
+                fill-rule="evenodd"
+                d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              />
             </svg>
           ),
         },

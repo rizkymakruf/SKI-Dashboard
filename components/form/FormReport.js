@@ -91,15 +91,13 @@ const FormReport = ({ setDataReport, setMode, setTotalRows, setNewBody }) => {
                 ></input>
               </div>
 
-              <div className="w-full h-auto relative py-6 flex justify-end gap-1">
-                <div className="w-full h-auto flex justify-end gap-2">
-                  <button
-                    type={"submit"}
-                    className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
-                  >
-                    View Report
-                  </button>
-                </div>
+              <div className="w-full h-auto flex justify-end gap-2">
+                <button
+                  type={"submit"}
+                  className="w-full mt-2 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
+                >
+                  View Report
+                </button>
               </div>
             </div>
           </div>

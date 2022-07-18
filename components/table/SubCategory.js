@@ -35,8 +35,8 @@ const SubCategoryTable = ({
 
   const columns = [
     {
-      name: <div className="font-bold text-red-500">Category</div>,
-      grow: 10,
+      name: <div className="font-bold text-red-500">KATEGORY</div>,
+      grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1">
           <p className="text-xs font-bold">{a.category}</p>
@@ -44,8 +44,8 @@ const SubCategoryTable = ({
       ),
     },
     {
-      name: <div className="font-bold text-red-500">Sub Category</div>,
-      grow: 10,
+      name: <div className="font-bold text-red-500">SUB KATEGORY</div>,
+      grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1">
           <p className="text-xs font-bold">{a.sub}</p>
@@ -54,9 +54,9 @@ const SubCategoryTable = ({
     },
     {
       name: (
-        <div className="w-full text-center font-bold text-red-500">Active</div>
+        <div className="w-full text-center font-bold text-red-500">ACTIVE</div>
       ),
-      grow: 2,
+      grow: 1,
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <label className="switch">
@@ -104,9 +104,9 @@ const SubCategoryTable = ({
     },
     {
       name: (
-        <div className="w-full text-center font-bold text-red-500">Action</div>
+        <div className="w-full text-center font-bold text-red-500">ACTION</div>
       ),
-      grow: 2,
+      grow: 1,
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button
@@ -139,7 +139,7 @@ const SubCategoryTable = ({
 
   return (
     <div className="w-full h-auto relative ">
-      <div className="shadow-md border-2 rounded-md">
+      <div className="hover:shadow-md hover:shadow-red-500 border-2 rounded-md">
         {search ? (
           <DataTable
             // title={
