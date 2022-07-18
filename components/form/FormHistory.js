@@ -36,7 +36,7 @@ const FormHistory = ({ myRef, globalCtx, globalAct, onSubmit }) => {
                 disabled={globalCtx.isFetch ? "disabled" : ""}
                 className="w-full h-10 bg-green-500 border-2 border-green-700 text-white hover:bg-green-300 hover:text-green-700  font-semibold rounded overflow-hidden"
               >
-                FILTER
+                FILTER HISTORY
               </button>
             </div>
           </div>
