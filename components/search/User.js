@@ -54,7 +54,7 @@ const SearchUser = (props) => {
       }}
     >
       <div className="flex gap-2 w-full items-center">
-        <p className="text-sm font-bold text-red-600 w-1/6">CARI USER ADMIN</p>
+        {/* <p className="text-sm font-bold text-red-600 w-1/6">CARI USER ADMIN</p> */}
         <input
           name="username"
           placeholder="Search..."

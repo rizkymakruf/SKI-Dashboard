@@ -1,16 +1,25 @@
 import { useForm } from "react-hook-form";
-import { useContext, memo, useCallback } from "react";
+import { useContext, memo, useCallback, useRef, useState } from "react";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
+import { uploadFile } from "lib/imageK";
+import Image from "next/image";
 
 const FormOtlet = () => {
-  // const [imageFile, setImageFile] = useState([]);
-  // const inputFileImage = useRef(null);
+  const [imageFile, setImageFile] = useState("");
+  const inputFileImage = useRef();
 
-  // const upLoad = (props, ref) => {
-  //   inputFileImage.current.click();
-  // };
+  const upLoad = useCallback(() => {
+    inputFileImage.current.click();
+  }, []);
+
+  const handleChange = useCallback(async (e) => {
+    globalAct.setIsFetch(true);
+    const a = await uploadFile(e.target.files[0], "outlet.png", "outlet");
+    setImageFile(a.url);
+    globalAct.setIsFetch(false);
+  });
 
   // const resetForm = (e) => {
   //   e.preventDefault();
@@ -37,7 +46,7 @@ const FormOtlet = () => {
     console.log("outlet", data);
 
     const body = {
-      pict: [],
+      pict: imageFile,
       name: data.name,
       shortname: data.shortname,
       description: data.description,
@@ -158,25 +167,20 @@ const FormOtlet = () => {
               <input
                 accept="image/png, image/gif, image/jpeg"
                 type="file"
-                name="pict"
-                id="fileContract"
-                // ref={inputFileImage}
+                ref={inputFileImage}
                 style={{ display: "none" }}
-                // onChange={(e) => handleImage(e)}
+                onChange={(e) => handleChange(e)}
                 disabled={isFetch ? "disabled" : ""}
-                {...register("pict", {
-                  required: {
-                    value: false,
-                  },
-                })}
               />
 
               <div className="w-full h-auto relative flex-row gap-2 flex items-center px-4 pt-2">
                 <div
-                  // onClick={upLoad}
+                  onClick={upLoad}
                   className="w-full h-32 relative z-0 flex text-gray-700 flex-col justify-center items-center rounded h-passport border-2 border-dashed bg-white backdrop-filter bg-opacity-20 backdrop-blur-lg"
                 >
-                  {isFetch ? (
+                  {imageFile !== "" ? (
+                    <Image layout="fill" src={imageFile} />
+                  ) : globalCtx.isFetch ? (
                     <svg
                       className="animate-spin h-5 w-5 text-blue-300"
                       xmlns="http://www.w3.org/2000/svg"

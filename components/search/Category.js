@@ -53,7 +53,7 @@ const SearchCategory = (props) => {
       }}
     >
       <div className="flex gap-2 w-full items-center">
-        <p className="text-sm font-bold text-red-600 w-1/6">CARI KATEGORI</p>
+        {/* <p className="text-sm font-bold text-red-600 w-1/6">CARI KATEGORI</p> */}
         <input
           name="name"
           placeholder="Search..."
