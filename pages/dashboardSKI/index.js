@@ -55,7 +55,9 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   const outlet = await allOutlet();
   const qty = await PenjualanQty();
   const rp = await PenjualanRp();
-  const outletPict = await findOutlet(checkUids[0].outlet);
+  if (checkUids[0].outlet !== "") {
+    outletPict = await findOutlet(checkUids[0].outlet);
+  }
 
   if (checkUids.length < 1) {
     return redirect("/");
