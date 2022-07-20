@@ -6,23 +6,12 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useForm } from "react-hook-form";
 
 const ContentTable = ({
-  setMethod,
   data,
   reset,
   totalRows,
   handlePageChange,
   handlePerRowsChange,
 }) => {
-  // const {
-  //   reset,
-  //   trigger,
-  //   isFetch,
-  //   setValue,
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm();
-
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
 
@@ -60,7 +49,7 @@ const ContentTable = ({
                   active: !a.active,
                 };
 
-                // console.log(body);
+                console.log(body);
 
                 try {
                   await fetchJson("/api/prot/patch", {
@@ -121,18 +110,8 @@ const ContentTable = ({
           </button>
           <button
             onClick={() => {
-              // set update
-              // globalAct.setModal("editContent");
-              // globalAct.setSelectedData(a);
-              setMethod(true);
-              reset({
-                key: a.key,
-                title: a.title,
-                description: a.description,
-                pict: [],
-                type: a.type,
-                label: a.label,
-              });
+              globalAct.setModal("editContent");
+              globalAct.setSelectedData(a);
             }}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:before:content-['Edit'] border border-blue-300"

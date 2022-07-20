@@ -1,5 +1,12 @@
 import { useForm } from "react-hook-form";
-import { useContext, memo, useCallback, useRef, useState } from "react";
+import {
+  useContext,
+  memo,
+  useCallback,
+  useRef,
+  useState,
+  useEffect,
+} from "react";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
@@ -16,7 +23,9 @@ const FormOtlet = () => {
 
   const handleChange = useCallback(async (e) => {
     globalAct.setIsFetch(true);
-    const a = await uploadFile(e.target.files[0], "outlet.png", "outlet");
+    const file = e.target.files[0];
+    const typeFile = file.type.split("/")[1];
+    const a = await uploadFile(file, `outlet.${typeFile}`, "outlet");
     setImageFile(a.url);
     globalAct.setIsFetch(false);
   });
@@ -43,10 +52,8 @@ const FormOtlet = () => {
   const router = useRouter();
 
   const onSubmit = useCallback(async (data) => {
-    console.log("outlet", data);
-
     const body = {
-      pict: imageFile,
+      pict: data.pict,
       name: data.name,
       shortname: data.shortname,
       description: data.description,
@@ -60,9 +67,10 @@ const FormOtlet = () => {
         body: JSON.stringify(body),
       });
 
-      router.replace("/dashboardSKI/outlet");
-      reset();
-      globalAct.setModal("");
+      await reset();
+      await setImageFile("");
+      await globalAct.setModal("");
+      await router.replace("/dashboardSKI/outlet");
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {
@@ -214,16 +222,11 @@ const FormOtlet = () => {
                   )}
                 </div>
               </div>
-
-              {/* {errorMessage && (
-                <p className="px-4 text-red-600">{errorMessage}</p>
-              )} */}
-
               <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                 <div className="w-full h-auto flex justify-end gap-2">
                   <button
                     type="submit"
-                    onClick={() => setValue("pict", [])}
+                    onClick={() => setValue("pict", imageFile)}
                     // disabled={globalCtx.isFetch ? "disabled" : ""}
                     className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                   >

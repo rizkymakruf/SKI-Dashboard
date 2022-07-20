@@ -25,6 +25,16 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/dashboardSKI/admins": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboardSKI/admins.js"
+    ],
+    "/dashboardSKI/content": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboardSKI/content.js"
+    ],
     "/dashboardSKI/outlet": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

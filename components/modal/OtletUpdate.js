@@ -15,7 +15,9 @@ const OtletUpdateModal = () => {
       <div className="bg-red-500 h-12 w-full flex items-center justify-between px-3 rounded-t-md">
         <p className="text-white font-bold">Update otlet</p>
         <button
-          onClick={() => globalAct.setModal("")}
+          onClick={() => {
+            globalAct.setModal(""), globalAct.setSelectedData("");
+          }}
           className={
             "bg-white items-center justify-center h-8 w-8 rounded-md shadow-md flex gap-x-2 text-xs text-red-500 hover:w-24 duration-150 hover:after:content-['Cancel']"
           }

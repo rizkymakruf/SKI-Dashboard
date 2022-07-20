@@ -122,7 +122,7 @@ const Modal = (props) => {
       >
         <UserUpdateModal />
       </div>
-      {/* 
+
       <div
         className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "editContent"
@@ -131,7 +131,7 @@ const Modal = (props) => {
         }`}
       >
         <ContentUpdateModal />
-      </div> */}
+      </div>
 
       <div
         className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
