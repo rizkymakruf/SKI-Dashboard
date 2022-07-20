@@ -3,6 +3,8 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { GlobalContext } from "context/global";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Image from "next/image";
+
 const Profile = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
@@ -59,7 +61,13 @@ const Profile = () => {
       </div>
       <div className="p-3 w-full flex flex-col gap-y-2">
         <div className="flex items-center flex-col gap-2">
-          <div className="bg-black w-full h-40 rounded-md" />
+          {globalCtx.userPict === "" ? (
+            <div className="bg-black w-full h-40 rounded-md" />
+          ) : (
+            <div className="relative h-40 w-full rounded-md">
+              <Image layout="fill" src={globalCtx.userPict} />
+            </div>
+          )}
           <div className="items-center text-center">
             <p className="text-md font-semibold mb-8">{globalCtx.fullname}</p>
           </div>

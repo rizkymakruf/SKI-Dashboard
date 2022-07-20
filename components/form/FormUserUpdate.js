@@ -1,29 +1,34 @@
 import { useForm } from "react-hook-form";
-import { useContext, useCallback, memo } from "react";
+import {
+  useContext,
+  memo,
+  useCallback,
+  useRef,
+  useState,
+  useEffect,
+} from "react";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import { uploadFile } from "lib/imageK";
 
 const FormUserUpdate = () => {
-  //   const [detail, setDetail] = useState(false);
-  //   const [infoLengkap, setInfoLengkap] = useState(false);
+  const inputFileImage = useRef(null);
+  const [imageFile, setImageFile] = useState("");
 
-  //   useEffect(() => {
-  //     !detail && setInfoLengkap(false);
-  //   });
-  // const [imageFile, setImageFile] = useState([]);
-  // const inputFileImage = useRef(null);
+  const upLoad = useCallback(() => {
+    inputFileImage.current.click();
+  }, []);
 
-  // const upLoad = (props, ref) => {
-  //   inputFileImage.current.click();
-  // };
-
-  // const resetForm = (e) => {
-  //   e.preventDefault();
-  //   document.querySelector("form").reset();
-  //   setSlide([]);
-  //   setUpdate([]);
-  // };
+  const handleChange = useCallback(async (e) => {
+    globalAct.setIsFetch(true);
+    const file = e.target.files[0];
+    const typeFile = file.type.split("/")[1];
+    const a = await uploadFile(file, `outlet.${typeFile}`, "outlet");
+    globalAct.setSelectedData({ ...globalCtx.selectedData, pict: a.url });
+    globalAct.setIsFetch(false);
+  });
 
   const {
     reset,
@@ -40,9 +45,14 @@ const FormUserUpdate = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
 
+  useEffect(() => {
+    setImageFile(globalCtx.selectedData?.pict);
+    reset();
+  }, [globalCtx.selectedData]);
+
   const onSubmit = useCallback(async (data) => {
     const body = {
-      pict: [],
+      pict: data.pict,
       key: data.key,
       email: data.email,
       phone: data.phone,
@@ -306,18 +316,19 @@ const FormUserUpdate = () => {
                   type="file"
                   name="pict"
                   id="fileContract"
-                  // ref={inputFileImage}
-                  // onChange={(e) => handleImage(e)}
+                  ref={inputFileImage}
+                  onChange={(e) => handleChange(e)}
                   style={{ display: "none" }}
                   disabled={isFetch ? "disabled" : ""}
                 />
 
                 <div className="w-full h-auto relative flex-row gap-2 flex items-center  pt-2">
                   <div
-                    // onClick={upLoad}
+                    onClick={upLoad}
                     className="w-full h-32 relative z-0 flex text-gray-700 flex-col justify-center items-center rounded h-passport border-2 border-dashed bg-white backdrop-filter bg-opacity-20 backdrop-blur-lg"
                   >
-                    {isFetch ? (
+                    {globalCtx.selectedData?.pict === "" &&
+                    globalCtx.isFetch ? (
                       <svg
                         className="animate-spin h-5 w-5 text-blue-300"
                         xmlns="http://www.w3.org/2000/svg"
@@ -338,7 +349,8 @@ const FormUserUpdate = () => {
                           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                         ></path>
                       </svg>
-                    ) : (
+                    ) : globalCtx.selectedData?.pict === "" &&
+                      !globalCtx.isFetch ? (
                       <>
                         <h3 className="text-gray-700">
                           <i className="fas fa-cloud-download-alt"></i>
@@ -348,26 +360,28 @@ const FormUserUpdate = () => {
                           Drop here or click here
                         </p>
                       </>
+                    ) : (
+                      globalCtx.selectedData !== "" && (
+                        <Image
+                          layout="fill"
+                          src={globalCtx.selectedData?.pict}
+                        />
+                      )
                     )}
                   </div>
                 </div>
-
-                {/* {errorMessage && (
-                  <p className="px-4 text-red-600">{errorMessage}</p>
-                )} */}
-
                 <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                   <div className="w-full h-auto flex justify-end gap-2">
                     <button
                       type="submit"
                       onClick={() => {
                         setValue("key", globalCtx.selectedData.key),
-                          setValue("pict", []);
+                          setValue("pict", imageFile);
                       }}
-                      // disabled={globalCtx.isFetch ? "disabled" : ""}
+                      disabled={globalCtx.isFetch ? "disabled" : ""}
                       className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                     >
-                      Save
+                      Update
                     </button>
                   </div>
                 </div>

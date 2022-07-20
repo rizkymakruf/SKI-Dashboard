@@ -63,7 +63,6 @@ const SideNav = ({ children, props }) => {
   useEffect(() => {
     console.log("fetch data status : ", globalCtx.isFetch);
   }, [globalCtx]);
-
   const router = useRouter();
   const { query } = router;
   const faqs = [
@@ -381,7 +380,11 @@ const SideNav = ({ children, props }) => {
           <div className="w-full h-auto flex justify-center items-center">
             <div className="w-52 h-52 p-4">
               <div className="w-full h-full relative rounded-full overflow-hidden">
-                <div className="bg-gray-300 w-full h-full"></div>
+                {globalCtx.outletPict === "" ? (
+                  <div className="bg-grey-300 h-full w-full"></div>
+                ) : (
+                  <Image layout="fill" src={globalCtx.outletPict} />
+                )}
               </div>
             </div>
           </div>

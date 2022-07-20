@@ -312,7 +312,7 @@ const FormContentUpdate = () => {
                     disabled={globalCtx.isFetch ? "disabled" : ""}
                     className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                   >
-                    Save
+                    Update
                   </button>
                 </div>
               </div>

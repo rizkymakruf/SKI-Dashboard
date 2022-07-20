@@ -15,6 +15,8 @@ export const GlobalProvider = ({ children }) => {
   const [newData, setNewData] = useState({});
   const [adminMode, setAdminMode] = useState("");
   const [currentBrand, setCurrentBrand] = useState("");
+  const [userPict, setUserPict] = useState("");
+  const [outletPict, setOutletPict] = useState("");
 
   const contextValue = {
     globalCtx: {
@@ -30,6 +32,8 @@ export const GlobalProvider = ({ children }) => {
       listBrand,
       adminMode,
       currentBrand,
+      userPict,
+      outletPict,
     },
     globalAct: {
       setModal,
@@ -44,6 +48,8 @@ export const GlobalProvider = ({ children }) => {
       setListBrand,
       setAdminMode,
       setCurrentBrand,
+      setUserPict,
+      setOutletPict,
     },
   };
 
