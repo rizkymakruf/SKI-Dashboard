@@ -3,7 +3,13 @@ import DashboardCardSKI from "components/card/DashboardCardSKI";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { useContext, useEffect, useMemo } from "react";
-import { allOutlet, checkUid, PenjualanQty, PenjualanRp } from "lib/arangoDb";
+import {
+  allOutlet,
+  checkUid,
+  PenjualanQty,
+  PenjualanRp,
+  findOutlet,
+} from "lib/arangoDb";
 import { useRouter } from "next/router";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import Line from "components/chart/line";
@@ -49,6 +55,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   const outlet = await allOutlet();
   const qty = await PenjualanQty();
   const rp = await PenjualanRp();
+  const outletPict = await findOutlet(checkUids[0].outlet);
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -57,6 +64,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
+    pict: checkUids[0].pict,
     allOutlet: outlet,
     qty: qty,
     rp: rp,
@@ -72,6 +80,8 @@ const DashboardSKI = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   useEffect(() => {
     globalAct.setFullname(props.fullName);
+    globalAct.setUserPict(props.pict);
+    globalAct.setOutletPict(props.pict);
     globalAct.setAdminMode("ski");
   }, []);
   {
