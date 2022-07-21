@@ -17,6 +17,7 @@ export const GlobalProvider = ({ children }) => {
   const [currentBrand, setCurrentBrand] = useState("");
   const [userPict, setUserPict] = useState("");
   const [outletPict, setOutletPict] = useState("");
+  const [ski, setSki] = useState(false);
 
   const contextValue = {
     globalCtx: {
@@ -34,6 +35,7 @@ export const GlobalProvider = ({ children }) => {
       currentBrand,
       userPict,
       outletPict,
+      ski,
     },
     globalAct: {
       setModal,
@@ -50,6 +52,7 @@ export const GlobalProvider = ({ children }) => {
       setCurrentBrand,
       setUserPict,
       setOutletPict,
+      setSki,
     },
   };
 

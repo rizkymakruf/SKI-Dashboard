@@ -23,7 +23,7 @@ const ChildMenu = ({ q, i, a, r }) => (
   </Link>
 );
 
-const Item = ({ q, i, a, r }) => (
+const Item = ({ q, i, a, r, globalCtx }) => (
   <div className="relative overflow-hidden border-b-2 border-white">
     <input
       defaultChecked
@@ -50,18 +50,9 @@ const Item = ({ q, i, a, r }) => (
       </svg>
     </div>
     <div className="overflow-hidden bg-white transition-all duration-300 max-h-0 peer-checked:max-h-full ">
-      {a.map(
-        (item, key) =>
-          key !== 8 && (
-            <ChildMenu
-              q={item.link}
-              i={item.ic}
-              a={item.name}
-              r={r}
-              key={key}
-            />
-          )
-      )}
+      {a.map((item, key) => (
+        <ChildMenu q={item.link} i={item.ic} a={item.name} r={r} key={key} />
+      ))}
     </div>
   </div>
 );
@@ -377,28 +368,28 @@ const SideNav = ({ children, props }) => {
             </svg>
           ),
         },
-
-        {
-          link: `/dashboardSKI/outlet`,
-          name: "Back",
-          ic: (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-4 w-4 mr-2"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          ),
-        },
       ],
     },
   ];
+
+  const back = {
+    link: `/dashboardSKI/outlet`,
+    name: "Back",
+    ic: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4 mr-2"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    ),
+  };
 
   return (
     <>
@@ -430,6 +421,7 @@ const SideNav = ({ children, props }) => {
                 i={faqs[0].ic}
                 a={faqs[0].menu}
                 r={router.pathname}
+                globalCtx={globalCtx}
               />
             ) : (
               globalCtx.adminMode === "outlet" && (
@@ -438,8 +430,18 @@ const SideNav = ({ children, props }) => {
                   i={faqs[1].ic}
                   a={faqs[1].menu}
                   r={router.asPath}
+                  globalCtx={globalCtx}
                 />
               )
+            )}
+
+            {globalCtx.ski && globalCtx.adminMode === "outlet" && (
+              <ChildMenu
+                q={back.link}
+                i={back.ic}
+                a={back.name}
+                r={router.asPath}
+              />
             )}
           </div>
         </div>
