@@ -15,7 +15,7 @@ import { uploadFile } from "lib/imageK";
 
 const FormUserUpdate = () => {
   const inputFileImage = useRef(null);
-  const [imageFile, setImageFile] = useState("");
+  // const [imageFile, setImageFile] = useState("");
 
   const upLoad = useCallback(() => {
     inputFileImage.current.click();
@@ -46,7 +46,7 @@ const FormUserUpdate = () => {
   const router = useRouter();
 
   useEffect(() => {
-    setImageFile(globalCtx.selectedData?.pict);
+    // setImageFile(globalCtx.selectedData?.pict);
     reset();
   }, [globalCtx.selectedData]);
 
@@ -362,13 +362,12 @@ const FormUserUpdate = () => {
                       </>
                     ) : (
                       globalCtx.selectedData !== "" && (
-                        // <Image
-                        //   layout="fill"
-                        //   width={100}
-                        //   height={100}
-                        //   src={globalCtx.selectedData?.pict}
-                        // />
-                        <div></div>
+                        <Image
+                          layout="fill"
+                          width={100}
+                          height={100}
+                          src={globalCtx.selectedData?.pict}
+                        />
                       )
                     )}
                   </div>
@@ -379,7 +378,7 @@ const FormUserUpdate = () => {
                       type="submit"
                       onClick={() => {
                         setValue("key", globalCtx.selectedData.key),
-                          setValue("pict", imageFile);
+                          setValue("pict", globalCtx.selectedData.pict);
                       }}
                       disabled={globalCtx.isFetch ? "disabled" : ""}
                       className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"

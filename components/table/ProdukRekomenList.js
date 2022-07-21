@@ -16,7 +16,7 @@ const ProdukRekomenListTable = ({
   const columns = [
     {
       name: <div className="font-bold text-red-500">Product</div>,
-      grow: 1,
+      grow: 5,
       cell: (a) => (
         <div className="w-full h-full py-1 flex items-center flex-row gap-1">
           <p className="text-xs font-bold">{a.name}</p>

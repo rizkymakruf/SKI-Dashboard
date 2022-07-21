@@ -27,7 +27,7 @@ const TopBrandListTable = ({
           Top Brand
         </div>
       ),
-      grow: 2,
+      grow: 1,
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button

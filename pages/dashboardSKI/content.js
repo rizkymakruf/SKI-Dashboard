@@ -55,7 +55,10 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     return redirect("/");
   }
 
-  const content = await getContent();
+  const content = await getContent(
+    query.start ? parseInt(query.start) : 0,
+    query.length ? parseInt(query.length) : 10
+  );
   const totalContent = await getTotalContent();
 
   if (checkUids.length < 1) {
@@ -78,7 +81,7 @@ sessionOptions);
 const ManageContent = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
-  const [data, setData] = useState(props.content);
+  const data = props.content;
   const [totalRows, setTotalRows] = useState(props.totalCat);
   const [perPage, setPerPage] = useState(10);
 
@@ -89,42 +92,6 @@ const ManageContent = (props) => {
     globalAct.setUserPict(props.pict);
     globalAct.setOutletPict(props.outletPict);
     globalAct.setAdminMode("ski");
-  }, []);
-
-  const handlePageChange = useCallback((page) => {
-    fetchData((page - 1) * perPage, perPage);
-  }, []);
-
-  const handlePerRowsChange = useCallback((newPerPage, page) => {
-    setPerPage(newPerPage);
-    fetchData(0, newPerPage);
-  }, []);
-
-  const fetchData = useCallback(async (start, page) => {
-    globalAct.setIsFetch(true);
-    const body = {
-      uri: "content",
-      start: start,
-      length: page,
-    };
-    try {
-      const res = await fetchJson("/api/prot/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      setData(res.data);
-      setTotalRows(res.total);
-      setPerPage(page);
-    } catch (error) {
-      console.log("error", error);
-      if (error instanceof FetchError) {
-        globalAct.setErrorMsg(error.data.message);
-      } else {
-        globalAct.setErrorMsg("An unexpected error happened");
-      }
-    }
-    globalAct.setIsFetch(false);
   }, []);
 
   return (
@@ -144,8 +111,19 @@ const ManageContent = (props) => {
               reset={props.reset}
               data={data}
               totalRows={totalRows}
-              handlePageChange={handlePageChange}
-              handlePerRowsChange={handlePerRowsChange}
+              handlePageChange={(page) => {
+                router.replace(
+                  `/dashboardSKI/content?start=${
+                    (page - 1) * perPage
+                  }&length=${perPage}`
+                );
+              }}
+              handlePerRowsChange={(newpage) => {
+                setPerPage(newpage);
+                router.replace(
+                  `/dashboardSKI/content?start=0&length=${newpage}`
+                );
+              }}
             />
           );
         }, [data])}

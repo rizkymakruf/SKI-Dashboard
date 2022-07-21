@@ -40,7 +40,7 @@ const OrderTable = ({
               onClick={async function handleSubmit(e) {
                 e.preventDefault();
                 globalAct.setIsFetch(true);
-                globalAct.setSelectedData(a);
+                // globalAct.setSelectedData(a);
 
                 const body = {
                   uri: "category/status",
@@ -121,6 +121,7 @@ const OrderTable = ({
             data={data}
             responsive={true}
             highlightOnHover={true}
+            paginationRowsPerPageOptions={[10, 15, 20, 25, 30, 50]}
             pagination
           />
         ) : (
@@ -134,7 +135,7 @@ const OrderTable = ({
             highlightOnHover={true}
             pagination
             paginationServer
-            paginationRowsPerPageOptions={[10]}
+            paginationRowsPerPageOptions={[10, 15, 20, 25, 30, 50]}
             paginationTotalRows={totalRows}
             onChangeRowsPerPage={handlePerRowsChange}
             onChangePage={handlePageChange}

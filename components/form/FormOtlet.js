@@ -14,9 +14,7 @@ import { uploadFile } from "lib/imageK";
 import Image from "next/image";
 
 const FormOtlet = () => {
-  const [imageFile, setImageFile] = useState(
-    "https://cdn.discordapp.com/attachments/957998627928817684/999209333575393320/unknown.png"
-  );
+  const [imageFile, setImageFile] = useState("");
   const inputFileImage = useRef();
 
   const upLoad = useCallback(() => {

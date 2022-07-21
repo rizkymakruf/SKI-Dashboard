@@ -1,6 +1,8 @@
 import { GlobalContext } from "context/global";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useContext, useState, memo } from "react";
+import { fill } from "tailwindcss/defaulttheme";
 
 const DetailUser = (props) => {
   // const { globalCtx, globalAct } = useContext(GlobalContext);
@@ -9,11 +11,18 @@ const DetailUser = (props) => {
   // const { modal } = props.globalCtx;
   // const { setModal } = props.globalAct;
   // console.log("helll", props.globalCtx.selectedData);
+  console.log(props.globalCtx.selectedData.pict);
   return (
     <>
       <div className="w-full flex items-center p-5">
         <div className="w-36 h-full flex-col flex items-center">
-          <div className="w-28 h-28 rounded-full bg-slate-400 mb-2"></div>
+          {props.globalCtx.selectedData.pict !== "" ? (
+            <div className="w-28 h-28 rounded-full mb-2 relative">
+              <Image src={props.globalCtx.selectedData.pict} layout="fill" />
+            </div>
+          ) : (
+            <div className="w-28 h-28 rounded-full bg-slate-400 mb-2 relative"></div>
+          )}
           <p>{props.globalCtx.selectedData.username}</p>
         </div>
         <div className="ml-4">

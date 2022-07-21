@@ -158,6 +158,12 @@ const ManageCategory = (props) => {
                   }&length=${perPage}`
                 );
               }}
+              handlePerRowsChange={(newpage) => {
+                setPerPage(newpage);
+                router.replace(
+                  `/dashboardSKI/category?start=0&length=${newpage}`
+                );
+              }}
             />
           );
         }, [data, isSearch])}

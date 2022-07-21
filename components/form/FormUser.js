@@ -373,8 +373,7 @@ const FormUser = () => {
                     className="w-full h-32 relative z-0 flex text-gray-700 flex-col justify-center items-center rounded h-passport border-2 border-dashed bg-white backdrop-filter bg-opacity-20 backdrop-blur-lg"
                   >
                     {imageFile !== "" ? (
-                      // <Image layout="fill" src={imageFile} />
-                      <div></div>
+                      <Image layout="fill" src={imageFile} />
                     ) : globalCtx.isFetch ? (
                       <svg
                         className="animate-spin h-5 w-5 text-blue-300"

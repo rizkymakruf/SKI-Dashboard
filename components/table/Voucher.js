@@ -62,7 +62,7 @@ const VoucherTable = ({
           highlightOnHover={true}
           pagination
           paginationServer
-          paginationRowsPerPageOptions={[10]}
+          paginationRowsPerPageOptions={[10, 15, 20, 25, 30, 50]}
           paginationTotalRows={totalRows}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}

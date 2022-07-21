@@ -41,7 +41,7 @@ const ContentTable = ({
               onClick={async function handleSubmit(e) {
                 e.preventDefault();
                 globalAct.setIsFetch(true);
-                globalAct.setSelectedData(a);
+                // globalAct.setSelectedData(a);
 
                 const body = {
                   uri: "content/status",
@@ -57,7 +57,7 @@ const ContentTable = ({
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                   });
-                  router.replace(router.pathname);
+                  router.replace("/dashboardSKI/content");
                 } catch (error) {
                   console.log("error", error);
                   if (error instanceof FetchError) {
@@ -66,8 +66,6 @@ const ContentTable = ({
                     globalAct.setErrorMsg("An unexpected error happened");
                   }
                 }
-
-                // router.replace("/dashboardSKI/category");
                 globalAct.setModal("");
                 globalAct.setIsFetch(false);
               }}
@@ -149,7 +147,7 @@ const ContentTable = ({
           highlightOnHover={true}
           pagination
           paginationServer
-          paginationRowsPerPageOptions={[10]}
+          paginationRowsPerPageOptions={[10, 15, 20, 25, 30, 50]}
           paginationTotalRows={totalRows}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}

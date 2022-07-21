@@ -131,6 +131,12 @@ const ManageUsers = (props) => {
                   }&length=${perPage}`
                 );
               }}
+              handlePerRowsChange={(newpage) => {
+                setPerPage(newpage);
+                router.replace(
+                  `/dashboardSKI/admins?start=0&length=${newpage}`
+                );
+              }}
             />
           );
         }, [dataUser, isSearch])}

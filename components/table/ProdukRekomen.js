@@ -16,7 +16,7 @@ const ProdukRekomenTable = ({
   const columns = [
     {
       name: <div className="font-bold text-red-500">Product Recomendation</div>,
-      grow: 2,
+      grow: 5,
       cell: (a) => (
         <div className="w-full h-full py-1 flex items-center flex-row gap-1">
           <p className="text-xs font-bold">{a.name}</p>
@@ -29,7 +29,7 @@ const ProdukRekomenTable = ({
           {/* Product Rekomendation */}
         </div>
       ),
-      grow: 3,
+      grow: 1,
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button

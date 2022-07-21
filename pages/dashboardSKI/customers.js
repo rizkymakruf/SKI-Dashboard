@@ -47,7 +47,10 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     return redirect("/");
   }
 
-  const cst = await allCst();
+  const cst = await allCst(
+    query.start ? parseInt(query.start) : 0,
+    query.length ? parseInt(query.length) : 10
+  );
   const totalCust = await getTotalCust();
 
   if (checkUids.length < 1) {
@@ -58,11 +61,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     isLogin: true,
     fullName: checkUids[0].fullname,
     pict:
-      // checkUids[0].pict !== "" ? checkUids[0].pict : "/img/user-default.png",
-      checkUids[0].pict === ""
-        ? "/public/img/user-default.png"
-        : checkUids[0].pict,
-    outletPict: "/public/img/ski.png",
+      checkUids[0].pict !== "" ? checkUids[0].pict : "/img/user-default.png",
+    outletPict: "/img/ski.png",
     cst: cst,
     totalCust: totalCust[0].total,
   });
@@ -71,53 +71,19 @@ sessionOptions);
 
 const ManageUsersCst = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  const [data, setData] = useState(props.cst);
+  const data = props.cst;
   const router = useRouter();
   const [totalRows, setTotalRows] = useState(props.totalCust);
   const [perPage, setPerPage] = useState(10);
   const [isSearch, setIsSearch] = useState(false);
+  const [dataSearch, setDataSearch] = useState([]);
+  console.log(data);
 
   useEffect(() => {
     globalAct.setFullname(props.fullName);
     globalAct.setUserPict(props.pict);
     globalAct.setOutletPict(props.outletPict);
     globalAct.setAdminMode("ski");
-  }, []);
-
-  const handlePageChange = useCallback((page) => {
-    fetchData((page - 1) * perPage, perPage);
-  }, []);
-
-  const handlePerRowsChange = useCallback((newPerPage, page) => {
-    setPerPage(newPerPage);
-    fetchData(0, newPerPage);
-  }, []);
-
-  const fetchData = useCallback(async (start, page) => {
-    globalAct.setIsFetch(true);
-    const body = {
-      uri: "customer",
-      start: start,
-      length: page,
-    };
-    try {
-      const res = await fetchJson("/api/prot/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      setData(res.data);
-      setTotalRows(res.total);
-      setPerPage(page);
-    } catch (error) {
-      console.log("error", error);
-      if (error instanceof FetchError) {
-        globalAct.setErrorMsg(error.data.message);
-      } else {
-        globalAct.setErrorMsg("An unexpected error happened");
-      }
-    }
-    globalAct.setIsFetch(false);
   }, []);
 
   return (
@@ -127,7 +93,7 @@ const ManageUsersCst = (props) => {
           console.log("search");
           return (
             <SearchUserCst
-              setData={setData}
+              setData={setDataSearch}
               setTotalRows={setTotalRows}
               setIsSearch={setIsSearch}
             />
@@ -141,12 +107,23 @@ const ManageUsersCst = (props) => {
             <UsersTableCst
               data={data}
               search={isSearch}
-              handlePageChange={handlePageChange}
-              handlePerRowsChange={handlePerRowsChange}
               totalRows={totalRows}
+              handlePageChange={(page) => {
+                router.replace(
+                  `/dashboardSKI/customers?start=${
+                    (page - 1) * perPage
+                  }&length=${perPage}`
+                );
+              }}
+              handlePerRowsChange={(newpage) => {
+                setPerPage(newpage);
+                router.replace(
+                  `/dashboardSKI/customers?start=0&length=${newpage}`
+                );
+              }}
             />
           );
-        }, [data])}
+        }, [data, isSearch])}
       </div>
     </div>
   );
