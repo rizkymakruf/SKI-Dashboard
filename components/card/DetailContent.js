@@ -1,4 +1,5 @@
 import { memo } from "react";
+import Image from "next/image";
 
 const DetailContent = (props) => {
   // const { modal } = props.globalCtx;
@@ -8,8 +9,21 @@ const DetailContent = (props) => {
     <>
       <div className="w-full flex items-center p-5">
         <div className="w-36 h-full flex-col flex items-center">
-          <div className="w-32 h-32 rounded-md bg-slate-400"></div>
-          {/* <p>$title</p> */}
+          {props.globalCtx.selectedData?.pict === "" ? (
+            <div className="w-32 h-32 rounded-full bg-slate-400 mb-2 relative"></div>
+          ) : (
+            <div className="w-32 h-32 mb-2 relative">
+              <Image
+                src={
+                  props.globalCtx.selectedData !== ""
+                    ? props.globalCtx.selectedData.pict
+                    : "/img/user-default.png"
+                }
+                layout="fill"
+                className="rounded-full"
+              />
+            </div>
+          )}
         </div>
         <div className="space-y-2 ml-4">
           <div className="flex">

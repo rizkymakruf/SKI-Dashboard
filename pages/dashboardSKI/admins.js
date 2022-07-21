@@ -93,6 +93,10 @@ const ManageUsers = (props) => {
     globalAct.setFullname(props.fullName);
     globalAct.setUserPict(props.pict);
     globalAct.setOutletPict(props.outletPict);
+    globalAct.setSelectedData({
+      ...globalCtx.selectedData,
+      pict: "/img/user-default.png",
+    });
     globalAct.setAdminMode("ski");
   }, []);
 

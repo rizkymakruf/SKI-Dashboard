@@ -11,17 +11,24 @@ const DetailUser = (props) => {
   // const { modal } = props.globalCtx;
   // const { setModal } = props.globalAct;
   // console.log("helll", props.globalCtx.selectedData);
-  console.log(props.globalCtx.selectedData.pict);
   return (
     <>
       <div className="w-full flex items-center p-5">
         <div className="w-36 h-full flex-col flex items-center">
-          {props.globalCtx.selectedData.pict !== "" ? (
-            <div className="w-28 h-28 rounded-full mb-2 relative">
-              <Image src={props.globalCtx.selectedData.pict} layout="fill" />
-            </div>
-          ) : (
+          {props.globalCtx.selectedData?.pict === "" ? (
             <div className="w-28 h-28 rounded-full bg-slate-400 mb-2 relative"></div>
+          ) : (
+            <div className="w-28 h-28 mb-2 relative">
+              <Image
+                src={
+                  props.globalCtx.selectedData !== ""
+                    ? props.globalCtx.selectedData.pict
+                    : "/img/user-default.png"
+                }
+                layout="fill"
+                className="rounded-full"
+              />
+            </div>
           )}
           <p>{props.globalCtx.selectedData.username}</p>
         </div>

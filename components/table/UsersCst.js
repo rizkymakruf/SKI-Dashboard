@@ -25,7 +25,7 @@ const UsersTableCst = ({
     },
     {
       name: <div className="font-bold text-red-500">Fullname</div>,
-      grow: 2,
+      grow: 3,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
           <p className="text-xs font-bold">{a.fullname}</p>
@@ -45,7 +45,7 @@ const UsersTableCst = ({
       name: (
         <div className="w-full text-center font-bold text-red-500">Active</div>
       ),
-      grow: 2,
+      grow: 1,
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <label className="switch">

@@ -228,7 +228,12 @@ const FormOtlet = () => {
                 <div className="w-full h-auto flex justify-end gap-2">
                   <button
                     type="submit"
-                    onClick={() => setValue("pict", imageFile)}
+                    onClick={() =>
+                      setValue(
+                        "pict",
+                        imageFile !== "" ? imageFile : "/img/outlet-default.png"
+                      )
+                    }
                     // disabled={globalCtx.isFetch ? "disabled" : ""}
                     className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                   >

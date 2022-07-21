@@ -77,7 +77,6 @@ const ManageUsersCst = (props) => {
   const [perPage, setPerPage] = useState(10);
   const [isSearch, setIsSearch] = useState(false);
   const [dataSearch, setDataSearch] = useState([]);
-  console.log(data);
 
   useEffect(() => {
     globalAct.setFullname(props.fullName);

@@ -413,7 +413,12 @@ const FormUser = () => {
                     <button
                       className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                       type="submit"
-                      onClick={() => setValue("pict", imageFile)}
+                      onClick={() =>
+                        setValue(
+                          "pict",
+                          imageFile !== "" ? imageFile : "/img/user-default.png"
+                        )
+                      }
                     >
                       Save
                     </button>
