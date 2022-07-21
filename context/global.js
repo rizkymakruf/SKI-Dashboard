@@ -4,7 +4,7 @@ export const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
   const [modal, setModal] = useState("");
-  const [popover, setPopover] = useState("");
+
   const [isFetch, setIsFetch] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [fullname, setFullname] = useState("");
@@ -21,7 +21,7 @@ export const GlobalProvider = ({ children }) => {
   const contextValue = {
     globalCtx: {
       modal,
-      popover,
+
       errorMsg,
       isFetch,
       fullname,
@@ -37,7 +37,7 @@ export const GlobalProvider = ({ children }) => {
     },
     globalAct: {
       setModal,
-      setPopover,
+
       setErrorMsg,
       setIsFetch,
       setFullname,

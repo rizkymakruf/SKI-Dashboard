@@ -8,7 +8,13 @@ import SearchUser from "components/search/User";
 
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { allUsers, getOutlet, checkUid, getTotalAdmin } from "lib/arangoDb";
+import {
+  allUsers,
+  getOutlet,
+  checkUid,
+  getTotalAdmin,
+  findOutlet,
+} from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { useRouter } from "next/router";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -63,6 +69,9 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
+    pict:
+      checkUids[0].pict !== "" ? checkUids[0].pict : "/img/user-default.png",
+    outletPict: "/img/ski.png",
     users: users,
     listOutlet: listOutlet,
     totalAdmin: totalUser[0].total,
@@ -82,6 +91,8 @@ const ManageUsers = (props) => {
   useEffect(() => {
     globalAct.setListOutlet(props.listOutlet);
     globalAct.setFullname(props.fullName);
+    globalAct.setUserPict(props.pict);
+    globalAct.setOutletPict(props.outletPict);
     globalAct.setAdminMode("ski");
   }, []);
 

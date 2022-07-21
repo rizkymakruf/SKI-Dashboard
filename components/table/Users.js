@@ -55,7 +55,7 @@ const UsersTable = ({
       name: (
         <div className="w-full text-center font-bold text-red-500">Active</div>
       ),
-      grow: 2,
+      grow: 1,
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <label className="switch">
@@ -81,7 +81,7 @@ const UsersTable = ({
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                   });
-                  router.reload("/dashboardSKI/admins");
+                  router.replace("/dashboardSKI/admins");
                 } catch (error) {
                   console.log("error", error);
                   if (error instanceof FetchError) {

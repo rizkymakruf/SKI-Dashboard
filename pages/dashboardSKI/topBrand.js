@@ -59,6 +59,9 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
+    pict:
+      checkUids[0].pict !== "" ? checkUids[0].pict : "/img/user-default.png",
+    outletPict: "/img/ski.png",
     tbrand: tbrand,
     brand: brand,
     totalBrand: totalBrand[0].total,
@@ -76,6 +79,8 @@ const ManageTopBrand = (props) => {
 
   useEffect(() => {
     globalAct.setFullname(props.fullName);
+    globalAct.setUserPict(props.pict);
+    globalAct.setOutletPict(props.outletPict);
     globalAct.setAdminMode("ski");
   }, []);
 

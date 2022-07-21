@@ -55,7 +55,7 @@ const OrderTable = ({
                     body: JSON.stringify(body),
                   });
 
-                  router.reload("/dashboardSKI/category");
+                  router.replace("/dashboardSKI/category");
                 } catch (error) {
                   console.log("error", error);
                   alert(globalCtx.errorMsg);

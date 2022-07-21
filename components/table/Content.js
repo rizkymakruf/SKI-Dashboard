@@ -57,7 +57,7 @@ const ContentTable = ({
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                   });
-                  router.reload("/dashboardSKI/category");
+                  router.replace(router.pathname);
                 } catch (error) {
                   console.log("error", error);
                   if (error instanceof FetchError) {

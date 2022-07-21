@@ -80,8 +80,8 @@ const FormContentUpdate = () => {
         body: JSON.stringify(body),
       });
 
-      router.replace("/dashboardSKI/content");
-      reset();
+      await router.replace("/dashboardSKI/content");
+      await reset();
       globalAct.setModal("");
     } catch (error) {
       if (error instanceof FetchError) {
@@ -296,7 +296,8 @@ const FormContentUpdate = () => {
                     </>
                   ) : (
                     globalCtx.selectedData !== "" && (
-                      <Image layout="fill" src={globalCtx.selectedData?.pict} />
+                      // <Image layout="fill" src={globalCtx.selectedData?.pict} />
+                      <div></div>
                     )
                   )}
                 </div>

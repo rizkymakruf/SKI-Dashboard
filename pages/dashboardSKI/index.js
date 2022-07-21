@@ -3,13 +3,7 @@ import DashboardCardSKI from "components/card/DashboardCardSKI";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { useContext, useEffect, useMemo } from "react";
-import {
-  allOutlet,
-  checkUid,
-  PenjualanQty,
-  PenjualanRp,
-  findOutlet,
-} from "lib/arangoDb";
+import { allOutlet, checkUid, PenjualanQty, PenjualanRp } from "lib/arangoDb";
 import { useRouter } from "next/router";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import Line from "components/chart/line";
@@ -51,13 +45,9 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   if (checkUids[0].outlet !== "") {
     return redirect("/");
   }
-  var outletPict;
   const outlet = await allOutlet();
   const qty = await PenjualanQty();
   const rp = await PenjualanRp();
-  if (checkUids[0].outlet !== "") {
-    outletPict = await findOutlet(checkUids[0].outlet);
-  }
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -68,10 +58,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     fullName: checkUids[0].fullname,
     pict:
       checkUids[0].pict !== "" ? checkUids[0].pict : "/img/user-default.png",
-    outletPict:
-      checkUids[0].outlet !== ""
-        ? outletPict[0].pict
-        : "/img/outlet-default.png",
+    outletPict: "/img/ski.png",
     allOutlet: outlet,
     qty: qty,
     rp: rp,

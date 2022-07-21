@@ -71,7 +71,7 @@ const UsersTableCst = ({
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                   });
-                  router.reload("/dashboardSKI/customers");
+                  router.replace("/dashboardSKI/customers");
                 } catch (error) {
                   console.log("error", error);
                   if (error instanceof FetchError) {

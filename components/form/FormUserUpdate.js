@@ -362,10 +362,13 @@ const FormUserUpdate = () => {
                       </>
                     ) : (
                       globalCtx.selectedData !== "" && (
-                        <Image
-                          layout="fill"
-                          src={globalCtx.selectedData?.pict}
-                        />
+                        // <Image
+                        //   layout="fill"
+                        //   width={100}
+                        //   height={100}
+                        //   src={globalCtx.selectedData?.pict}
+                        // />
+                        <div></div>
                       )
                     )}
                   </div>

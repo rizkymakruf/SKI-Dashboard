@@ -53,6 +53,9 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
+    pict:
+      checkUids[0].pict !== "" ? checkUids[0].pict : "/img/user-default.png",
+    outletPict: "/img/ski.png",
     allOutlet: outlet,
   });
 },
@@ -64,6 +67,8 @@ const Otlets = (props) => {
 
   useEffect(() => {
     globalAct.setFullname(props.fullName);
+    globalAct.setUserPict(props.pict);
+    globalAct.setOutletPict(props.outletPict);
     globalAct.setAdminMode("ski");
   }, []);
 

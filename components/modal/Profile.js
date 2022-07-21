@@ -64,8 +64,13 @@ const Profile = () => {
           {globalCtx.userPict === "" ? (
             <div className="bg-black w-full h-40 rounded-md" />
           ) : (
-            <div className="relative h-40 w-full rounded-md">
-              <Image layout="fill" src={globalCtx.userPict} />
+            <div className="relative h-40 w-40 rounded-md">
+              <Image
+                layout="fill"
+                src={globalCtx.userPict}
+                width={100}
+                height={100}
+              />
             </div>
           )}
           <div className="items-center text-center">

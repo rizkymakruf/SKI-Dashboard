@@ -10,6 +10,7 @@ const nextConfig = {
       "drive.google.com",
       "res.cloudinary.com",
       "ik.imagekit.io",
+      "cdn.discordapp.com",
     ],
   },
 };

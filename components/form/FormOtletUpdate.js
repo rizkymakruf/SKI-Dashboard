@@ -235,7 +235,8 @@ const FormOtletUpdate = () => {
                     </>
                   ) : (
                     globalCtx.selectedData !== "" && (
-                      <Image layout="fill" src={globalCtx.selectedData?.pict} />
+                      <div></div>
+                      // <Image layout="fill" src={globalCtx.selectedData?.pict} />
                     )
                   )}
                 </div>
