@@ -413,7 +413,7 @@ const SideNav = ({ children, props }) => {
             </div>
           </div>
 
-          <div className="w-full h-full overflow-y-auto">
+          <div className="w-full h-full overflow-y-auto overflow-x-hidden">
             {/* overflow-scroll */}
             {globalCtx.adminMode === "ski" ? (
               <Item

@@ -25,10 +25,20 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboard/outlet/[pid]": [
+    "/dashboardSKI/content": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/outlet/[pid].js"
+      "static/chunks/pages/dashboardSKI/content.js"
+    ],
+    "/dashboardSKI/produkRekomen": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboardSKI/produkRekomen.js"
+    ],
+    "/dashboardSKI/report": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboardSKI/report.js"
     ],
     "/dashboardSKI/topBrand": [
       "static/chunks/webpack.js",

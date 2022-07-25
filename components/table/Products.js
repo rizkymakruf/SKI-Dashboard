@@ -4,7 +4,7 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useContext, memo } from "react";
 import { useRouter } from "next/router";
 
-const Products = ({ data }) => {
+const Products = ({ data, setData }) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
 
@@ -46,6 +46,14 @@ const Products = ({ data }) => {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 });
+
+                const index = data.findIndex((object) => {
+                  return object.key === a.key;
+                });
+
+                if (index !== -1) {
+                  data[index].recommend = !a.recommend;
+                }
               } catch (error) {
                 console.log("error", error);
                 if (error instanceof FetchError) {

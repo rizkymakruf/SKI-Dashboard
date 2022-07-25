@@ -29,7 +29,7 @@ const ProdukRekomenTable = ({
           {/* Product Rekomendation */}
         </div>
       ),
-      grow: 1,
+      grow: 2,
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button

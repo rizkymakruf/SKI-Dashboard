@@ -179,7 +179,7 @@ const ManageProdukRekomen = (props) => {
             </div>
           ) : (
             <div className="flex gap-6 my-4">
-              <Products data={searchData} />
+              <Products data={searchData} setData={setSearchData} />
             </div>
           );
         }, [searchData])}
