@@ -49,7 +49,10 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   }
 
   const tbrand = await topBrand();
-  const brand = await listBrand();
+  const brand = await listBrand(
+    query.start ? parseInt(query.start) : 0,
+    query.length ? parseInt(query.length) : 10
+  );
   const totalBrand = await getTotalBrand();
 
   if (checkUids.length < 1) {
@@ -72,7 +75,8 @@ sessionOptions);
 const ManageTopBrand = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
-  const [data, setData] = useState(props.brand);
+  const data = props.brand;
+  console.log("brand", props.brand);
 
   const [totalRows, setTotalRows] = useState(props.totalBrand);
   const [perPage, setPerPage] = useState(10);
@@ -82,42 +86,6 @@ const ManageTopBrand = (props) => {
     globalAct.setUserPict(props.pict);
     globalAct.setOutletPict(props.outletPict);
     globalAct.setAdminMode("ski");
-  }, []);
-
-  const handlePageChange = useCallback((page) => {
-    fetchData((page - 1) * perPage, perPage);
-  }, []);
-
-  const handlePerRowsChange = useCallback((newPerPage, page) => {
-    setPerPage(newPerPage);
-    fetchData(0, newPerPage);
-  }, []);
-
-  const fetchData = useCallback(async (start, page) => {
-    globalAct.setIsFetch(true);
-    const body = {
-      uri: "outlet/other",
-      start: start,
-      length: page,
-    };
-    try {
-      const res = await fetchJson("/api/prot/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      setData(res.data);
-      setTotalRows(res.total);
-      setPerPage(page);
-    } catch (error) {
-      console.log("error", error);
-      if (error instanceof FetchError) {
-        globalAct.setErrorMsg(error.data.message);
-      } else {
-        globalAct.setErrorMsg("An unexpected error happened");
-      }
-    }
-    globalAct.setIsFetch(false);
   }, []);
 
   return (
@@ -139,8 +107,19 @@ const ManageTopBrand = (props) => {
             <TopBrandListTable
               data={data}
               totalRows={totalRows}
-              handlePageChange={handlePageChange}
-              handlePerRowsChange={handlePerRowsChange}
+              handlePageChange={(page) => {
+                router.replace(
+                  `/dashboardSKI/topBrand?start=${
+                    (page - 1) * perPage
+                  }&length=${perPage}`
+                );
+              }}
+              handlePerRowsChange={(newpage) => {
+                setPerPage(newpage);
+                router.replace(
+                  `/dashboardSKI/topBrand?start=0&length=${newpage}`
+                );
+              }}
             />
           );
         }, [data])}

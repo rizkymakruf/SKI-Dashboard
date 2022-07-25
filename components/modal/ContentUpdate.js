@@ -9,8 +9,6 @@ import { useForm } from "react-hook-form";
 const ContentUpdateModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
 
-  const { reset } = useForm();
-
   return (
     <div className="bg-white w-full h-full rounded-md shadow-sm shadow-black">
       <div className="bg-red-500 h-12 w-full flex items-center justify-between px-3 rounded-t-md">
@@ -18,7 +16,12 @@ const ContentUpdateModal = () => {
         <button
           onClick={() => {
             globalAct.setModal("");
-            reset();
+            {
+              globalAct.setModal(""),
+                globalAct.setSelectedData({
+                  pict: "/img/user-default.png",
+                });
+            }
           }}
           className={
             "bg-white items-center justify-center h-8 w-8 rounded-md shadow-md flex gap-x-2 text-xs text-red-500 hover:w-24 duration-150 hover:after:content-['Cancel']"

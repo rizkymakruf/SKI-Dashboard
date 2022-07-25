@@ -8,7 +8,9 @@ export const GlobalProvider = ({ children }) => {
   const [isFetch, setIsFetch] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [fullname, setFullname] = useState("");
-  const [selectedData, setSelectedData] = useState("");
+  const [selectedData, setSelectedData] = useState({
+    pict: "/img/user-default.png",
+  });
   const [listOutlet, setListOutlet] = useState([]);
   const [listUser, setListUser] = useState([]);
   const [listBrand, setListBrand] = useState([]);

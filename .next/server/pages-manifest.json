@@ -2,9 +2,5 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/dashboard/product/[pid]": "pages/dashboard/product/[pid].js",
-  "/dashboard/outlet/[pid]": "pages/dashboard/outlet/[pid].js",
-  "/": "pages/index.js",
-  "/dashboardSKI/customers": "pages/dashboardSKI/customers.js",
-  "/dashboardSKI": "pages/dashboardSKI.js"
+  "/dashboardSKI/vouchers": "pages/dashboardSKI/vouchers.js"
 }

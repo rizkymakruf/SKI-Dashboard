@@ -290,8 +290,6 @@ const FormUser = () => {
                   </p>
                 )}
               </div>
-            </div>
-            <div className="w-full space-y-1">
               <div className="w-full">
                 <p>Outlet</p>
                 <select
@@ -323,6 +321,8 @@ const FormUser = () => {
                   </p>
                 )}
               </div>
+            </div>
+            <div className="w-full space-y-1">
               <div className="w-full">
                 <p>Alamat</p>
                 <textarea
@@ -354,7 +354,7 @@ const FormUser = () => {
                   </p>
                 )}
               </div>
-              <div className="w-full h-auto relative pt-2">
+              <div className="w-full h-auto relative pt-1">
                 <p>Foto user</p>
                 <input
                   accept="image/png, image/gif, image/jpeg"
@@ -367,48 +367,53 @@ const FormUser = () => {
                   onChange={(e) => handleChange(e)}
                 />
 
-                <div className="w-full h-auto relative flex-row gap-2 flex items-center  pt-2">
+                <div className="w-full h-auto relative flex-row gap-2 flex items-center pt-2">
                   <div
                     onClick={upLoad}
-                    className="w-full h-32 relative z-0 flex text-gray-700 flex-col justify-center items-center rounded h-passport border-2 border-dashed bg-white backdrop-filter bg-opacity-20 backdrop-blur-lg"
+                    className="w-full h-40 relative z-0 flex text-gray-700 flex-col justify-center items-center rounded h-passport border-2 border-dashed bg-white backdrop-filter bg-opacity-20 backdrop-blur-lg"
                   >
-                    {imageFile !== "" ? (
-                      <Image layout="fill" src={imageFile} />
-                    ) : globalCtx.isFetch ? (
-                      <svg
-                        className="animate-spin h-5 w-5 text-blue-300"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                    ) : (
-                      <>
-                        <h3 className="text-gray-700">
-                          <i className="fas fa-cloud-download-alt"></i>
-                        </h3>
+                    <div className="w-36 h-36 relative z-40 flex justify-center items-center">
+                      {imageFile !== "" ? (
+                        <Image layout="fill" src={imageFile} />
+                      ) : globalCtx.isFetch ? (
+                        <svg
+                          className="animate-spin h-5 w-5 text-blue-300"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                      ) : (
+                        <>
+                          <h3 className="text-gray-700">
+                            <i className="fas fa-cloud-download-alt"></i>
+                          </h3>
 
-                        <p className="font-light text-xs text-black text-center px-3">
-                          Drop here or click here
-                        </p>
-                      </>
-                    )}
+                          <p className="font-light text-xs text-gray-400 text-center px-3">
+                            Drop here or click here
+                          </p>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
-                <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
+                <span className="text-gray-400 text-xs">
+                  *Format picture recomand 1x1
+                </span>
+                <div className="w-full h-auto relative py-3 flex justify-end gap-1">
                   <div className="w-full h-auto flex justify-end gap-2">
                     <button
                       className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"

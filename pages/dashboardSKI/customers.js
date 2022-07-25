@@ -104,7 +104,7 @@ const ManageUsersCst = (props) => {
           console.log("tabel");
           return (
             <UsersTableCst
-              data={data}
+              data={isSearch ? dataSearch : data}
               search={isSearch}
               totalRows={totalRows}
               handlePageChange={(page) => {

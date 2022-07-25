@@ -15,7 +15,7 @@ const DetailUserCst = (props) => {
             <div className="w-28 h-28 mb-2 relative">
               <Image
                 src={
-                  props.globalCtx.selectedData !== ""
+                  props.globalCtx.selectedData?.pict !== ""
                     ? props.globalCtx.selectedData.pict
                     : "/img/user-default.png"
                 }

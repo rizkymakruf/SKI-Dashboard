@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useContext, memo, useCallback } from "react";
+import { useContext, memo, useCallback, useEffect } from "react";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
@@ -15,6 +15,11 @@ const FormCategory = () => {
 
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
+
+  useEffect(() => {
+    // setImageFile(globalCtx.selectedData?.pict);
+    reset();
+  }, [globalCtx.selectedData]);
 
   const onSubmit = useCallback(async (data) => {
     const body = {

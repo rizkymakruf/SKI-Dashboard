@@ -15,11 +15,6 @@
     "static/development/_middlewareManifest.js"
   ],
   "pages": {
-    "/": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/index.js"
-    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -30,35 +25,20 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboard/category/[pid]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboard/category/[pid].js"
-    ],
     "/dashboard/outlet/[pid]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/dashboard/outlet/[pid].js"
     ],
-    "/dashboard/product/[pid]": [
+    "/dashboardSKI/topBrand": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/product/[pid].js"
+      "static/chunks/pages/dashboardSKI/topBrand.js"
     ],
-    "/dashboardSKI": [
+    "/dashboardSKI/vouchers": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI.js"
-    ],
-    "/dashboardSKI/admins": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/admins.js"
-    ],
-    "/dashboardSKI/customers": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/customers.js"
+      "static/chunks/pages/dashboardSKI/vouchers.js"
     ]
   },
   "ampFirstPages": []

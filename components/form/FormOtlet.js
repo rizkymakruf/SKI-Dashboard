@@ -181,12 +181,12 @@ const FormOtlet = () => {
                 disabled={isFetch ? "disabled" : ""}
               />
 
-              <div className="w-full h-auto relative flex-row gap-2 flex items-center px-4 pt-2">
+              <div className="w-full h-auto relative flex-row gap-2 flex items-center pt-2">
                 <div
                   onClick={upLoad}
-                  className="w-full h-32 relative z-0 flex text-gray-700 flex-col justify-center items-center rounded h-passport border-2 border-dashed bg-white backdrop-filter bg-opacity-20 backdrop-blur-lg"
+                  className="w-full h-40 relative z-0 flex text-gray-700 flex-col justify-center items-center rounded h-passport border-2 border-dashed bg-white backdrop-filter bg-opacity-20 backdrop-blur-lg"
                 >
-                  <div className="relative w-40 h-full">
+                  <div className="w-36 h-36 relative z-40 flex justify-center items-center">
                     {imageFile !== "" ? (
                       <Image layout="fill" src={imageFile} />
                     ) : globalCtx.isFetch ? (
@@ -216,7 +216,7 @@ const FormOtlet = () => {
                           <i className="fas fa-cloud-download-alt"></i>
                         </h3>
 
-                        <p className="font-light text-xs text-black text-center px-3">
+                        <p className="font-light text-xs text-gray-400 text-center px-3">
                           Drop here or click here
                         </p>
                       </>
@@ -224,6 +224,9 @@ const FormOtlet = () => {
                   </div>
                 </div>
               </div>
+              <span className="text-gray-400 text-xs">
+                *Format picture recomand 1x1
+              </span>
               <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                 <div className="w-full h-auto flex justify-end gap-2">
                   <button

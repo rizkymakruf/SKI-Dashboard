@@ -92,12 +92,12 @@ const DashboardCardSKI = (props) => {
                 router.push(`/dashboard/outlet/${props.otlet.shortname}`);
               }}
               className={
-                "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-orange/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:after:content-['Manage'] "
+                "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-orange-orange/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:after:content-['Manage'] "
               }
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 text-blue-500"
+                class="h-5 w-5 text-orange-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -123,12 +123,12 @@ const DashboardCardSKI = (props) => {
                 props.globalAct.setSelectedData(props.otlet);
               }}
               className={
-                "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-orange/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:after:content-['Update'] "
+                "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-blue/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:after:content-['Update'] "
               }
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 text-orange-500"
+                class="h-5 w-5 text-blue-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
