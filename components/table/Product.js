@@ -23,6 +23,24 @@ const OrderTable = ({}) => {
       harga: "Rp 3000.0000",
       stock: 8,
     },
+    {
+      name: "Coffe Stone",
+      category: "Coffee",
+      harga: "Rp 3000.0000",
+      stock: 3,
+    },
+    {
+      name: "Coffe Stone",
+      category: "Coffee",
+      harga: "Rp 3000.0000",
+      stock: 377,
+    },
+    {
+      name: "Coffe Stone",
+      category: "Coffee",
+      harga: "Rp 3000.0000",
+      stock: 8,
+    },
   ];
   const columns = [
     {

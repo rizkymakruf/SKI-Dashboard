@@ -15,7 +15,7 @@ const VoucherTable = ({
       name: <div className="font-bold text-red-500">Voucher From</div>,
       grow: 10,
       cell: (a) => (
-        <div className="w-full h-full py-1 flex flex-row gap-1">
+        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
           <p className="text-xs font-bold">{a.outlet}</p>
         </div>
       ),
@@ -24,7 +24,7 @@ const VoucherTable = ({
       name: <div className="font-bold text-red-500">Voucher Name</div>,
       grow: 10,
       cell: (a) => (
-        <div className="w-full h-full py-1 flex flex-row gap-1">
+        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
           <p className="text-xs font-bold">{a.name}</p>
         </div>
       ),
@@ -33,7 +33,7 @@ const VoucherTable = ({
       name: <div className="font-bold text-red-500">Voucher Expired</div>,
       grow: 10,
       cell: (a) => (
-        <div className="w-full h-full py-1 flex flex-row gap-1">
+        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
           <p className="text-xs font-bold">{a.expired}</p>
         </div>
       ),
@@ -42,7 +42,7 @@ const VoucherTable = ({
       name: <div className="font-bold text-red-500">Minimum</div>,
       grow: 10,
       cell: (a) => (
-        <div className="w-full h-full py-1 flex flex-row gap-1">
+        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
           <p className="text-xs font-bold">Rp {a.min}</p>
         </div>
       ),

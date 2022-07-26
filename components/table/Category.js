@@ -19,7 +19,7 @@ const OrderTable = ({
       name: <div className="font-bold text-red-500">Category Name</div>,
       grow: 10,
       cell: (a) => (
-        <div className="w-full h-full py-1 flex flex-row gap-1">
+        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
           <p className="text-xs font-bold">{a.name}</p>
         </div>
       ),

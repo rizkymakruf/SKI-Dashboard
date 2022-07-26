@@ -41,20 +41,20 @@ const Modal = (props) => {
           modal !== "" ? "" : "hidden"
         }`}
       />
-      <div
+      {/* <div
         className={`${
           modal === "addProduct" ? "translate-x-0" : "-translate-x-full"
         } z-50 fixed duration-700 w-2/4 h-screen p-4`}
       >
         <ProductModal />
-      </div>
-      <div
+      </div> */}
+      {/* <div
         className={`${
           modal === "addProduct" ? "translate-x-0" : "translate-x-full"
         } z-50 fixed right-0 duration-700 w-96 h-screen p-4`}
       >
         <ProductImageModal />
-      </div>
+      </div> */}
       <div
         className={`${
           modal === "deleteProduct" ? "translate-x-0" : "-translate-x-full"
@@ -84,6 +84,15 @@ const Modal = (props) => {
         }`}
       >
         <OtletModal />
+      </div>
+      <div
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "addProduct"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <ProductModal />
       </div>
       <div
         className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${

@@ -11,6 +11,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { checkUid, findOutlet } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import FormProduct from "components/form/FormProduct";
+import AddProduct from "components/card/AddProduct";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
@@ -80,7 +81,7 @@ const ManageProduct = (props) => {
   return (
     <div className="w-full p-4 flex flex-col gap-y-4">
       <div className="w-full border border-gray-300 rounded-md p-4 shadow-sm hover:shadow-md hover:shadow-red-500">
-        <FormProduct />
+        <AddProduct globalAct={globalAct} globalCtx={globalCtx} />
       </div>
       <div className="w-full p-4 border border-gray-200 rounded-md shadow-sm hover:shadow-md hover:shadow-red-500">
         <SearchProductOutlet />

@@ -20,7 +20,7 @@ const ContentTable = ({
       name: <div className="font-bold text-red-500">Title</div>,
       grow: 10,
       cell: (a) => (
-        <div className="w-full h-full py-1 flex flex-row gap-1">
+        <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
           <p className="text-xs font-bold">{a.title}</p>
         </div>
       ),

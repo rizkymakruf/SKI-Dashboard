@@ -1,11 +1,5 @@
 {
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/_error": "pages/_error.js",
-  "/dashboardSKI/content": "pages/dashboardSKI/content.js",
-  "/dashboardSKI/produkRekomen": "pages/dashboardSKI/produkRekomen.js",
-  "/api/prot/post": "pages/api/prot/post.js",
-  "/dashboardSKI/topBrand": "pages/dashboardSKI/topBrand.js",
-  "/dashboardSKI/vouchers": "pages/dashboardSKI/vouchers.js",
-  "/dashboardSKI/report": "pages/dashboardSKI/report.js"
+  "/_error": "pages/_error.js"
 }

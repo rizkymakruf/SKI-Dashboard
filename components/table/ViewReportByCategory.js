@@ -7,18 +7,6 @@ const ViewReportByCategoryTable = ({
   handlePageChange,
   handlePerRowsChange,
 }) => {
-  const CountIncome = useCallback((a) => {
-    var x = 0;
-    a.map((e) => (x += e.order));
-    return x;
-  }, []);
-
-  const CountProduct = useCallback((a) => {
-    var x = 0;
-    a.map((e) => (x += e.qty));
-    return x;
-  }, []);
-
   const columns = [
     {
       name: <div className="font-bold text-red-500">Category Name</div>,
@@ -30,33 +18,11 @@ const ViewReportByCategoryTable = ({
       ),
     },
     {
-      name: <div className="font-bold text-red-500">Total Product</div>,
+      name: <div className="font-bold text-red-500">Sold</div>,
       grow: 10,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1">
-          <p className="text-xs font-bold">
-            {a.order ? CountProduct(a.order) : 0}
-          </p>
-        </div>
-      ),
-    },
-    {
-      name: <div className="font-bold text-red-500">Total Order</div>,
-      grow: 10,
-      cell: (a) => (
-        <div className="w-full h-full py-1 flex flex-row gap-1">
-          <p className="text-xs font-bold">{a.order ? a.order.length : 0}</p>
-        </div>
-      ),
-    },
-    {
-      name: <div className="font-bold text-red-500">Total Income</div>,
-      grow: 10,
-      cell: (a) => (
-        <div className="w-full h-full py-1 flex flex-row gap-1">
-          <p className="text-xs font-bold">
-            {a.order ? CountIncome(a.order) : 0}
-          </p>
+          <p className="text-xs font-bold">{a.order ? a.order : 0} product</p>
         </div>
       ),
     },

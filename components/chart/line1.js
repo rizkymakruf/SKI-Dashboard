@@ -35,13 +35,43 @@ const CoinPriceChart = (props) => {
     datasets: [
       {
         data: props.qty,
+        backgroundColor: [
+          "rgba(255, 237, 187, 0.6)",
+          "rgba(255, 229, 202, 0.6)",
+          "rgba(255, 226, 146, 0.6)",
+          "rgba(248, 169, 110, 0.6)",
+          "rgba(215, 227, 125, 0.6)",
+          "rgba(173, 197, 231, 0.6)",
+          "rgba(248, 170, 150, 0.6)",
+          "rgba(231, 186, 215, 0.6)",
+          "rgba(186, 228, 240, 0.6)",
+          "rgba(74, 200, 221, 0.6)",
+          "rgba(245, 140, 118, 0.6)",
+          "rgba(128, 107, 170, 0.6)",
+        ],
+        borderColor: [
+          "rgba(255, 237, 187)",
+          "rgba(255, 229, 202)",
+          "rgba(255, 226, 146)",
+          "rgba(248, 169, 110)",
+          "rgba(215, 227, 125)",
+          "rgba(173, 197, 231)",
+          "rgba(248, 170, 150)",
+          "rgba(231, 186, 215)",
+          "rgba(186, 228, 240)",
+          "rgba(74, 200, 221)",
+          "rgba(245, 140, 118)",
+          "rgba(128, 107, 170)",
+        ],
+        borderWidth: 2,
       },
     ],
   };
+
   console.log("data", data);
   return (
     <div className="chart-container w-full h-full relative">
-      <Chart type="line" data={data} options={ConfigLine} />
+      <Chart type="bar" data={data} options={ConfigLine} />
     </div>
   );
 };

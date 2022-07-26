@@ -34,12 +34,14 @@ const FormReport = ({ setDataReport, setMode, setTotalRows, setNewBody }) => {
       length: 10,
     };
     setNewBody(body);
+    console.log(body);
     try {
       const res = await fetchJson("/api/prot/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+      console.log(res);
       await setMode(body.method);
       await setDataReport(res.data);
       await setTotalRows(res.total);

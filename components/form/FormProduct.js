@@ -285,7 +285,7 @@ const FormProduct = ({ myRef, globalCtx, globalAct, onSubmit, isFetch }) => {
                   ref={inputFileImage}
                   style={{ display: "none" }}
                   onChange={(e) => handleImage(e)}
-                  disabled={isFetch ? "disabled" : ""}
+                  // disabled={isFetch ? "disabled" : ""}
                 />
 
                 <div className="w-full h-auto relative flex-row gap-2 flex items-center pt-2">
