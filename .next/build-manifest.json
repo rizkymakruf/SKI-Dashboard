@@ -30,10 +30,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/dashboard/category/[pid].js"
     ],
-    "/dashboardSKI/report": [
+    "/dashboard/outlet/[pid]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/report.js"
+      "static/chunks/pages/dashboard/outlet/[pid].js"
+    ],
+    "/dashboard/product/[pid]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboard/product/[pid].js"
     ]
   },
   "ampFirstPages": []

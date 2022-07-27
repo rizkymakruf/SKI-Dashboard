@@ -16,9 +16,9 @@ const DetailProduct = (props) => {
       <div className="w-full flex items-center p-5">
         <div className="w-36 h-full flex-col flex items-center">
           {props.globalCtx.selectedData?.pict === "" ? (
-            <div className="w-28 h-28 rounded-full bg-slate-400 mb-2 relative"></div>
+            <div className="w-32 h-32 rounded-full bg-slate-400 mb-2 relative"></div>
           ) : (
-            <div className="w-28 h-28 mb-2 relative">
+            <div className="w-32 h-32 mb-2 relative">
               <Image
                 src={
                   props.globalCtx.selectedData?.pict !== ""
@@ -26,50 +26,99 @@ const DetailProduct = (props) => {
                     : "/img/content-default.png"
                 }
                 layout="fill"
-                className="rounded-full"
+                className="rounded-md"
               />
             </div>
           )}
           {/* <p>{props.globalCtx.selectedData.username}</p> */}
-          <p>Nama Product</p>
+          {/* <p>Nama Product</p> */}
         </div>
         <div className="ml-4">
           <div className="space-y-2">
             <div className="flex">
               <p className="w-32 text-md font-semibold text-red-500">
-                Fullname
+                Nama Produk
               </p>
-              <p className="text-md font-semibold text-gray-500">
+              <p className={"w-4"}>:</p>
+              <p className="text-md font-semibold text-gray-500 w-5/6">
                 {/* {props.globalCtx.selectedData.fullname} */}
-                nama lengkap
+                Delonghi Stilosa EC230.BK Coffee Maker Mesin Kopi Espresso EC
+                230 B
               </p>
             </div>
-            <div className="flex">
-              <p className="w-32 text-md font-semibold text-red-500">Email</p>
-              <p className="text-md font-semibold text-gray-500">
-                {/* {props.globalCtx.selectedData.email} */}
-                ini email
-              </p>
-            </div>
-            <div className="flex">
-              <p className="w-32 text-md font-semibold text-red-500">Phone</p>
-              <p className="text-md font-semibold text-gray-500">
-                {/* {props.globalCtx.selectedData.phone} */}
-                098765434356744
-              </p>
-            </div>
-            <div className="flex">
-              <p className="w-32 text-md font-semibold text-red-500">Address</p>
-              <p className="text-md font-semibold text-gray-500">
-                {/* {props.globalCtx.selectedData.address} */}
-                alamat niii
-              </p>
-            </div>
+
             <div className="flex">
               <p className="w-32 text-md font-semibold text-red-500">Outlet</p>
-              <p className="text-md font-semibold text-gray-500">
+              <p className={"w-4"}>:</p>
+              <p className="text-md font-semibold text-gray-500 w-5/6">
+                {/* {props.globalCtx.selectedData.phone} */}
+                Seren Coffee
+              </p>
+            </div>
+            <div className="flex">
+              <p className="w-32 text-md font-semibold text-red-500">Price</p>
+              <p className={"w-4"}>:</p>
+              <p className="text-md font-semibold text-gray-500 w-5/6">
+                {/* {props.globalCtx.selectedData.address} */}
+                Rp 2.100.800
+              </p>
+            </div>
+            <div className="flex">
+              <p className="w-32 text-md font-semibold text-red-500">Weight</p>
+              <p className={"w-4"}>:</p>
+              <p className="text-md font-semibold text-gray-500 w-5/6">
                 {/* {props.globalCtx.selectedData.outlet?.name} */}
-                nama outlet nii
+                4300gr
+              </p>
+            </div>
+            <div className="flex">
+              <p className="w-32 text-md font-semibold text-red-500">Stock</p>
+              <p className={"w-4"}>:</p>
+              <p className="text-md font-semibold text-gray-500 w-5/6">
+                {/* {props.globalCtx.selectedData.outlet?.name} */}
+                43 items
+              </p>
+            </div>
+            <div className="flex">
+              <p className="w-32 text-md font-semibold text-red-500">
+                Discount
+              </p>
+              <p className={"w-4"}>:</p>
+              <p className="text-md font-semibold text-gray-500 w-5/6">
+                {/* {props.globalCtx.selectedData.outlet?.name} */}
+                True
+              </p>
+            </div>
+            <div className="flex">
+              <p className="w-32 text-md font-semibold text-red-500">
+                Recommend
+              </p>
+              <p className={"w-4"}>:</p>
+              <p className="text-md font-semibold text-gray-500 w-5/6">
+                {/* {props.globalCtx.selectedData.outlet?.name} */}
+                True
+              </p>
+            </div>
+            <div className="flex">
+              <p className="w-32 text-md font-semibold text-red-500">
+                Description
+              </p>
+              <p className={"w-4"}>:</p>
+              <p className="text-md font-semibold text-gray-500 w-5/6">
+                {/* {props.globalCtx.selectedData.email} */}
+                Brew a wide range of milk based beverages thanks to the
+                stainless steel milk frother - Extra space for your mug by
+                simply removing the drip tray hosting your preferred cup up to
+                110 mm
+              </p>
+            </div>
+            <div className="flex">
+              <p className="w-32 text-md font-semibold text-red-500">
+                Info lengkap
+              </p>
+              <p className={"w-4"}>:</p>
+              <p className="text-md font-semibold text-gray-500 w-5/6">
+                {/* {props.globalCtx.selectedData.email} */}-
               </p>
             </div>
           </div>
