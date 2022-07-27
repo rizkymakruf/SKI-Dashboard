@@ -25,6 +25,7 @@ import AddedBrandModal from "components/modal/AddedBrand";
 import UserDetailCstModal from "components/modal/UserDetailCst";
 import ProductEdit from "components/modal/ProductEdit";
 import ProductDetail from "components/modal/ProductDetail";
+import SubCategoryUpdate from "components/modal/SubCategoryUpdate";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
@@ -140,6 +141,15 @@ const Modal = (props) => {
         }`}
       >
         <ProductDetail />
+      </div>
+      <div
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "editSubCategory"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <SubCategoryUpdate />
       </div>
 
       <div

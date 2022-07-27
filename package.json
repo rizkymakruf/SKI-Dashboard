@@ -36,6 +36,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@iconify/react": "^3.2.2",
     "@tailwindcss/custom-forms": "^0.2.1",
     "autoprefixer": "^10.4.5",
     "eslint": "8.14.0",

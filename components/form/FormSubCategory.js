@@ -53,9 +53,7 @@ const FormSubCategory = () => {
         <div className="w-full h-full select-none">
           <div className="w-full h-full p-3 backdrop-blur bg-white/30 rounded-md border border-gray-300 hover:shadow-md hover:shadow-red-500">
             <div className="w-full h-auto relative mb-2">
-              <p className="text-xs font-bold text-gray-700 pb-1">
-                SUB KATEGORI
-              </p>
+              <p className="text-xs font-bold text-gray-700 pb-1">KATEGORI</p>
               <select
                 name="subCategory"
                 type="text"
@@ -75,7 +73,7 @@ const FormSubCategory = () => {
                   trigger("subCategory");
                 }}
               >
-                <option>-- Select Sub Category --</option>
+                <option>-- Select Category --</option>
                 <option>Coffee Biji</option>
                 <option>Machine</option>
                 <option>Bijikerst</option>
