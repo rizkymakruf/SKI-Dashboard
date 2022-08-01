@@ -7,7 +7,12 @@ import { sessionOptions } from "lib/session";
 import { GlobalContext } from "context/global";
 import { useContext, useEffect } from "react";
 import { withIronSessionSsr } from "iron-session/next";
-import { checkUid, findOutlet } from "lib/arangoDb";
+import {
+  checkUid,
+  findOutlet,
+  getOutletByShortname,
+  getOutletDashboardQty,
+} from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 
 // ssr
@@ -47,6 +52,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({
       return redirect("/");
     }
   }
+  const keyOutlet = await getOutletByShortname(query.pid);
+  const qty = await getOutletDashboardQty(keyOutlet[0].key);
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -58,6 +65,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     adminMode: outlet.length > 0 ? outlet[0]?.shortname : query.pid,
     ski: checkUids[0].outlet !== "" ? false : true,
     outletPict: "/img/ski.png",
+    qty: qty,
   });
 },
 sessionOptions);
@@ -77,7 +85,7 @@ const Dashboard = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("fetch data status : ", globalCtx.isFetch);
+    console.log("props qty : ", props.qty);
   }, [globalCtx]);
 
   return (

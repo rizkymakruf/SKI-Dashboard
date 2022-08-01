@@ -29,16 +29,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/dashboard/outlet/[pid].js"
-    ],
-    "/dashboard/report/[pid]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboard/report/[pid].js"
-    ],
-    "/dashboardSKI/outlet": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/outlet.js"
     ]
   },
   "ampFirstPages": []
