@@ -1,7 +1,8 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext, memo } from "react";
+import { useContext, memo, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import LoadingMini from "components/card/LoadingMini";
 
 const TopBrandListTable = ({
   data,
@@ -11,6 +12,18 @@ const TopBrandListTable = ({
 }) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
+
+  const [pending, setPending] = useState(true);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRows(data);
+      setPending(false);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
+
   const columns = [
     {
       name: <div className="font-bold text-red-500">Brand Name</div>,
@@ -75,6 +88,8 @@ const TopBrandListTable = ({
           paginationTotalRows={totalRows}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
+          progressPending={pending}
+          progressComponent={<LoadingMini />}
         />
       </div>
     </div>

@@ -1,12 +1,24 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext, memo } from "react";
+import { useContext, memo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import LoadingMini from "components/card/LoadingMini";
 
 const TopBrandTable = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
   const data = props.tbrand;
+
+  const [pending, setPending] = useState(true);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRows(data);
+      setPending(false);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   const columns = [
     {
@@ -31,7 +43,8 @@ const TopBrandTable = (props) => {
           data={data}
           responsive={true}
           highlightOnHover={true}
-          // pagination
+          progressPending={pending}
+          progressComponent={<LoadingMini />}
         />
       </div>
     </div>

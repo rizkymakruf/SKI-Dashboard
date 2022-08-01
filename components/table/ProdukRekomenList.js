@@ -1,8 +1,9 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import { useContext, memo } from "react";
+import { useContext, memo, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import LoadingMini from "components/card/LoadingMini";
 
 const ProdukRekomenListTable = ({
   data,
@@ -12,6 +13,17 @@ const ProdukRekomenListTable = ({
 }) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
+
+  const [pending, setPending] = useState(true);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRows(data);
+      setPending(false);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   const columns = [
     {
@@ -103,6 +115,8 @@ const ProdukRekomenListTable = ({
           paginationTotalRows={totalRows}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
+          progressPending={pending}
+          progressComponent={<LoadingMini />}
         />
       </div>
     </div>

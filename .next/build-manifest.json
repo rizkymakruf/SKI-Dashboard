@@ -34,6 +34,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/dashboardSKI/customers.js"
+    ],
+    "/dashboardSKI/outlet": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboardSKI/outlet.js"
     ]
   },
   "ampFirstPages": []

@@ -1,9 +1,10 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext, memo } from "react";
+import { useContext, memo, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useForm } from "react-hook-form";
+import Loading from "components/card/Loading";
 
 const ContentTable = ({
   data,
@@ -14,6 +15,17 @@ const ContentTable = ({
 }) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
+
+  const [pending, setPending] = useState(true);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRows(data);
+      setPending(false);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   const columns = [
     {
@@ -151,6 +163,8 @@ const ContentTable = ({
           paginationTotalRows={totalRows}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
+          progressPending={pending}
+          progressComponent={<Loading />}
         />
       </div>
     </div>
