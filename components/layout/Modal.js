@@ -99,6 +99,15 @@ const Modal = (props) => {
       </div>
       <div
         className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "addVoucher"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <ProductModal />
+      </div>
+      <div
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
           modal === "addUser"
             ? "-translate-y-1 bottom-0"
             : "translate-y-full overflow-hidden bottom-0"

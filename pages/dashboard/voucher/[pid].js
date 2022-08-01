@@ -8,6 +8,7 @@ import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { GlobalContext } from "context/global";
 import FormVoucher from "components/form/FormVoucher";
 import VoucherTabel from "components/table/VoucherTabel";
+import AddVoucher from "components/card/AddVoucher";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
@@ -55,6 +56,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     isLogin: true,
     fullName: checkUids[0].fullname,
     adminMode: outlet.length > 0 ? outlet[0]?.shortname : query.pid,
+    ski: checkUids[0].outlet !== "" ? false : true,
+    outletPict: "/img/ski.png",
   });
 },
 sessionOptions);
@@ -68,7 +71,9 @@ const ManageVoucher = (props) => {
     globalAct.setFullname(props.fullName);
     globalAct.setIsFetch(false);
     globalAct.setErrorMsg("");
+    globalAct.setSki(props.ski);
     globalAct.setCurrentBrand(props.adminMode);
+    globalAct.setOutletPict(props.outletPict);
   }, []);
 
   useEffect(() => {
@@ -77,7 +82,9 @@ const ManageVoucher = (props) => {
 
   return (
     <div className="w-full p-4 flex flex-col gap-y-2">
-      <FormVoucher />
+      <div className="w-full border border-gray-300 rounded-md p-4 shadow-sm hover:shadow-md hover:shadow-red-500">
+        <AddVoucher globalAct={globalAct} globalCtx={globalCtx} />
+      </div>
       <VoucherTabel />
     </div>
   );

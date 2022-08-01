@@ -57,6 +57,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     fullName: checkUids[0].fullname,
     adminMode: outlet.length > 0 ? outlet[0]?.shortname : query.pid,
     ski: checkUids[0].outlet !== "" ? false : true,
+    outletPict: "/img/ski.png",
   });
 },
 sessionOptions);
@@ -72,6 +73,7 @@ const Dashboard = (props) => {
     globalAct.setErrorMsg("");
     globalAct.setCurrentBrand(props.adminMode);
     globalAct.setSki(props.ski);
+    globalAct.setOutletPict(props.outletPict);
   }, []);
 
   useEffect(() => {

@@ -9,20 +9,20 @@ const FormReportOutlet = ({
   setNewBody,
 }) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
-  const data = [
-    {
-      key: "brand",
-      name: "Report by brand",
-    },
-    {
-      key: "category",
-      name: "Report by category",
-    },
-    {
-      key: "product",
-      name: "Report by product",
-    },
-  ];
+  // const data = [
+  //   {
+  //     key: "brand",
+  //     name: "Report by brand",
+  //   },
+  //   {
+  //     key: "category",
+  //     name: "Report by category",
+  //   },
+  //   {
+  //     key: "product",
+  //     name: "Report by product",
+  //   },
+  // ];
 
   const onSubmit = useCallback(async (e) => {
     e.preventDefault();
@@ -65,7 +65,7 @@ const FormReportOutlet = ({
         <form onSubmit={onSubmit}>
           <div className="w-full h-full grid grid-cols-1 gap-4 select-none p-3">
             <div className="w-full space-y-2">
-              <div className="w-full">
+              {/* <div className="w-full">
                 <p>Report Filter</p>
                 <select
                   name="report"
@@ -76,7 +76,7 @@ const FormReportOutlet = ({
                     <option value={dat.key}>{dat.name}</option>
                   ))}
                 </select>
-              </div>
+              </div> */}
               <div className="w-full">
                 <p>Date From</p>
                 <input

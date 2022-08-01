@@ -56,6 +56,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     isLogin: true,
     fullName: checkUids[0].fullname,
     adminMode: outlet.length > 0 ? outlet[0]?.shortname : query.pid,
+    ski: checkUids[0].outlet !== "" ? false : true,
+    outletPict: "/img/ski.png",
   });
 },
 sessionOptions);
@@ -69,7 +71,9 @@ const ManageOrder = (props) => {
     globalAct.setFullname(props.fullName);
     globalAct.setIsFetch(false);
     globalAct.setErrorMsg("");
+    globalAct.setSki(props.ski);
     globalAct.setCurrentBrand(props.adminMode);
+    globalAct.setOutletPict(props.outletPict);
   }, []);
 
   useEffect(() => {
