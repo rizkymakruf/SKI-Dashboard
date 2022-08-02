@@ -12,6 +12,11 @@ import {
   findOutlet,
   getOutletByShortname,
   getOutletDashboardQty,
+  getOutletDashboardRp,
+  getOutletDashboardCategory,
+  getOutletDashboardOrder,
+  getOutletDashboardUnpack,
+  getOutletDashboardProduct,
 } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 
@@ -54,6 +59,11 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   }
   const keyOutlet = await getOutletByShortname(query.pid);
   const qty = await getOutletDashboardQty(keyOutlet[0].key);
+  const rp = await getOutletDashboardRp(keyOutlet[0].key);
+  const cat = await getOutletDashboardCategory(keyOutlet[0].key);
+  const order = await getOutletDashboardOrder(keyOutlet[0].key);
+  const unpack = await getOutletDashboardUnpack(keyOutlet[0].key);
+  const product = await getOutletDashboardProduct(keyOutlet[0].key);
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -66,6 +76,11 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     ski: checkUids[0].outlet !== "" ? false : true,
     outletPict: "/img/ski.png",
     qty: qty,
+    rp: rp,
+    cat: cat,
+    order: order,
+    unpack: unpack,
+    product: product,
   });
 },
 sessionOptions);
@@ -86,6 +101,11 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     console.log("props qty : ", props.qty);
+    console.log("props rp : ", props.rp);
+    console.log("props cat : ", props.cat);
+    console.log("props order : ", props.order);
+    console.log("props unpack : ", props.unpack);
+    console.log("props product : ", props.product);
   }, [globalCtx]);
 
   return (
@@ -112,7 +132,7 @@ const Dashboard = (props) => {
           <DashboardCard
             title={"Manage Kategori"}
             content={"Kategori"}
-            jml={"20"}
+            jml={props.cat}
             routes={`/dashboard/category/${globalCtx.currentBrand}`}
           />
         </div>
@@ -120,7 +140,7 @@ const Dashboard = (props) => {
           <DashboardCard
             title={"Manage Produk"}
             content={"Produk"}
-            jml={"180"}
+            jml={props.product}
             routes={`/dashboard/product/${globalCtx.currentBrand}`}
           />
         </div>
@@ -128,15 +148,15 @@ const Dashboard = (props) => {
           <DashboardCard
             title={"Manage Order"}
             content={"Order belum dikemas"}
-            jml={"100"}
+            jml={props.unpack}
             routes={`/dashboard/order/${globalCtx.currentBrand}`}
           />
         </div>
         <div className="w-full">
           <DashboardCard
             title={"Manage Order"}
-            content={"Order Masuk"}
-            jml={"230"}
+            content={"Order Baru"}
+            jml={props.order}
             routes={`/dashboard/order/${globalCtx.currentBrand}`}
           />
         </div>

@@ -1,51 +1,35 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext, memo } from "react";
+import { useContext, useEffect, useState, memo } from "react";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
+import Loading from "components/card/Loading";
 
-const OrderTable = ({}) => {
+const ProductTable = ({
+  data,
+  search,
+  totalRows,
+  handlePerRowsChange,
+  handlePageChange,
+}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  const data = [
-    {
-      name: "Coffe Stone",
-      category: "Coffee",
-      harga: "Rp 3000.0000",
-      stock: 3,
-    },
-    {
-      name: "Coffe Stone",
-      category: "Coffee",
-      harga: "Rp 3000.0000",
-      stock: 377,
-    },
-    {
-      name: "Coffe Stone",
-      category: "Coffee",
-      harga: "Rp 3000.0000",
-      stock: 8,
-    },
-    {
-      name: "Coffe Stone",
-      category: "Coffee",
-      harga: "Rp 3000.0000",
-      stock: 3,
-    },
-    {
-      name: "Coffe Stone",
-      category: "Coffee",
-      harga: "Rp 3000.0000",
-      stock: 377,
-    },
-    {
-      name: "Coffe Stone",
-      category: "Coffee",
-      harga: "Rp 3000.0000",
-      stock: 8,
-    },
-  ];
+  const router = useRouter();
+
+  const [pending, setPending] = useState(true);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRows(data);
+      setPending(false);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
+
   const columns = [
     {
       name: <div className="font-bold text-red-500">Product</div>,
-      grow: 2,
+      grow: 5,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
           <p className="text-xs font-bold">{a.name}</p>
@@ -57,7 +41,7 @@ const OrderTable = ({}) => {
       grow: 2,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.category}</p>
+          <p className="text-xs font-bold">{a.main}</p>
         </div>
       ),
     },
@@ -67,7 +51,7 @@ const OrderTable = ({}) => {
       grow: 2,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.stock}</p>
+          <p className="text-xs font-bold">{a.stock} items</p>
         </div>
       ),
     },
@@ -76,7 +60,7 @@ const OrderTable = ({}) => {
       grow: 2,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.harga}</p>
+          <p className="text-xs font-bold">Rp {a.price}</p>
         </div>
       ),
     },
@@ -154,19 +138,34 @@ const OrderTable = ({}) => {
   return (
     <div className="w-full h-auto relative ">
       <div className="shadow-md border rounded-md hover:shadow-md hover:shadow-red-500">
-        <DataTable
-          // title={
-          //   <p className="text-red-500 font-bold text-sm">Category List</p>
-          // }
-          columns={columns}
-          data={data}
-          responsive={true}
-          highlightOnHover={true}
-          pagination
-        />
+        {search ? (
+          <DataTable
+            columns={columns}
+            data={data}
+            responsive={true}
+            highlightOnHover={true}
+            paginationRowsPerPageOptions={[10, 15, 20, 25, 30, 50]}
+            pagination
+          />
+        ) : (
+          <DataTable
+            columns={columns}
+            data={data}
+            responsive={true}
+            highlightOnHover={true}
+            pagination
+            paginationServer
+            paginationRowsPerPageOptions={[10, 15, 20, 25, 30, 50]}
+            paginationTotalRows={totalRows}
+            onChangeRowsPerPage={handlePerRowsChange}
+            onChangePage={handlePageChange}
+            progressPending={pending}
+            progressComponent={<Loading />}
+          />
+        )}
       </div>
     </div>
   );
 };
 
-export default memo(OrderTable);
+export default memo(ProductTable);
