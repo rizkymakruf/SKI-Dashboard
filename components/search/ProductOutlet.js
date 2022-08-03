@@ -23,10 +23,10 @@ const SearchProductOutlet = (props) => {
             body: JSON.stringify(find),
           });
           console.log(res);
-          props.setSearchData(res.data);
+          props.setData(res.data);
           if (!check) {
             props.setIsSearch(false);
-            props.setSearchData([]);
+            props.setData([]);
           } else {
             props.setIsSearch(true);
           }

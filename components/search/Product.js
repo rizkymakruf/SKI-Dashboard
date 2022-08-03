@@ -13,7 +13,7 @@ const SearchProduct = (props) => {
 
         const find = {
           name: "%" + e.currentTarget.name.value + "%",
-          uri: "product/searchAll",
+          uri: "product/search",
         };
         const check = e.currentTarget.name.value !== "" ? true : false;
         try {

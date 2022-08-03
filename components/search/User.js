@@ -39,7 +39,7 @@ const SearchUser = (props) => {
             props.setIsSearch(false);
           } else {
             props.setIsSearch(true);
-            router.replace("/dashboardSKI/admins");
+            router.replace("/dashboard/product");
           }
         } catch (error) {
           console.log("error", error);
