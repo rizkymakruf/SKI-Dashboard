@@ -4,7 +4,7 @@ import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-const FormSubCategory = () => {
+const FormSubCategory = (props) => {
   const {
     reset,
     trigger,
@@ -16,6 +16,7 @@ const FormSubCategory = () => {
 
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
+  console.log(props.maincategory);
 
   const onSubmit = useCallback(async (data) => {
     console.log("disi", data);
@@ -55,28 +56,28 @@ const FormSubCategory = () => {
             <div className="w-full h-auto relative mb-2">
               <p className="text-xs font-bold text-gray-700 pb-1">KATEGORI</p>
               <select
-                name="subCategory"
+                name="mainCategory"
                 type="text"
                 placeholder="Sub Category"
                 className={`rounded-md p-1 border-2  border-orange-500/50 w-full focus:outline-none ${
-                  errors.subCategory
+                  errors.mainCategory
                     ? "focus:border-red-500 border-red-500 focus:ring-0"
                     : null
                 }`}
-                {...register("subCategory", {
+                {...register("mainCategory", {
                   required: {
                     value: true,
                     message: "",
                   },
                 })}
                 onKeyUp={() => {
-                  trigger("subCategory");
+                  trigger("mainCategory");
                 }}
               >
                 <option>-- Select Category --</option>
-                <option>Coffee Biji</option>
-                <option>Machine</option>
-                <option>Bijikerst</option>
+                {props.maincategory.map((x) => (
+                  <option value={x.key}>{x.name}</option>
+                ))}
               </select>
             </div>
             <div className="w-full h-auto relative mb-4">

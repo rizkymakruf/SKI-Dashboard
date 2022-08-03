@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
 const SubCategoryTable = ({
+  cat,
   data,
   search,
   totalRows,
@@ -14,32 +15,13 @@ const SubCategoryTable = ({
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
 
-  const cat = [
-    {
-      category: "Coffee",
-      sub: "Coffee Robusta",
-    },
-    {
-      category: "Coffee",
-      sub: "Coffee Arabic",
-    },
-    {
-      category: "Coffee",
-      sub: "Coffee Bali",
-    },
-    {
-      category: "Coffee",
-      sub: "Coffee Luwak",
-    },
-  ];
-
   const columns = [
     {
       name: <div className="font-bold text-red-500">KATEGORY</div>,
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1">
-          <p className="text-xs font-bold flex items-center">{a.category}</p>
+          <p className="text-xs font-bold flex items-center">{a.main}</p>
         </div>
       ),
     },
@@ -48,7 +30,7 @@ const SubCategoryTable = ({
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1">
-          <p className="text-xs font-bold flex items-center">{a.sub}</p>
+          <p className="text-xs font-bold flex items-center">{a.name}</p>
         </div>
       ),
     },

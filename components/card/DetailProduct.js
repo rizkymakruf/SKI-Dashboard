@@ -10,7 +10,7 @@ const DetailProduct = (props) => {
   // const [selectedData, setSelectedData] = useState(props.users);
   // const { modal } = props.globalCtx;
   // const { setModal } = props.globalAct;
-  // console.log("helll", props.globalCtx.selectedData);
+  console.log("detail product", props.globalCtx.selectedData);
   return (
     <>
       <div className="w-full flex items-center p-5">
@@ -41,18 +41,23 @@ const DetailProduct = (props) => {
               </p>
               <p className={"w-4"}>:</p>
               <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.fullname} */}
-                Delonghi Stilosa EC230.BK Coffee Maker Mesin Kopi Espresso EC
-                230 B
+                {props.globalCtx.selectedData.name}
               </p>
             </div>
-
+            <div className="flex">
+              <p className="w-32 text-md font-semibold text-red-500">
+                Nama Produk
+              </p>
+              <p className={"w-4"}>:</p>
+              <p className="text-md font-semibold text-gray-500 w-5/6">
+                {props.globalCtx.selectedData.main}
+              </p>
+            </div>
             <div className="flex">
               <p className="w-32 text-md font-semibold text-red-500">Outlet</p>
               <p className={"w-4"}>:</p>
               <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.phone} */}
-                Seren Coffee
+                {props.globalCtx.selectedData.outlet?.name}
               </p>
             </div>
             <div className="flex">

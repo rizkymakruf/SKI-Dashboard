@@ -72,7 +72,10 @@ const ProductTable = ({
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button
-            onClick={() => globalAct.setModal("detailProduct")}
+            onClick={() => {
+              globalAct.setModal("detailProduct");
+              globalAct.setSelectedData(a);
+            }}
             className={
               "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-orange-500/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:before:content-['View'] border border-orange-300"
             }

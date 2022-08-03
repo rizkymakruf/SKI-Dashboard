@@ -7,7 +7,13 @@ import { useRouter } from "next/router";
 import { sessionOptions } from "lib/session";
 import { useContext, useEffect } from "react";
 import { withIronSessionSsr } from "iron-session/next";
-import { checkUid, findOutlet } from "lib/arangoDb";
+import {
+  checkUid,
+  findOutlet,
+  getAllCategory,
+  getAllSubCategory,
+  getOutletByShortname,
+} from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import FormSubCategory from "components/form/FormSubCategory";
 
@@ -53,12 +59,22 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     return redirect("/");
   }
 
+  const keyOutlet = await getOutletByShortname(query.pid);
+  const mainCategory = await getAllCategory();
+  const subCategory = await getAllSubCategory(
+    keyOutlet[0].key,
+    query.start ? parseInt(query.start) : 0,
+    query.length ? parseInt(query.length) : 10
+  );
+
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
     adminMode: outlet.length > 0 ? outlet[0]?.shortname : query.pid,
     ski: checkUids[0].outlet !== "" ? false : true,
     outletPict: "/img/ski.png",
+    mainCategory: mainCategory,
+    subCategory: subCategory,
   });
 },
 sessionOptions);
@@ -84,13 +100,13 @@ const ManageCategory = (props) => {
   return (
     <div className="w-full p-4 flex flex-col gap-y-4">
       <div>
-        <FormSubCategory />
+        <FormSubCategory maincategory={props.mainCategory} />
       </div>
       <div>
         <SearchSubCategory />
       </div>
       <div>
-        <SubCategoryTable />
+        <SubCategoryTable cat={props.subCategory} />
       </div>
     </div>
   );
