@@ -30,6 +30,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/dashboard/category/[pid].js"
     ],
+    "/dashboard/outlet/[pid]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboard/outlet/[pid].js"
+    ],
     "/dashboard/product/[pid]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

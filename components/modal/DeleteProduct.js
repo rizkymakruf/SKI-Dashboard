@@ -1,15 +1,22 @@
-import { useContext, memo } from "react";
+import { useForm } from "react-hook-form";
+import { useContext, memo, useCallback } from "react";
 import { GlobalContext } from "context/global";
-const DeleteProductModal = () => {
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from "next/router";
+
+const DeleteProductModal = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
+  console.log("delete", globalCtx.selectedData);
 
   return (
     <div className="bg-white w-full h-auto rounded-md shadow-sm shadow-black">
       <div className="px-3 py-2 w-full flex flex-row justify-between items-center">
-        <div>
-          <p className="text-md font-semibold">
-            Apakah anda yakin hapus ${"namaproduct"} dari list product ?
+        <div className="flex gap-1">
+          <p className="text-md font-semibold">Apakah anda yakin hapus</p>
+          <p className="text-md font-semibold text-red-500">
+            {globalCtx.selectedData.name}
           </p>
+          <p className="text-md font-semibold"> dari list product ?</p>
         </div>
         <div className="flex gap-x-4">
           <button
@@ -19,7 +26,37 @@ const DeleteProductModal = () => {
             Cancel
           </button>
           <button
-            onClick={() => globalAct.setModal("")}
+            globalCtx={globalCtx}
+            globalAct={globalAct}
+            onClick={async function handleSubmit(e) {
+              e.preventDefault();
+              globalAct.setIsFetch(true);
+
+              const body = {
+                uri: "product/delete",
+                key: globalCtx.selectedData.key,
+              };
+
+              console.log("delete product", body);
+
+              try {
+                await fetchJson("/api/prot/patch", {
+                  method: "PATCH",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                });
+                router.replace(`/dashboard/product/${globalCtx.currentBrand}`);
+              } catch (error) {
+                console.log("error", error);
+                if (error instanceof FetchError) {
+                  globalAct.setErrorMsg(error.data.message);
+                } else {
+                  globalAct.setErrorMsg("An unexpected error happened");
+                }
+              }
+              globalAct.setModal("");
+              globalAct.setIsFetch(false);
+            }}
             className="px-6 h-8 bg-red-500/30 text-red-500 border-2 shadow-md hover:bg-red-500/50 border-red-300 font-semibold rounded overflow-hidden"
           >
             Remove

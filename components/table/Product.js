@@ -4,6 +4,7 @@ import { useContext, useEffect, useState, memo } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import Loading from "components/card/Loading";
+import formatRupiah from "components/FunctionRupiah";
 
 const ProductTable = ({
   data,
@@ -60,7 +61,9 @@ const ProductTable = ({
       grow: 2,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">Rp {a.price}</p>
+          <p className="text-xs font-bold">
+            {formatRupiah(a.price !== "" ? a.price : 0, "Rp")}
+          </p>
         </div>
       ),
     },
@@ -115,7 +118,10 @@ const ProductTable = ({
             </svg>
           </button>
           <button
-            onClick={() => globalAct.setModal("deleteProduct")}
+            onClick={() => {
+              globalAct.setModal("deleteProduct");
+              globalAct.setSelectedData(a);
+            }}
             className={
               "bg-red-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-500/50 shadow-md flex gap-x-2 text-xs text-red-500 hover:w-24 duration-150 hover:before:content-['Remove'] border border-red-300"
             }

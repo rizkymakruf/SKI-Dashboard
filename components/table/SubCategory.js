@@ -50,10 +50,9 @@ const SubCategoryTable = ({
               onClick={async function handleSubmit(e) {
                 e.preventDefault();
                 globalAct.setIsFetch(true);
-                globalAct.setSelectedData(a);
 
                 const body = {
-                  uri: "category/status",
+                  uri: "subcategory/status",
                   key: a.key,
                   active: !a.active,
                 };
@@ -65,7 +64,9 @@ const SubCategoryTable = ({
                     body: JSON.stringify(body),
                   });
 
-                  router.reload("/dashboardSKI/category");
+                  router.replace(
+                    `/dashboard/category/${globalCtx.currentBrand}`
+                  );
                 } catch (error) {
                   console.log("error", error);
                   alert(globalCtx.errorMsg);
@@ -94,7 +95,14 @@ const SubCategoryTable = ({
           <button
             onClick={() => {
               globalAct.setModal("editSubCategory");
-              // globalAct.setSelectedData(a);
+              globalAct.setSelectedData({
+                pict: "/img/user-default.png",
+                key: a.key,
+                name: a.name,
+                category: a.category,
+                activ: a.active,
+                created_at: a.created_at,
+              });
             }}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:before:content-['Edit'] border border-blue-300"

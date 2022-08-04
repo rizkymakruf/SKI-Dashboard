@@ -1,3 +1,4 @@
+import formatRupiah from "components/FunctionRupiah";
 import { GlobalContext } from "context/global";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -46,7 +47,7 @@ const DetailProduct = (props) => {
             </div>
             <div className="flex">
               <p className="w-32 text-md font-semibold text-red-500">
-                Nama Produk
+                Sub Kategori
               </p>
               <p className={"w-4"}>:</p>
               <p className="text-md font-semibold text-gray-500 w-5/6">
@@ -54,54 +55,29 @@ const DetailProduct = (props) => {
               </p>
             </div>
             <div className="flex">
-              <p className="w-32 text-md font-semibold text-red-500">Outlet</p>
-              <p className={"w-4"}>:</p>
-              <p className="text-md font-semibold text-gray-500 w-5/6">
-                {props.globalCtx.selectedData.outlet?.name}
-              </p>
-            </div>
-            <div className="flex">
               <p className="w-32 text-md font-semibold text-red-500">Price</p>
               <p className={"w-4"}>:</p>
               <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.address} */}
-                Rp 2.100.800
+                {formatRupiah(
+                  props.globalCtx.selectedData?.price !== undefined
+                    ? props.globalCtx.selectedData?.price
+                    : 0,
+                  "Rp"
+                )}
               </p>
             </div>
             <div className="flex">
               <p className="w-32 text-md font-semibold text-red-500">Weight</p>
               <p className={"w-4"}>:</p>
               <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.outlet?.name} */}
-                4300gr
+                {props.globalCtx.selectedData.weight} gr
               </p>
             </div>
             <div className="flex">
               <p className="w-32 text-md font-semibold text-red-500">Stock</p>
               <p className={"w-4"}>:</p>
               <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.outlet?.name} */}
-                43 items
-              </p>
-            </div>
-            <div className="flex">
-              <p className="w-32 text-md font-semibold text-red-500">
-                Discount
-              </p>
-              <p className={"w-4"}>:</p>
-              <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.outlet?.name} */}
-                True
-              </p>
-            </div>
-            <div className="flex">
-              <p className="w-32 text-md font-semibold text-red-500">
-                Recommend
-              </p>
-              <p className={"w-4"}>:</p>
-              <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.outlet?.name} */}
-                True
+                {props.globalCtx.selectedData.stock} items
               </p>
             </div>
             <div className="flex">
@@ -110,11 +86,7 @@ const DetailProduct = (props) => {
               </p>
               <p className={"w-4"}>:</p>
               <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.email} */}
-                Brew a wide range of milk based beverages thanks to the
-                stainless steel milk frother - Extra space for your mug by
-                simply removing the drip tray hosting your preferred cup up to
-                110 mm
+                {props.globalCtx.selectedData.description}
               </p>
             </div>
             <div className="flex">
@@ -123,7 +95,9 @@ const DetailProduct = (props) => {
               </p>
               <p className={"w-4"}>:</p>
               <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.email} */}-
+                {props.globalCtx.selectedData?.add_info !== ""
+                  ? props.globalCtx.selectedData?.add_info
+                  : "-"}
               </p>
             </div>
           </div>

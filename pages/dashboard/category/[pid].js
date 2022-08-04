@@ -91,8 +91,10 @@ const ManageCategory = (props) => {
     globalAct.setSki(props.ski);
     globalAct.setCurrentBrand(props.adminMode);
     globalAct.setOutletPict(props.outletPict);
+    globalAct.setListCategory(props.mainCategory);
   }, []);
 
+  console.log(props.subCategory);
   useEffect(() => {
     console.log("fetch data status : ", globalCtx.isFetch);
   }, [globalCtx]);
