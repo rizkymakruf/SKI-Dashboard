@@ -25,7 +25,7 @@ const FormEditSubCategory = () => {
     const body = {
       key: data.key,
       name: data.name,
-      outlet : glob
+      outlet: globalCtx.currentBrand,
       category: data.mainCategory,
       uri: "subcategory/update",
     };
