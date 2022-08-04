@@ -211,6 +211,10 @@ const FormUser = () => {
                       value: 11,
                       message: "Nomor hp minimal 11 karakter!",
                     },
+                    pattern: {
+                      value: /^[0-9]*$/,
+                      message: "Format No HP tidak sesuai!",
+                    },
                   })}
                   onKeyUp={() => {
                     trigger("phone");

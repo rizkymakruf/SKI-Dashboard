@@ -25,7 +25,6 @@ const SearchProduct = (props) => {
           props.setSearchData(res.data);
           if (!check) {
             props.setIsSearch(false);
-            props.setSearchData([]);
           } else {
             props.setIsSearch(true);
           }

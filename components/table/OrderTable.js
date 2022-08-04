@@ -1,93 +1,37 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext, memo } from "react";
+import { useContext, memo, useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import Loading from "components/card/Loading";
 
-const OrderTable = ({}) => {
+const OrderTable = ({
+  data,
+  totalRows,
+  handlePageChange,
+  handlePerRowsChange,
+}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  const data = [
-    {
-      inv: "INV1234567",
-      tujuan: "Jln rusa no.44",
-      status: "SUCCESS",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Jln rusa no.44",
-      status: "DIBAYAR",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Jln ikan no.34",
-      status: "DIPACKING",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Jln burung no.34",
-      status: "DIPACKING",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Jln kaki no.34",
-      status: "DIBAYAR",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Gng eek",
-      status: "SUCCESS",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Jln rusa no.44",
-      status: "DIBAYAR",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Jln ikan no.34",
-      status: "DIPACKING",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Jln burung no.34",
-      status: "DIPACKING",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Jln kaki no.34",
-      status: "DIBAYAR",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Gng eek",
-      status: "SUCCESS",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Jln rusa no.44",
-      status: "DIBAYAR",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Jln ikan no.34",
-      status: "DIPACKING",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Jln burung no.34",
-      status: "DIBAYAR",
-    },
-    {
-      inv: "INV1234567",
-      tujuan: "Jln kaki no.34",
-      status: "DIBAYAR",
-    },
-  ];
+  const router = useRouter();
+
+  const [pending, setPending] = useState(true);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRows(data);
+      setPending(false);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
+
   const columns = [
     {
       name: <div className="font-bold text-red-500">INVOICE</div>,
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">#{a.inv}</p>
+          <p className="text-xs font-bold">{a.invoice}</p>
         </div>
       ),
     },
@@ -102,7 +46,51 @@ const OrderTable = ({}) => {
       cell: (a) => (
         <div className="flex justify-center w-full">
           <label class="chck">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={
+                a.status === "confirmed" ||
+                a.status === "packed" ||
+                a.status === "sent" ||
+                a.status === "done"
+              }
+              disabled={
+                a.status === "confirmed" ||
+                a.status === "packed" ||
+                a.status === "sent" ||
+                a.status === "done"
+              }
+              onClick={async function handleSubmit(e) {
+                e.preventDefault();
+                globalAct.setIsFetch(true);
+
+                const body = {
+                  uri: "order/status",
+                  key: a.key,
+                  status: "confirm",
+                };
+
+                try {
+                  await fetchJson("/api/prot/patch", {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
+                  });
+
+                  router.replace(`/dashboard/order/${globalCtx.currentBrand}`);
+                } catch (error) {
+                  console.log("error", error);
+                  alert(globalCtx.errorMsg);
+                  if (error instanceof FetchError) {
+                    globalAct.setErrorMsg(error.data.message);
+                  } else {
+                    globalAct.setErrorMsg("An unexpected error happened");
+                  }
+                }
+
+                globalAct.setIsFetch(false);
+              }}
+            />
             <span class="checkmark"></span>
           </label>
         </div>
@@ -116,7 +104,50 @@ const OrderTable = ({}) => {
       cell: (a) => (
         <div className="flex justify-center w-full">
           <label class="chck">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={
+                a.status === "packed" ||
+                a.status === "sent" ||
+                a.status === "done"
+              }
+              disabled={
+                a.status !== "confirmed" ||
+                a.status === "packed" ||
+                a.status === "sent" ||
+                a.status === "done"
+              }
+              onClick={async function handleSubmit(e) {
+                e.preventDefault();
+                globalAct.setIsFetch(true);
+
+                const body = {
+                  uri: "order/status",
+                  key: a.key,
+                  status: "pack",
+                };
+
+                try {
+                  await fetchJson("/api/prot/patch", {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
+                  });
+
+                  router.replace(`/dashboard/order/${globalCtx.currentBrand}`);
+                } catch (error) {
+                  console.log("error", error);
+                  alert(globalCtx.errorMsg);
+                  if (error instanceof FetchError) {
+                    globalAct.setErrorMsg(error.data.message);
+                  } else {
+                    globalAct.setErrorMsg("An unexpected error happened");
+                  }
+                }
+
+                globalAct.setIsFetch(false);
+              }}
+            />
             <span class="checkmark"></span>
           </label>
         </div>
@@ -130,7 +161,41 @@ const OrderTable = ({}) => {
       cell: (a) => (
         <div className="flex justify-center w-full ">
           <label class="chck">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={a.status === "sent" || a.status === "done"}
+              disabled={a.status !== "confirmed" && a.status !== "packed"}
+              onClick={async function handleSubmit(e) {
+                e.preventDefault();
+                globalAct.setIsFetch(true);
+
+                const body = {
+                  uri: "order/status",
+                  key: a.key,
+                  status: "send",
+                };
+
+                try {
+                  await fetchJson("/api/prot/patch", {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
+                  });
+
+                  router.replace(`/dashboard/order/${globalCtx.currentBrand}`);
+                } catch (error) {
+                  console.log("error", error);
+                  alert(globalCtx.errorMsg);
+                  if (error instanceof FetchError) {
+                    globalAct.setErrorMsg(error.data.message);
+                  } else {
+                    globalAct.setErrorMsg("An unexpected error happened");
+                  }
+                }
+
+                globalAct.setIsFetch(false);
+              }}
+            />
             <span class="checkmark"></span>
           </label>
         </div>
@@ -145,12 +210,20 @@ const OrderTable = ({}) => {
       cell: (a) => (
         <div className="flex justify-center gap-x-2 w-full">
           <p
-            className={`text-xs w-24 flex items-center justify-center font-bold shadow-md py-1 rounded-xl ${
-              a.status === "DIBAYAR"
-                ? "bg-blue-500/30 text-blue-500"
-                : a.status === "DIPACKING"
+            className={`text-xs w-24 flex items-center justify-center font-bold shadow-md py-1 rounded-xl uppercase ${
+              a.status === "unpaid"
+                ? "bg-gray-500/30 text-gray-500"
+                : a.status === "paid"
+                ? "bg-slate-500/30 text-slate-500"
+                : a.status === "confirmed"
                 ? "bg-yellow-500/30 text-yellow-500"
-                : a.status == "SUCCESS" && "bg-green-500/30 text-green-500"
+                : a.status === "packed"
+                ? "bg-blue-500/30 text-blue-500"
+                : a.status === "sent"
+                ? "bg-yellow-500/30 text-yellow-500"
+                : a.status === "canceled"
+                ? "bg-yellow-500/30 text-yellow-500"
+                : a.status == "done" && "bg-green-500/30 text-green-500"
             }`}
           >
             {a.status}
@@ -198,8 +271,13 @@ const OrderTable = ({}) => {
         data={data}
         responsive={true}
         highlightOnHover={true}
-        // sortIcon={sortIcon}
         pagination
+        paginationServer
+        paginationTotalRows={totalRows}
+        onChangeRowsPerPage={handlePerRowsChange}
+        onChangePage={handlePageChange}
+        progressPending={pending}
+        progressComponent={<Loading />}
       />
     </div>
   );

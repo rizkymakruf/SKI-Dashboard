@@ -21,11 +21,11 @@ export const GlobalProvider = ({ children }) => {
   const [outletPict, setOutletPict] = useState("");
   const [ski, setSki] = useState(false);
   const [listCategory, setListCategory] = useState([]);
+  const [listSubCategory, setListSubCategory] = useState([]);
 
   const contextValue = {
     globalCtx: {
       modal,
-
       errorMsg,
       isFetch,
       fullname,
@@ -40,10 +40,10 @@ export const GlobalProvider = ({ children }) => {
       outletPict,
       ski,
       listCategory,
+      listSubCategory,
     },
     globalAct: {
       setModal,
-
       setErrorMsg,
       setIsFetch,
       setFullname,
@@ -58,6 +58,7 @@ export const GlobalProvider = ({ children }) => {
       setOutletPict,
       setSki,
       setListCategory,
+      setListSubCategory,
     },
   };
 

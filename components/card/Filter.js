@@ -1,9 +1,39 @@
-import { memo } from "react";
+import { memo, useContext } from "react";
+import { useRouter } from "next/router";
+import { GlobalContext } from "context/global";
 
 const Filter = (props) => {
+  const router = useRouter();
+  const { globalCtx, globalAct } = useContext(GlobalContext);
   return (
     <>
       <div className="w-full flex justify-end items-center gap-x-3">
+        <button className="flex items-center py-1.5 px-2 gap-2  rounded-md border text-white bg-blue-500 text-sm hover:bg-blue-500/50 hover:text-blue-700 border-blue-500">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8 9l4-4 4 4m0 6l-4 4-4-4"
+            />
+          </svg>
+          <p
+            className=""
+            onClick={() =>
+              router.replace(
+                `/dashboard/order/${globalCtx.currentBrand}?type=all&start=0&length=10`
+              )
+            }
+          >
+            Semua Order
+          </p>
+        </button>
         <button className="flex items-center py-1.5 px-2 gap-2  rounded-md border text-white bg-green-500 text-sm hover:bg-green-500/50 hover:text-green-700 border-green-500">
           <svg
             width="20"
@@ -17,7 +47,16 @@ const Filter = (props) => {
               fill="white"
             />
           </svg>
-          <p className="">Belum Dikemas</p>
+          <p
+            className=""
+            onClick={() =>
+              router.replace(
+                `/dashboard/order/${globalCtx.currentBrand}?type=confirmed&start=0&length=10`
+              )
+            }
+          >
+            Belum Dikemas
+          </p>
         </button>
         <button className="flex items-center py-1.5 px-2 gap-2 rounded-md border border-orange-500 text-sm text-white bg-orange-500 hover:bg-orange-500/50 hover:text-orange-600">
           <svg
@@ -32,7 +71,15 @@ const Filter = (props) => {
               fill="white"
             />
           </svg>
-          <p>Belum Dikirim</p>
+          <p
+            onClick={() =>
+              router.replace(
+                `/dashboard/order/${globalCtx.currentBrand}?type=packed&start=0&length=10`
+              )
+            }
+          >
+            Belum Dikirim
+          </p>
         </button>
       </div>
     </>

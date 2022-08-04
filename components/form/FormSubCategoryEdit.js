@@ -17,15 +17,10 @@ const FormEditSubCategory = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
 
-  useEffect(() => {
-    reset();
-  }, [globalCtx.selectedData]);
-
   const onSubmit = useCallback(async (data) => {
     const body = {
       key: data.key,
       name: data.name,
-      outlet: globalCtx.currentBrand,
       category: data.mainCategory,
       uri: "subcategory/update",
     };
@@ -67,7 +62,6 @@ const FormEditSubCategory = () => {
               <select
                 name="mainCategory"
                 type="text"
-                placeholder="Sub Category"
                 className={`rounded-md p-1 border-2  border-orange-500/50 w-full focus:outline-none ${
                   errors.mainCategory
                     ? "focus:border-red-500 border-red-500 focus:ring-0"
@@ -84,14 +78,16 @@ const FormEditSubCategory = () => {
                 }}
               >
                 <option>-- Select Category --</option>
-                {globalCtx.listCategory.map((x) => (
-                  <option
-                    value={x.key}
-                    selected={globalCtx.selectedData?.category === x.key}
-                  >
-                    {x.name}
-                  </option>
-                ))}
+                {globalCtx.listCategory.map((x) => {
+                  return (
+                    <option
+                      value={x.key}
+                      selected={globalCtx.selectedData?.category == x.key}
+                    >
+                      {x.name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className="w-full h-auto relative mb-4">

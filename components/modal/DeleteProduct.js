@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 
 const DeleteProductModal = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
+  const router = useRouter();
   console.log("delete", globalCtx.selectedData);
 
   return (

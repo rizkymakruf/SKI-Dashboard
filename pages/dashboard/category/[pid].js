@@ -5,7 +5,7 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import SearchSubCategory from "components/search/SubCategory";
 import { useRouter } from "next/router";
 import { sessionOptions } from "lib/session";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import {
   checkUid,
@@ -13,6 +13,7 @@ import {
   getAllCategory,
   getAllSubCategory,
   getOutletByShortname,
+  getTotalSubCategory,
 } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import FormSubCategory from "components/form/FormSubCategory";
@@ -66,6 +67,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     query.start ? parseInt(query.start) : 0,
     query.length ? parseInt(query.length) : 10
   );
+  const totalSub = await getTotalSubCategory(keyOutlet[0].key);
 
   return retObject({
     isLogin: true,
@@ -75,6 +77,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     outletPict: "/img/ski.png",
     mainCategory: mainCategory,
     subCategory: subCategory,
+    totalSub: totalSub[0].total,
   });
 },
 sessionOptions);
@@ -82,6 +85,11 @@ sessionOptions);
 const ManageCategory = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
+
+  const [dataSearch, setDataSearch] = useState([]);
+  const [totalRows, setTotalRows] = useState(props.totalSub);
+  const [perPage, setPerPage] = useState(10);
+  const [isSearch, setIsSearch] = useState(false);
 
   useEffect(() => {
     globalAct.setAdminMode("outlet");
@@ -94,7 +102,6 @@ const ManageCategory = (props) => {
     globalAct.setListCategory(props.mainCategory);
   }, []);
 
-  console.log(props.subCategory);
   useEffect(() => {
     console.log("fetch data status : ", globalCtx.isFetch);
   }, [globalCtx]);
@@ -105,10 +112,28 @@ const ManageCategory = (props) => {
         <FormSubCategory maincategory={props.mainCategory} />
       </div>
       <div>
-        <SearchSubCategory />
+        <SearchSubCategory setIsSearch={setIsSearch} setData={setDataSearch} />
       </div>
       <div>
-        <SubCategoryTable cat={props.subCategory} />
+        <SubCategoryTable
+          cat={props.subCategory}
+          search={isSearch}
+          data={dataSearch}
+          totalRows={totalRows}
+          handlePageChange={(page) => {
+            router.replace(
+              `/dashboard/category/${props.adminMode}?start=${
+                (page - 1) * perPage
+              }&length=${perPage}`
+            );
+          }}
+          handlePerRowsChange={(newpage) => {
+            setPerPage(newpage);
+            router.replace(
+              `/dashboard/category/${props.adminMode}?start=0&length=${newpage}`
+            );
+          }}
+        />
       </div>
     </div>
   );

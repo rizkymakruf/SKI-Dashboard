@@ -13,6 +13,8 @@ import { useRouter } from "next/router";
 import { uploadFile } from "lib/imageK";
 import Image from "next/image";
 
+import DefaultOutlet from "../../public/img/outlet-default.png";
+
 const FormOtlet = () => {
   const [imageFile, setImageFile] = useState("");
   const inputFileImage = useRef();
@@ -81,6 +83,10 @@ const FormOtlet = () => {
     }
     globalAct.setIsFetch(false);
   }, []);
+
+  useEffect(() => {
+    globalCtx.modal === "" && setImageFile("");
+  });
 
   return (
     <div className="w-full h-auto">
@@ -188,7 +194,7 @@ const FormOtlet = () => {
                 >
                   <div className="w-36 h-36 relative z-40 flex justify-center items-center">
                     {imageFile !== "" ? (
-                      <Image layout="fill" src={imageFile} />
+                      <Image layout="fill" src={imageFile || DefaultOutlet} />
                     ) : globalCtx.isFetch ? (
                       <svg
                         className="animate-spin h-5 w-5 text-blue-300"

@@ -13,6 +13,7 @@ import {
   getOutletProductList,
   getOutletByShortname,
   getTotalOutletProduct,
+  getListSubCategory,
 } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import FormProduct from "components/form/FormProduct";
@@ -63,6 +64,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     query.length ? parseInt(query.length) : 10
   );
   const totalProduct = await getTotalOutletProduct(keyOutlet[0].key);
+  const subCategory = await getListSubCategory(keyOutlet[0].key);
 
   if (checkUids.length < 1) {
     return redirect("/");
@@ -76,6 +78,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     outletPict: "/img/ski.png",
     product: product,
     totalProduct: totalProduct[0].total,
+    subCategory: subCategory,
   });
 },
 sessionOptions);
@@ -97,20 +100,18 @@ const ManageProduct = (props) => {
     globalAct.setSki(props.ski);
     globalAct.setCurrentBrand(props.adminMode);
     globalAct.setOutletPict(props.outletPict);
+    globalAct.setListSubCategory(props.subCategory);
   }, []);
 
   useEffect(() => {
     console.log("product : ", props.product);
+    console.log("sub cat : ", props.subCategory);
   }, [globalCtx]);
   return (
     <div className="w-full p-4 flex flex-col gap-y-4">
       <div className="w-full border border-gray-300 rounded-md p-4 shadow-sm hover:shadow-md hover:shadow-red-500">
         <AddProduct globalAct={globalAct} globalCtx={globalCtx} />
       </div>
-
-      {/* <div>
-        <ProductTable globalAct={globalAct} globalCtx={globalCtx} />
-      </div> */}
       <div>
         {useMemo(() => {
           console.log("searchuser");

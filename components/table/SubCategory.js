@@ -1,8 +1,9 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext, memo } from "react";
+import { useContext, memo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import fetchJson, { FetchError } from "lib/fetchJson";
+import Loading from "components/card/Loading";
 
 const SubCategoryTable = ({
   cat,
@@ -14,6 +15,16 @@ const SubCategoryTable = ({
 }) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
+  const [pending, setPending] = useState(true);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRows(data);
+      setPending(false);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   const columns = [
     {
@@ -100,7 +111,7 @@ const SubCategoryTable = ({
                 key: a.key,
                 name: a.name,
                 category: a.category,
-                activ: a.active,
+                active: a.active,
                 created_at: a.created_at,
               });
             }}
@@ -152,10 +163,11 @@ const SubCategoryTable = ({
             highlightOnHover={true}
             pagination
             paginationServer
-            paginationRowsPerPageOptions={[10]}
             paginationTotalRows={totalRows}
             onChangeRowsPerPage={handlePerRowsChange}
             onChangePage={handlePageChange}
+            progressPending={pending}
+            progressComponent={<Loading />}
           />
         )}
       </div>

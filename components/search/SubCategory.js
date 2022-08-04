@@ -15,26 +15,22 @@ const SearchSubCategory = (props) => {
         globalAct.setIsFetch(true);
 
         const find = {
+          outlet: globalCtx.currentBrand,
           name: "%" + e.currentTarget.name.value + "%",
-          uri: "category/search",
+          uri: "subcategory/search",
         };
-        const body = {
-          uri: "category",
-          start: 0,
-          length: 10,
-        };
+        console.log(find);
 
         const check = e.currentTarget.name.value !== "" ? true : false;
         try {
           const res = await fetchJson("/api/prot/post", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(check ? find : body),
+            body: JSON.stringify(find),
           });
           console.log(res);
           props.setData(res.data);
           if (!check) {
-            props.setTotalRows(res.total);
             props.setIsSearch(false);
           } else {
             props.setIsSearch(true);

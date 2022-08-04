@@ -390,7 +390,6 @@ const SideNav = ({ children, props }) => {
       </svg>
     ),
   };
-
   return (
     <>
       <Modal globalCtx={globalCtx} globalAct={globalAct} />
@@ -424,7 +423,7 @@ const SideNav = ({ children, props }) => {
                   q={faqs[1].name}
                   i={faqs[1].ic}
                   a={faqs[1].menu}
-                  r={router.asPath}
+                  r={router.asPath.split("?")[0]}
                   globalCtx={globalCtx}
                 />
               )
