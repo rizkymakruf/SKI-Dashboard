@@ -25,6 +25,7 @@ const FormEditSubCategory = () => {
     const body = {
       key: data.key,
       name: data.name,
+      outlet : glob
       category: data.mainCategory,
       uri: "subcategory/update",
     };
