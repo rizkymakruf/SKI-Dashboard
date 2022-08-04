@@ -19,33 +19,31 @@ const FormSubCategory = (props) => {
   console.log(props.maincategory);
 
   const onSubmit = useCallback(async (data) => {
-    console.log("disi", data);
-
     const body = {
-      key: data.key,
+      outlet: globalCtx.currentBrand,
       name: data.name,
-      uri: "category/update",
+      category: data.mainCategory,
+      uri: "subcategory/add",
     };
 
-    // try {
-    //   await fetchJson("/api/prot/patch", {
-    //     method: "PATCH",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(body),
-    //   });
+    try {
+      await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
 
-    //   router.replace("/dashboardSKI/category");
-    //   globalAct.setModal("");
-    //   reset();
-    // } catch (error) {
-    //   console.log("error", error);
-    //   if (error instanceof FetchError) {
-    //     globalAct.setErrorMsg(error.data.message);
-    //   } else {
-    //     globalAct.setErrorMsg("An unexpected error happened");
-    //   }
-    // }
-    // globalAct.setIsFetch(false);
+      router.replace(`/dashboard/category/${globalCtx.currentBrand}`);
+      reset();
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+    globalAct.setIsFetch(false);
   }, []);
 
   return (
@@ -117,9 +115,7 @@ const FormSubCategory = (props) => {
             <div className="w-full h-12 flex justify-end gap-2">
               <button
                 type="submit"
-                onClick={() => setValue("key", globalCtx.selectedData.key)}
                 className="w-full px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
-                // disabled={globalCtx.isFetch ? "disabled" : ""}
               >
                 TAMBAH
               </button>
