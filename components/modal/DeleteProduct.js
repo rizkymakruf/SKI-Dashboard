@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 const DeleteProductModal = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
-  console.log("delete", globalCtx.selectedData);
+  console.log("delete", globalCtx.selectedData.key);
 
   return (
     <div className="bg-white w-full h-auto rounded-md shadow-sm shadow-black">
