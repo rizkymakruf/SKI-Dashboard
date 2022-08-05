@@ -22,6 +22,18 @@ export const GlobalProvider = ({ children }) => {
   const [ski, setSki] = useState(false);
   const [listCategory, setListCategory] = useState([]);
   const [listSubCategory, setListSubCategory] = useState([]);
+  const [detailOrder, setDetailOrder] = useState({
+    created_at: 0,
+    detail_order: [],
+    customer: {},
+    invoice: "",
+    key: "",
+    ongkir: 0,
+    expedition: "",
+    status: "",
+    total: 0,
+    voucher: 0,
+  });
 
   const contextValue = {
     globalCtx: {
@@ -41,6 +53,7 @@ export const GlobalProvider = ({ children }) => {
       ski,
       listCategory,
       listSubCategory,
+      detailOrder,
     },
     globalAct: {
       setModal,
@@ -59,6 +72,7 @@ export const GlobalProvider = ({ children }) => {
       setSki,
       setListCategory,
       setListSubCategory,
+      setDetailOrder,
     },
   };
 

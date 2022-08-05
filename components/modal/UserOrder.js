@@ -1,8 +1,27 @@
-import { useContext, memo } from "react";
+import { useContext, memo, useCallback } from "react";
 import { GlobalContext } from "context/global";
 import Link from "next/link";
+import formatRupiah from "components/FunctionRupiah";
+
 const UserOrderModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
+  console.log(globalCtx.detailOrder);
+
+  const countQty = useCallback(() => {
+    let a = 0;
+    globalCtx.detailOrder?.detail_order.map((x) => {
+      a += x.qty;
+    });
+    return a;
+  });
+
+  const countWeight = useCallback(() => {
+    let a = 0;
+    globalCtx.detailOrder?.detail_order.map((x) => {
+      a += x.weight;
+    });
+    return a / 1000;
+  });
 
   return (
     <div className="bg-white w-full h-auto rounded-md shadow-sm shadow-black">
@@ -34,12 +53,19 @@ const UserOrderModal = () => {
           <div className="flex text-sm">
             <p className="w-10">Item</p>
             <p className="px-2">:</p>
-            <p>Coffee tubruk gajah</p>
+            <div className="">
+              {globalCtx.detailOrder?.detail_order.map((x, i) => (
+                <div>
+                  <span className="font-semibold">{x.qty} pcs </span> {x.name}
+                  {i + 1 < globalCtx.detailOrder?.detail_order.length && ","}
+                </div>
+              ))}
+            </div>
           </div>
           <div className="flex text-sm">
             <p className="w-10">Qty</p>
             <p className="px-2">:</p>
-            <p>10 items</p>
+            <p>{countQty()} items</p>
           </div>
         </div>
         <p className="text-gray-700 text-sm font-semibold">Pembayaran</p>
@@ -47,17 +73,17 @@ const UserOrderModal = () => {
           <div className="flex text-sm">
             <p className="w-12">Total</p>
             <p className="px-2">:</p>
-            <p>Rp 100.000</p>
+            <p>{formatRupiah(globalCtx.detailOrder.total, "Rp")}</p>
           </div>
           <div className="flex text-sm">
             <p className="w-12">Method</p>
             <p className="px-2">:</p>
-            <p>Bank Tranfer : BCA</p>
+            {/* <p>Bank Tranfer : BCA</p> */}
           </div>
           <div className="flex text-sm">
             <p className="w-12">Status</p>
             <p className="px-2">:</p>
-            <p>Success</p>
+            {/* <p>Success</p> */}
           </div>
         </div>
         <p className="text-gray-700 text-sm font-semibold">Ekspedisi</p>
@@ -65,34 +91,34 @@ const UserOrderModal = () => {
           <div className="flex text-sm">
             <p className="w-16">Berat</p>
             <p className="px-2">:</p>
-            <p>10 Kg</p>
+            <p>{countWeight()} Kg</p>
           </div>
           <div className="flex text-sm">
             <p className="w-16">Ekspedisi</p>
             <p className="px-2">:</p>
-            <p>JNT</p>
+            <p>{globalCtx.detailOrder.expedition}</p>
           </div>
           <div className="flex text-sm">
             <p className="w-16">Ongkir</p>
             <p className="px-2">:</p>
-            <p>Rp 25.000</p>
+            <p>{formatRupiah(globalCtx.detailOrder.ongkir, "Rp")}</p>
           </div>
           <div className="flex text-sm">
             <p className="w-16">Penerima</p>
             <p className="px-2">:</p>
-            <p>Muhammad Fatah</p>
+            <p>{globalCtx.detailOrder.customer?.address?.name}</p>
           </div>
           <div className="flex text-sm">
             <p className="w-16">No. HP</p>
             <p className="px-2">:</p>
-            <p>089786567677</p>
+            <p>{globalCtx.detailOrder.customer?.address?.phone}</p>
           </div>
           <div className="flex text-sm">
             <p className="w-16">Alamat</p>
             <p className="px-2">:</p>
           </div>
           <p className="text-sm">
-            Jl. Mawar No.12, Buleleng, Singaraja, Bali, Indonesia
+            {globalCtx.detailOrder.customer?.address?.detail}
           </p>
         </div>
       </div>

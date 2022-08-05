@@ -98,7 +98,10 @@ const ProductTable = ({
             </svg>
           </button>
           <button
-            onClick={() => globalAct.setModal("editProduct")}
+            onClick={() => {
+              globalAct.setModal("editProduct");
+              globalAct.setSelectedData(a);
+            }}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:before:content-['Edit'] border border-blue-300"
             }

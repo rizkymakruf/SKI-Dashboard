@@ -1,6 +1,7 @@
 import FormProduct from "components/form/FormProduct";
 import { useContext, memo, useMemo } from "react";
 import { GlobalContext } from "context/global";
+import FormProductUpdate from "components/form/FormProductUpdate";
 const ProductEditModal = () => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
 
@@ -9,7 +10,15 @@ const ProductEditModal = () => {
       <div className="bg-red-500 h-12 w-full flex items-center justify-between px-3">
         <p className="text-white font-bold">Update product</p>
         <button
-          onClick={() => globalAct.setModal("")}
+          onClick={() => {
+            globalAct.setModal("");
+            {
+              globalAct.setModal(""),
+                globalAct.setSelectedData({
+                  pict: "/img/content-default.png",
+                });
+            }
+          }}
           className={
             "bg-white items-center justify-center h-8 w-8 rounded-md shadow-md flex gap-x-2 text-xs text-red-500 hover:w-24 duration-150 hover:after:content-['Cancel']"
           }
@@ -30,7 +39,7 @@ const ProductEditModal = () => {
       </div>
       {useMemo(() => {
         return (
-          <FormProduct
+          <FormProductUpdate
             // Default Form
             globalCtx={globalCtx}
             globalAct={globalAct}

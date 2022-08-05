@@ -15,6 +15,11 @@
     "static/development/_middlewareManifest.js"
   ],
   "pages": {
+    "/": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/index.js"
+    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -30,15 +35,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/dashboard/order/[pid].js"
     ],
-    "/dashboard/outlet/[pid]": [
+    "/dashboardSKI": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/outlet/[pid].js"
-    ],
-    "/dashboard/product/[pid]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboard/product/[pid].js"
+      "static/chunks/pages/dashboardSKI.js"
     ]
   },
   "ampFirstPages": []
