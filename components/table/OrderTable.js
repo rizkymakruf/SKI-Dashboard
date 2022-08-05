@@ -212,17 +212,17 @@ const OrderTable = ({
           <p
             className={`text-xs w-24 flex items-center justify-center font-bold shadow-md py-1 rounded-xl uppercase ${
               a.status === "unpaid"
-                ? "bg-gray-500/30 text-gray-500"
+                ? "bg-yellow-500/30 text-yellow-500"
                 : a.status === "paid"
-                ? "bg-slate-500/30 text-slate-500"
-                : a.status === "confirmed"
-                ? "bg-yellow-500/30 text-yellow-500"
-                : a.status === "packed"
                 ? "bg-blue-500/30 text-blue-500"
+                : a.status === "confirmed"
+                ? "bg-lime-500/30 text-lime-500"
+                : a.status === "packed"
+                ? "bg-orange-500/30 text-orange-500"
                 : a.status === "sent"
-                ? "bg-yellow-500/30 text-yellow-500"
+                ? "bg-purple-500/30 text-purple-500"
                 : a.status === "canceled"
-                ? "bg-yellow-500/30 text-yellow-500"
+                ? "bg-red-500/30 text-red-500"
                 : a.status == "done" && "bg-green-500/30 text-green-500"
             }`}
           >
