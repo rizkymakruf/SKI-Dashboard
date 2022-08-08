@@ -63,7 +63,7 @@ const FormProduct = (props) => {
   const onSubmit = useCallback(async (data) => {
     const body = {
       uri: "product/add",
-      outlet: globalCtx.currentBrand,
+      outlet: data.outlet,
       category: data.subCategory,
       name: data.name,
       description: data.description,
@@ -110,6 +110,12 @@ const FormProduct = (props) => {
           <div className="w-full h-full p-3 rounded-md grid grid-cols-2 gap-3">
             <div className="w-full">
               <div className="w-full h-auto relative mb-2">
+                <input
+                  name="outlet"
+                  type="hidden"
+                  defaultValue={globalCtx.currentBrand}
+                  {...register("outlet", { required: true })}
+                ></input>
                 <p className="text-xs font-bold text-gray-700 pb-1">
                   NAMA PRODUCT
                 </p>
@@ -357,15 +363,14 @@ const FormProduct = (props) => {
                     />
                   ) : null}
                 </div>
+                {errors.description && (
+                  <p className="text-xs text-red-500 pb-2">
+                    {errors.description.message}
+                  </p>
+                )}
               </div>
             </div>
             <div className="w-full">
-              {errors.description && (
-                <p className="text-xs text-red-500 pb-2">
-                  {errors.description.message}
-                </p>
-              )}
-
               {/* input gambar */}
               <p className="text-xs font-bold text-gray-700 pt-3">
                 FOTO PRODUK

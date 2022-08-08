@@ -1,13 +1,14 @@
 import { getLayout } from "components/layout/Navbar";
 import { useRouter } from "next/router";
 import { sessionOptions } from "lib/session";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState, useMemo, useCallback } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import { checkUid, findOutlet } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { GlobalContext } from "context/global";
 import HistoryTable from "components/table/History";
 import FormHistory from "components/form/FormHistory";
+import fetchJson, { FetchError } from "lib/fetchJson";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
@@ -64,6 +65,11 @@ sessionOptions);
 const History = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
+  const [history, setHistory] = useState(false);
+  const [data, setData] = useState([]);
+  const [totalRows, setTotalRows] = useState(0);
+  const [perPage, setPerPage] = useState(10);
+  const [newBody, setNewBody] = useState({});
 
   useEffect(() => {
     globalAct.setAdminMode("outlet");
@@ -74,14 +80,61 @@ const History = (props) => {
     globalAct.setCurrentBrand(props.adminMode);
     globalAct.setOutletPict(props.outletPict);
   }, []);
+
+  const handlePageChange = useCallback((page) => {
+    setNewBody({ ...newBody, index: (page - 1) * perPage });
+    fetchData();
+  }, []);
+
+  const handlePerRowsChange = useCallback((newPerPage, page) => {
+    setPerPage(newPerPage);
+    setNewBody({ ...newBody, index: 0, length: newPerPage });
+    fetchData();
+  }, []);
+
+  const fetchData = useCallback(async () => {
+    globalAct.setIsFetch(true);
+    try {
+      const res = await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newBody),
+      });
+      setMode(newBody.method);
+      setDataReport(res.data);
+      setTotalRows(res.total);
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+    globalAct.setIsFetch(false);
+  }, []);
+
   return (
     <div className="w-full p-2 flex flex-col gap-y-2">
       <div>
-        <FormHistory globalAct={globalAct} globalCtx={globalCtx} />
+        <FormHistory
+          setData={setData}
+          setHistory={setHistory}
+          setNewBody={setNewBody}
+          setTotalRows={setTotalRows}
+          currentBrand={props.adminMode}
+        />
       </div>
-      <div>
-        <HistoryTable />
-      </div>
+      {history && (
+        <div>
+          <HistoryTable
+            data={data}
+            totalRows={totalRows}
+            handlePageChange={handlePageChange}
+            handlePerRowsChange={handlePerRowsChange}
+          />
+        </div>
+      )}
     </div>
   );
 };

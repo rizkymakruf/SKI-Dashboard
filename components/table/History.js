@@ -1,78 +1,33 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext, memo } from "react";
+import { useContext, memo, useEffect, useState } from "react";
+import Loading from "components/card/Loading";
 
-const OrderTable = ({}) => {
+const OrderTable = ({
+  data,
+  totalRows,
+  handlePageChange,
+  handlePerRowsChange,
+}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  const data = [
-    {
-      order_by: "Fandy",
-      tujuan: "Jl. Jeruk",
-      status: "SUCCESS",
-      inv: "INV1234567",
-    },
-    {
-      order_by: "Wiliam",
-      tujuan: "Jln rusa no.44",
-      status: "PENDING",
-      inv: "INV1234567",
-    },
-    {
-      order_by: "Agus",
-      tujuan: "Jln ikan no.34",
-      status: "EXPIRED",
-      inv: "INV1234567",
-    },
-    {
-      order_by: "Made",
-      tujuan: "Jln burung no.34",
-      status: "PENDING",
-      inv: "INV1234567",
-    },
-    {
-      order_by: "Rizky",
-      tujuan: "Jln kaki no.34",
-      status: "PENDING",
-      inv: "INV1234567",
-    },
-    {
-      order_by: "Fandy",
-      tujuan: "Jl. Jeruk",
-      status: "SUCCESS",
-      inv: "INV1234567",
-    },
-    {
-      order_by: "Wiliam",
-      tujuan: "Jln rusa no.44",
-      status: "PENDING",
-      inv: "INV1234567",
-    },
-    {
-      order_by: "Agus",
-      tujuan: "Jln ikan no.34",
-      status: "EXPIRED",
-      inv: "INV1234567",
-    },
-    {
-      order_by: "Made",
-      tujuan: "Jln burung no.34",
-      status: "PENDING",
-      inv: "INV1234567",
-    },
-    {
-      order_by: "Rizky",
-      tujuan: "Jln kaki no.34",
-      status: "PENDING",
-      inv: "INV1234567",
-    },
-  ];
+  const [pending, setPending] = useState(true);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRows(data);
+      setPending(false);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
+
   const columns = [
     {
       name: <div className="font-bold text-red-500">INVOICE</div>,
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">#{a.inv}</p>
+          <p className="text-xs font-bold">{a.invoice}</p>
         </div>
       ),
     },
@@ -81,7 +36,7 @@ const OrderTable = ({}) => {
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.order_by}</p>
+          <p className="text-xs font-bold">{a.customer?.address?.name}</p>
         </div>
       ),
     },
@@ -94,11 +49,9 @@ const OrderTable = ({}) => {
         <div className="w-full h-full py-1 flex justify-center flex-row gap-1 items-center">
           <p
             className={`text-xs font-bold px-2 shadow-md py-1 rounded-xl ${
-              a.status === "PENDING"
-                ? "bg-yellow-500/30 text-yellow-500"
-                : a.status === "EXPIRED"
+              a.status === "canceled"
                 ? "bg-red-500/30 text-red-500"
-                : a.status == "SUCCESS" && "bg-green-500/30 text-green-500"
+                : a.status == "done" && "bg-green-500/30 text-green-500"
             }`}
           >
             {a.status}
@@ -114,7 +67,9 @@ const OrderTable = ({}) => {
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button
-            onClick={() => globalAct.setModal("userOrder")}
+            onClick={() => {
+              globalAct.setModal("userOrder"), globalAct.setDetailOrder(a);
+            }}
             className={
               "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-orange-500/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:before:content-['Info'] border border-orange-300"
             }
@@ -147,6 +102,12 @@ const OrderTable = ({}) => {
         responsive={true}
         highlightOnHover={true}
         pagination
+        paginationServer
+        paginationTotalRows={totalRows}
+        onChangeRowsPerPage={handlePerRowsChange}
+        onChangePage={handlePageChange}
+        progressPending={pending}
+        progressComponent={<Loading />}
       />
     </div>
   );
