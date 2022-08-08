@@ -21,7 +21,7 @@ const FormProductUpdate = (props) => {
     !detail && setInfoLengkap(false);
   });
 
-  const [imageFile, setImageFile] = useState("");
+  // const [imageFile, setImageFile] = useState("");
   const inputFileImage = useRef(null);
 
   const upLoad = useCallback(() => {
@@ -29,11 +29,13 @@ const FormProductUpdate = (props) => {
   }, []);
 
   const handleChange = useCallback(async (e) => {
+    alert("a");
     globalAct.setIsFetch(true);
     const file = e.target.files[0];
     const typeFile = file.type.split("/")[1];
     const a = await uploadFile(file, `product.${typeFile}`, "product");
-    setImageFile(a.url);
+    console.log("newpict", a);
+    globalAct.setSelectedData({ ...globalCtx.selectedData, url: a.url });
     globalAct.setIsFetch(false);
   });
 
@@ -52,10 +54,10 @@ const FormProductUpdate = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
 
-  useEffect(() => {
-    // setImageFile(globalCtx.selectedData?.pict);
-    reset();
-  }, [globalCtx.selectedData]);
+  // useEffect(() => {
+  //   // setImageFile(globalCtx.selectedData?.pict);
+  //   reset();
+  // }, [globalCtx.selectedData]);
 
   // console.log("sub", globalCtx.listSubCategory);
   // console.log("shorname", globalCtx.currentBrand);
@@ -66,7 +68,7 @@ const FormProductUpdate = (props) => {
     const body = {
       uri: "product/update",
       key: data.key,
-      outlet: globalCtx.currentBrand,
+      outlet: data.outlet,
       category: data.subCategory,
       name: data.name,
       description: data.description,
@@ -87,9 +89,9 @@ const FormProductUpdate = (props) => {
       });
 
       await reset();
-      await setImageFile("");
+      // await setImageFile("");
       await globalAct.setModal("");
-      await router.replace(`/dashboard/product/${globalCtx.currentBrand}`);
+      await router.replace(`/dashboard/product/${data.outlet}`);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {
@@ -102,9 +104,9 @@ const FormProductUpdate = (props) => {
     globalAct.setIsFetch(false);
   }, []);
 
-  useEffect(() => {
-    globalCtx.modal === "" && setImageFile("");
-  });
+  // useEffect(() => {
+  //   globalCtx.modal === "" && setImageFile("");
+  // });
 
   return (
     <div className="w-full h-auto">
@@ -118,6 +120,12 @@ const FormProductUpdate = (props) => {
                   type="hidden"
                   defaultValue={props.globalCtx.selectedData.key}
                   {...register("key", { required: true })}
+                ></input>
+                <input
+                  name="outlet"
+                  type="hidden"
+                  defaultValue={globalCtx.currentBrand}
+                  {...register("outlet", { required: true })}
                 ></input>
                 <p className="text-xs font-bold text-gray-700 pb-1">
                   NAMA PRODUCT
@@ -174,7 +182,7 @@ const FormProductUpdate = (props) => {
                   {globalCtx.listSubCategory.map((dat, idx) => {
                     return (
                       <option
-                        selected={globalCtx.selectedData.main?.key == dat.key}
+                        selected={globalCtx.selectedData?.category == dat.key}
                         value={dat.key}
                       >
                         {dat.name}
@@ -453,7 +461,7 @@ const FormProductUpdate = (props) => {
                   <span className="text-gray-400 text-xs">
                     *Format picture recomand 1x1
                   </span>
-                  {/* <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
+                  <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
                     <div className="w-full h-auto flex justify-end gap-2">
                       <button
                         type="submit"
@@ -467,23 +475,7 @@ const FormProductUpdate = (props) => {
                         Update
                       </button>
                     </div>
-                  </div> */}
-                </div>
-              </div>
-
-              <div className="w-full h-12 flex justify-end pt-5">
-                <div className="w-auto h-full flex items-center">
-                  <button
-                    type="submit"
-                    onClick={() => {
-                      setValue("key", globalCtx.selectedData.key),
-                        setValue("pict", globalCtx.selectedData.pict);
-                    }}
-                    disabled={globalCtx.isFetch ? "disabled" : ""}
-                    className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
-                  >
-                    Update
-                  </button>
+                  </div>
                 </div>
               </div>
             </div>
