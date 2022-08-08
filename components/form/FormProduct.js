@@ -70,7 +70,7 @@ const FormProduct = (props) => {
       price: parseInt(data.price),
       weight: parseInt(data.weight),
       stock: parseInt(data.stock),
-      pict: data.pict,
+      pict: imageFile,
       add_info: data.add_info,
     };
 
@@ -125,7 +125,7 @@ const FormProduct = (props) => {
                   {...register("name", {
                     required: {
                       value: true,
-                      message: "Nama outlet harus di isi!",
+                      message: "Nama product harus di isi!",
                     },
                   })}
                   onKeyUp={() => {

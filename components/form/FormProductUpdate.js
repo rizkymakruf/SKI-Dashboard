@@ -79,27 +79,27 @@ const FormProductUpdate = (props) => {
 
     console.log("body update product", body);
 
-    // try {
-    //   const res = await fetchJson("/api/prot/put", {
-    //     method: "PUT",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(body),
-    //   });
+    try {
+      const res = await fetchJson("/api/prot/put", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
 
-    //   await reset();
-    //   await setImageFile("");
-    //   await globalAct.setModal("");
-    //   await router.replace(`/dashboard/product/${globalCtx.currentBrand}`);
-    // } catch (error) {
-    //   console.log("error", error);
-    //   if (error instanceof FetchError) {
-    //     globalAct.setErrorMsg(error.data.message);
-    //   } else {
-    //     globalAct.setErrorMsg("An unexpected error happened");
-    //   }
-    // }
+      await reset();
+      await setImageFile("");
+      await globalAct.setModal("");
+      await router.replace(`/dashboard/product/${globalCtx.currentBrand}`);
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
 
-    // globalAct.setIsFetch(false);
+    globalAct.setIsFetch(false);
   }, []);
 
   useEffect(() => {
@@ -453,9 +453,21 @@ const FormProductUpdate = (props) => {
                   <span className="text-gray-400 text-xs">
                     *Format picture recomand 1x1
                   </span>
-                  <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
-                    <div className="w-full h-auto flex justify-end gap-2"></div>
-                  </div>
+                  {/* <div className="w-full h-auto relative px-4 py-3 flex justify-end gap-1">
+                    <div className="w-full h-auto flex justify-end gap-2">
+                      <button
+                        type="submit"
+                        onClick={() => {
+                          setValue("key", globalCtx.selectedData.key),
+                            setValue("pict", globalCtx.selectedData.pict);
+                        }}
+                        disabled={globalCtx.isFetch ? "disabled" : ""}
+                        className="px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </div> */}
                 </div>
               </div>
 
