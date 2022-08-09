@@ -1,95 +1,30 @@
 import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
-import { useContext, memo } from "react";
+import { useContext, memo, useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Loading from "components/card/Loading";
 
-const VoucherTable = ({}) => {
+const VoucherTable = ({
+  voc,
+  search,
+  totalRows,
+  handlePageChange,
+  handlePerRowsChange,
+}) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
-  const data = [
-    {
-      name: "DISCOUNT 99%",
-      val: "99%",
-      min: "Rp 25.000",
-      start: "1/8/2022",
-      end: "2/9/2022",
-    },
-    {
-      name: "DISCOUNT 50%",
-      val: "50%",
-      min: "Rp 10.000",
-      start: "17/8/2022",
-      end: "18/8/2022",
-    },
-    {
-      name: "DISCOUNT 10%",
-      val: "10%",
-      min: "Rp 0.0",
-      start: "30/7/2022",
-      end: "1/8/2022",
-    },
-    {
-      name: "DISCOUNT 99%",
-      val: "99%",
-      min: "Rp 25.000",
-      start: "1/8/2022",
-      end: "2/9/2022",
-    },
-    {
-      name: "DISCOUNT 50%",
-      val: "50%",
-      min: "Rp 10.000",
-      start: "17/8/2022",
-      end: "18/8/2022",
-    },
-    {
-      name: "DISCOUNT 10%",
-      val: "10%",
-      min: "Rp 0.0",
-      start: "30/7/2022",
-      end: "1/8/2022",
-    },
-    {
-      name: "DISCOUNT 99%",
-      val: "99%",
-      min: "Rp 25.000",
-      start: "1/8/2022",
-      end: "2/9/2022",
-    },
-    {
-      name: "DISCOUNT 50%",
-      val: "50%",
-      min: "Rp 10.000",
-      start: "17/8/2022",
-      end: "18/8/2022",
-    },
-    {
-      name: "DISCOUNT 10%",
-      val: "10%",
-      min: "Rp 0.0",
-      start: "30/7/2022",
-      end: "1/8/2022",
-    },
-    {
-      name: "DISCOUNT 99%",
-      val: "99%",
-      min: "Rp 25.000",
-      start: "1/8/2022",
-      end: "2/9/2022",
-    },
-    {
-      name: "DISCOUNT 50%",
-      val: "50%",
-      min: "Rp 10.000",
-      start: "17/8/2022",
-      end: "18/8/2022",
-    },
-    {
-      name: "DISCOUNT 10%",
-      val: "10%",
-      min: "Rp 0.0",
-      start: "30/7/2022",
-      end: "1/8/2022",
-    },
-  ];
+  const router = useRouter();
+
+  const [pending, setPending] = useState(true);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRows(voc);
+      setPending(false);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
+
   const columns = [
     {
       name: <div className="font-bold text-red-500">Voucher</div>,
@@ -114,7 +49,7 @@ const VoucherTable = ({}) => {
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.val}</p>
+          <p className="text-xs font-bold">{a.percentage}</p>
         </div>
       ),
     },
@@ -123,7 +58,7 @@ const VoucherTable = ({}) => {
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.start}</p>
+          <p className="text-xs font-bold">{a.started}</p>
         </div>
       ),
     },
@@ -132,7 +67,7 @@ const VoucherTable = ({}) => {
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.end}</p>
+          <p className="text-xs font-bold">{a.expired}</p>
         </div>
       ),
     },
@@ -215,15 +150,40 @@ const VoucherTable = ({}) => {
   ];
 
   return (
-    <div className="w-full h-auto relative border shadow rounded">
-      <DataTable
-        // title={<p className="text-red-500 font-bold">Order List</p>}
-        columns={columns}
-        data={data}
-        responsive={true}
-        highlightOnHover={true}
-        pagination
-      />
+    <div className="w-full h-auto relative ">
+      <div className="shadow-md border-2 rounded-md">
+        {search ? (
+          <DataTable
+            // title={
+            //   <p className="text-red-500 font-bold text-sm">Category List</p>
+            // }
+            columns={columns}
+            data={voc}
+            responsive={true}
+            highlightOnHover={true}
+            paginationRowsPerPageOptions={[10, 15, 20, 25, 30, 50]}
+            pagination
+          />
+        ) : (
+          <DataTable
+            // title={
+            //   <p className="text-red-500 font-bold text-sm">Category List</p>
+            // }
+            columns={columns}
+            data={voc}
+            responsive={true}
+            highlightOnHover={true}
+            pagination
+            paginationServer
+            paginationRowsPerPageOptions={[10, 15, 20, 25, 30, 50]}
+            paginationTotalRows={totalRows}
+            onChangeRowsPerPage={handlePerRowsChange}
+            onChangePage={handlePageChange}
+            progressPending={pending}
+            progressComponent={<Loading />}
+          />
+        )}
+      </div>
     </div>
   );
 };

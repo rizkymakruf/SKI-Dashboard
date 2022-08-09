@@ -3,6 +3,7 @@ import { getLayout } from "components/layout/Navbar";
 import SubCategoryTable from "components/table/SubCategory";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import SearchSubCategory from "components/search/SubCategory";
+import FormSubCategory from "components/form/FormSubCategory";
 import { useRouter } from "next/router";
 import { sessionOptions } from "lib/session";
 import { useContext, useEffect, useState } from "react";
@@ -16,7 +17,6 @@ import {
   getTotalSubCategory,
 } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
-import FormSubCategory from "components/form/FormSubCategory";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
@@ -101,10 +101,6 @@ const ManageCategory = (props) => {
     globalAct.setOutletPict(props.outletPict);
     globalAct.setListCategory(props.mainCategory);
   }, []);
-
-  useEffect(() => {
-    console.log("fetch data status : ", globalCtx.isFetch);
-  }, [globalCtx]);
 
   return (
     <div className="w-full p-4 flex flex-col gap-y-4">

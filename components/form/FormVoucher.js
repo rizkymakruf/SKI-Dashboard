@@ -120,25 +120,30 @@ const FormVOucher = () => {
               <p className="text-xs font-bold text-gray-700 pb-1">
                 JUMLAH DISCOUNT
               </p>
-              <input
-                name="persent"
-                autoComplete="off"
-                className={`rounded-md p-1 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
-                  errors.persent
-                    ? "focus:outline-red-500 border-2 border-red-500"
-                    : null
-                }`}
-                placeholder="Niali persent (50%)"
-                {...register("persent", {
-                  required: {
-                    value: true,
-                    message: "Jumlah discount harus di isi!",
-                  },
-                })}
-                onKeyUp={() => {
-                  trigger("persent");
-                }}
-              />
+              <div className="flex gap-2">
+                <input
+                  name="persent"
+                  autoComplete="off"
+                  className={`rounded-md p-1 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
+                    errors.persent
+                      ? "focus:outline-red-500 border-2 border-red-500"
+                      : null
+                  }`}
+                  placeholder="Niali persent e.g: (50)"
+                  {...register("persent", {
+                    required: {
+                      value: true,
+                      message: "Jumlah discount harus di isi!",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("persent");
+                  }}
+                />
+                <p className="px-8 flex items-center justify-center border border-orange-500/50 rounded-md">
+                  %
+                </p>
+              </div>
 
               {errors.persent && (
                 <p className="text-xs text-red-500 pt-2">

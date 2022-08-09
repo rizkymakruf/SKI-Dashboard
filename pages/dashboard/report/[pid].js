@@ -2,11 +2,13 @@ import FormReportOutlet from "components/form/FormReportOutlet";
 import { getLayout } from "components/layout/Navbar";
 import { useRouter } from "next/router";
 import { sessionOptions } from "lib/session";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import { checkUid, findOutlet } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { GlobalContext } from "context/global";
+import ViewReportByProductTable from "components/table/ViewReportByProduct";
+import fetchJson, { FetchError } from "lib/fetchJson";
 
 // ssr
 export const getServerSideProps = withIronSessionSsr(async function ({
@@ -62,7 +64,12 @@ sessionOptions);
 
 const Report = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
+  const [dataReport, setDataReport] = useState([]);
+  const [totalRows, setTotalRows] = useState(0);
+  const [perPage, setPerPage] = useState(10);
   const router = useRouter();
+  const [newBody, setNewBody] = useState({});
+  const [report, setReport] = useState(false);
 
   useEffect(() => {
     globalAct.setAdminMode("outlet");
@@ -73,11 +80,60 @@ const Report = (props) => {
     globalAct.setCurrentBrand(props.adminMode);
     globalAct.setOutletPict(props.outletPict);
   }, []);
+
+  const handlePageChange = useCallback((page) => {
+    setNewBody({ ...newBody, index: (page - 1) * perPage });
+    fetchData();
+  }, []);
+
+  const handlePerRowsChange = useCallback((newPerPage, page) => {
+    setPerPage(newPerPage);
+    setNewBody({ ...newBody, index: 0, length: newPerPage });
+    fetchData();
+  }, []);
+
+  const fetchData = useCallback(async () => {
+    globalAct.setIsFetch(true);
+    try {
+      const res = await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newBody),
+      });
+      setDataReport(res.data);
+      setTotalRows(res.total);
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+    globalAct.setIsFetch(false);
+  }, []);
+
   return (
-    <div className="w-full p-4">
+    <div className="w-full p-4  gap-y-2 space-y-3">
       <div className="p-3 border border-gray-300 rounded-md hover:shadow-md">
-        <FormReportOutlet />
+        <FormReportOutlet
+          currentBrand={props.adminMode}
+          setDataReport={setDataReport}
+          setNewBody={setNewBody}
+          setTotalRows={setTotalRows}
+          setReport={setReport}
+        />
       </div>
+      {report && (
+        <div>
+          <ViewReportByProductTable
+            data={dataReport}
+            totalRows={totalRows}
+            handlePageChange={handlePageChange}
+            handlePerRowsChange={handlePerRowsChange}
+          />
+        </div>
+      )}
     </div>
   );
 };

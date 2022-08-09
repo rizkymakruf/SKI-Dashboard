@@ -78,7 +78,7 @@ const FormEditSubCategory = () => {
                 }}
               >
                 <option>-- Select Category --</option>
-                {globalCtx.listCategory.map((x) => {
+                {globalCtx.listCategory?.map((x) => {
                   return (
                     <option
                       value={x.key}

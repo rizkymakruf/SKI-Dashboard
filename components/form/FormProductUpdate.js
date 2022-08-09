@@ -29,13 +29,12 @@ const FormProductUpdate = (props) => {
   }, []);
 
   const handleChange = useCallback(async (e) => {
-    alert("a");
     globalAct.setIsFetch(true);
     const file = e.target.files[0];
     const typeFile = file.type.split("/")[1];
     const a = await uploadFile(file, `product.${typeFile}`, "product");
     console.log("newpict", a);
-    globalAct.setSelectedData({ ...globalCtx.selectedData, url: a.url });
+    globalAct.setSelectedData({ ...globalCtx.selectedData, pict: a.url });
     globalAct.setIsFetch(false);
   });
 

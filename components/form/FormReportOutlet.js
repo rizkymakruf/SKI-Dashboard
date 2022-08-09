@@ -4,25 +4,12 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 
 const FormReportOutlet = ({
   setDataReport,
-  setMode,
+  currentBrand,
   setTotalRows,
   setNewBody,
+  setReport,
 }) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
-  // const data = [
-  //   {
-  //     key: "brand",
-  //     name: "Report by brand",
-  //   },
-  //   {
-  //     key: "category",
-  //     name: "Report by category",
-  //   },
-  //   {
-  //     key: "product",
-  //     name: "Report by product",
-  //   },
-  // ];
 
   const onSubmit = useCallback(async (e) => {
     e.preventDefault();
@@ -31,10 +18,10 @@ const FormReportOutlet = ({
     const endDate = new Date(e.currentTarget.end.value);
 
     const body = {
-      uri: "report",
+      uri: "report/outlet",
+      outlet: currentBrand,
       start: startDate / 1000,
       end: endDate / 1000,
-      method: e.currentTarget.report.value,
       index: 0,
       length: 10,
     };
@@ -45,9 +32,9 @@ const FormReportOutlet = ({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      await setMode(body.method);
       await setDataReport(res.data);
       await setTotalRows(res.total);
+      setReport(true);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {
@@ -65,18 +52,6 @@ const FormReportOutlet = ({
         <form onSubmit={onSubmit}>
           <div className="w-full h-full grid grid-cols-1 gap-4 select-none p-3">
             <div className="w-full space-y-2">
-              {/* <div className="w-full">
-                <p>Report Filter</p>
-                <select
-                  name="report"
-                  id="report"
-                  className="w-full rounded-md border-2 border-orange-500/50"
-                >
-                  {data.map((dat) => (
-                    <option value={dat.key}>{dat.name}</option>
-                  ))}
-                </select>
-              </div> */}
               <div className="w-full">
                 <p>Date From</p>
                 <input
