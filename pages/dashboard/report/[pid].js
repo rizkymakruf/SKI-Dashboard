@@ -2,12 +2,12 @@ import FormReportOutlet from "components/form/FormReportOutlet";
 import { getLayout } from "components/layout/Navbar";
 import { useRouter } from "next/router";
 import { sessionOptions } from "lib/session";
-import { useContext, useEffect, useState, useCallback } from "react";
+import { useContext, useEffect, useState, useCallback, useMemo } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import { checkUid, findOutlet } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { GlobalContext } from "context/global";
-import ViewReportByProductTable from "components/table/ViewReportByProduct";
+import ViewReportByProductOutlet from "components/table/ViewReportByProductOutlet";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
 // ssr
@@ -81,6 +81,8 @@ const Report = (props) => {
     globalAct.setOutletPict(props.outletPict);
   }, []);
 
+  useEffect(() => {}, [newBody]);
+
   const handlePageChange = useCallback((page) => {
     setNewBody({ ...newBody, index: (page - 1) * perPage });
     fetchData();
@@ -94,12 +96,14 @@ const Report = (props) => {
 
   const fetchData = useCallback(async () => {
     globalAct.setIsFetch(true);
+    console.log("fetch", newBody);
     try {
       const res = await fetchJson("/api/prot/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newBody),
       });
+      console.log("report", res);
       setDataReport(res.data);
       setTotalRows(res.total);
     } catch (error) {
@@ -115,18 +119,23 @@ const Report = (props) => {
 
   return (
     <div className="w-full p-4  gap-y-2 space-y-3">
-      <div className="p-3 border border-gray-300 rounded-md hover:shadow-md">
-        <FormReportOutlet
-          currentBrand={props.adminMode}
-          setDataReport={setDataReport}
-          setNewBody={setNewBody}
-          setTotalRows={setTotalRows}
-          setReport={setReport}
-        />
-      </div>
+      {useMemo(() => {
+        console.log("form");
+        return (
+          <div className="p-3 border border-gray-300 rounded-md hover:shadow-md">
+            <FormReportOutlet
+              currentBrand={props.adminMode}
+              setDataReport={setDataReport}
+              setNewBody={setNewBody}
+              setTotalRows={setTotalRows}
+              setReport={setReport}
+            />
+          </div>
+        );
+      }, [])}
       {report && (
         <div>
-          <ViewReportByProductTable
+          <ViewReportByProductOutlet
             data={dataReport}
             totalRows={totalRows}
             handlePageChange={handlePageChange}

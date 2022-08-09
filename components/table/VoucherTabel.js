@@ -2,6 +2,7 @@ import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
 import { useContext, memo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import fetchJson, { FetchError } from "lib/fetchJson";
 import Loading from "components/card/Loading";
 
 const VoucherTable = ({
@@ -40,7 +41,7 @@ const VoucherTable = ({
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.min}</p>
+          <p className="text-xs font-bold">Rp {a.min}</p>
         </div>
       ),
     },
@@ -49,7 +50,7 @@ const VoucherTable = ({
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.percentage}</p>
+          <p className="text-xs font-bold">{a.percentage} %</p>
         </div>
       ),
     },
@@ -68,52 +69,6 @@ const VoucherTable = ({
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
           <p className="text-xs font-bold">{a.expired}</p>
-        </div>
-      ),
-    },
-    {
-      name: (
-        <div className="w-full text-center font-bold text-red-500">Active</div>
-      ),
-      grow: 1,
-      cell: (a) => (
-        <div className="flex justify-center gap-x-2 w-full">
-          <label className="switch">
-            <input
-              type="checkbox"
-              checked={a.active}
-              globalCtx={globalCtx}
-              globalAct={globalAct}
-              // onClick={async function handleSubmit(e) {
-              //   e.preventDefault();
-              //   globalAct.setIsFetch(true);
-              //   globalAct.setSelectedData(a);
-
-              //   const body = {
-              //     uri: "user/status",
-              //     key: a.key,
-              //     active: !a.active,
-              //   };
-
-              //   try {
-              //     await fetchJson("/api/prot/patch", {
-              //       method: "PATCH",
-              //       headers: { "Content-Type": "application/json" },
-              //       body: JSON.stringify(body),
-              //     });
-              //     router.reload("/dashboardSKI/admins");
-              //   } catch (error) {
-              //     console.log("error", error);
-              //     if (error instanceof FetchError) {
-              //       globalAct.setErrorMsg(error.data.message);
-              //     } else {
-              //       globalAct.setErrorMsg("An unexpected error happened");
-              //     }
-              //   }
-              // }}
-            />
-            <span className="slider round"></span>
-          </label>
         </div>
       ),
     },
@@ -140,6 +95,36 @@ const VoucherTable = ({
               <path
                 fillRule="evenodd"
                 d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+          <button
+            onClick={() => {
+              globalAct.setModal("deleteVoucher");
+              globalAct.setSelectedData({
+                ...globalCtx.selectedData,
+                key: a.key,
+                name: a.name,
+              });
+              // globalAct.setSelectedData({
+              //   pict: "/img/outlet-default.png",
+              //   key: a.key,
+              // });
+            }}
+            className={
+              "bg-red-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-500/50 shadow-md flex gap-x-2 text-xs text-red-500 hover:w-24 duration-150 hover:before:content-['Remove'] border border-red-300"
+            }
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-red-500"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                 clipRule="evenodd"
               />
             </svg>

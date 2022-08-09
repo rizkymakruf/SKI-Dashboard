@@ -27,6 +27,7 @@ import ProductEdit from "components/modal/ProductEdit";
 import ProductDetail from "components/modal/ProductDetail";
 import SubCategoryUpdate from "components/modal/SubCategoryUpdate";
 import Voucher from "components/modal/Voucher";
+import DeleteVoucher from "components/modal/DeleteVoucher";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
@@ -65,6 +66,13 @@ const Modal = (props) => {
         } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
       >
         <DeleteProductModal />
+      </div>
+      <div
+        className={`${
+          modal === "deleteVoucher" ? "translate-x-0" : "-translate-x-full"
+        } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
+      >
+        <DeleteVoucher />
       </div>
       <div
         className={`${
