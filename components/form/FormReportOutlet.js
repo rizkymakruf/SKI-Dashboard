@@ -1,50 +1,11 @@
-import { useContext, useCallback, memo } from "react";
+import { useContext, useCallback, memo, useEffect } from "react";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
 const FormReportOutlet = ({
-  setDataReport,
-  currentBrand,
-  setTotalRows,
-  setNewBody,
-  setReport,
+  onSubmit,
 }) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
-
-  const onSubmit = useCallback(async (e) => {
-    e.preventDefault();
-    globalAct.setIsFetch(true);
-    const startDate = new Date(e.currentTarget.start.value);
-    const endDate = new Date(e.currentTarget.end.value);
-
-    const body = {
-      uri: "report/outlet",
-      outlet: currentBrand,
-      start: startDate / 1000,
-      end: endDate / 1000,
-      index: 0,
-      length: 10,
-    };
-    setNewBody(body);
-    try {
-      const res = await fetchJson("/api/prot/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      await setDataReport(res.data);
-      await setTotalRows(res.total);
-      setReport(true);
-    } catch (error) {
-      console.log("error", error);
-      if (error instanceof FetchError) {
-        globalAct.setErrorMsg(error.data.message);
-      } else {
-        globalAct.setErrorMsg("An unexpected error happened");
-      }
-    }
-    globalAct.setIsFetch(false);
-  }, []);
 
   return (
     <>

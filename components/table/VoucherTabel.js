@@ -4,6 +4,7 @@ import { useContext, memo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import Loading from "components/card/Loading";
+import moment from "moment";
 
 const VoucherTable = ({
   voc,
@@ -59,7 +60,10 @@ const VoucherTable = ({
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.started}</p>
+          <p className="text-xs font-bold">
+            {/* {moment(Date(a.started)).format("MM/DD/YYYY")} */}
+            {new Date(a.started * 1000).toLocaleDateString()}
+          </p>
         </div>
       ),
     },
@@ -68,7 +72,10 @@ const VoucherTable = ({
       grow: 1,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">{a.expired}</p>
+          <p className="text-xs font-bold">
+            {/* {moment(a.expired).format("MM/DD/YYYY")} */}
+            {new Date(a.expired * 1000).toLocaleDateString()}
+          </p>
         </div>
       ),
     },

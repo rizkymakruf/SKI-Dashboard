@@ -40,23 +40,23 @@ const DeleteVoucherModal = (props) => {
 
               console.log("delete product", body);
 
-              // try {
-              //   await fetchJson("/api/prot/patch", {
-              //     method: "PATCH",
-              //     headers: { "Content-Type": "application/json" },
-              //     body: JSON.stringify(body),
-              //   });
-              //   router.replace(`/dashboard/voucher/${globalCtx.currentBrand}`);
-              // } catch (error) {
-              //   console.log("error", error);
-              //   if (error instanceof FetchError) {
-              //     globalAct.setErrorMsg(error.data.message);
-              //   } else {
-              //     globalAct.setErrorMsg("An unexpected error happened");
-              //   }
-              // }
-              // globalAct.setModal("");
-              // globalAct.setIsFetch(false);
+              try {
+                await fetchJson("/api/prot/patch", {
+                  method: "PATCH",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                });
+                globalAct.setModal("");
+                router.replace(`/dashboard/voucher/${globalCtx.currentBrand}`);
+              } catch (error) {
+                console.log("error", error);
+                if (error instanceof FetchError) {
+                  globalAct.setErrorMsg(error.data.message);
+                } else {
+                  globalAct.setErrorMsg("An unexpected error happened");
+                }
+              }
+              globalAct.setIsFetch(false);
             }}
             className="px-6 h-8 bg-red-500/30 text-red-500 border-2 shadow-md hover:bg-red-500/50 border-red-300 font-semibold rounded overflow-hidden"
           >

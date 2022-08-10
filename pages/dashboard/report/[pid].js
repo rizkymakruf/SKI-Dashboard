@@ -68,8 +68,8 @@ const Report = (props) => {
   const [totalRows, setTotalRows] = useState(0);
   const [perPage, setPerPage] = useState(10);
   const router = useRouter();
-  const [newBody, setNewBody] = useState({});
   const [report, setReport] = useState(false);
+  let newBody;
 
   useEffect(() => {
     globalAct.setAdminMode("outlet");
@@ -81,27 +81,35 @@ const Report = (props) => {
     globalAct.setOutletPict(props.outletPict);
   }, []);
 
-  useEffect(() => {}, [newBody]);
-
   const handlePageChange = useCallback((page) => {
-    setNewBody({ ...newBody, index: (page - 1) * perPage });
-    fetchData();
+    console.log(newBody);
+    // setNewBody({ ...newBody, index: (page - 1) * perPage });
+    fetchData((page - 1) * perPage, perPage);
   }, []);
 
   const handlePerRowsChange = useCallback((newPerPage, page) => {
     setPerPage(newPerPage);
-    setNewBody({ ...newBody, index: 0, length: newPerPage });
-    fetchData();
+    // setNewBody({ ...newBody, index: 0, length: newPerPage });
+    fetchData(0, newPerPage);
   }, []);
 
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async (index, length) => {
     globalAct.setIsFetch(true);
     console.log("fetch", newBody);
+
+    const body = {
+      uri: "report/outlet",
+      outlet: props.adminMode,
+      start: newBody.start,
+      end: newBody.end,
+      index: index,
+      length: length,
+    };
     try {
       const res = await fetchJson("/api/prot/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newBody),
+        body: JSON.stringify(body),
       });
       console.log("report", res);
       setDataReport(res.data);
@@ -124,11 +132,41 @@ const Report = (props) => {
         return (
           <div className="p-3 border border-gray-300 rounded-md hover:shadow-md">
             <FormReportOutlet
-              currentBrand={props.adminMode}
-              setDataReport={setDataReport}
-              setNewBody={setNewBody}
-              setTotalRows={setTotalRows}
-              setReport={setReport}
+              onSubmit={async (e) => {
+                e.preventDefault();
+                globalAct.setIsFetch(true);
+                const startDate = new Date(e.currentTarget.start.value);
+                const endDate = new Date(e.currentTarget.end.value);
+                console.log(newBody);
+
+                const body = {
+                  uri: "report/outlet",
+                  outlet: props.adminMode,
+                  start: startDate / 1000,
+                  end: endDate / 1000,
+                  index: 0,
+                  length: 10,
+                };
+                newBody = body;
+                try {
+                  const res = await fetchJson("/api/prot/post", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
+                  });
+                  await setDataReport(res.data);
+                  await setTotalRows(res.total);
+                  setReport(true);
+                } catch (error) {
+                  console.log("error", error);
+                  if (error instanceof FetchError) {
+                    globalAct.setErrorMsg(error.data.message);
+                  } else {
+                    globalAct.setErrorMsg("An unexpected error happened");
+                  }
+                }
+                globalAct.setIsFetch(false);
+              }}
             />
           </div>
         );

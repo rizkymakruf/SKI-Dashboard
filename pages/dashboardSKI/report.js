@@ -77,7 +77,7 @@ const ManageReport = (props) => {
   const [totalRows, setTotalRows] = useState(0);
   const [perPage, setPerPage] = useState(10);
   const router = useRouter();
-  const [newBody, setNewBody] = useState({});
+  let newBody;
 
   useEffect(() => {
     globalAct.setFullname(props.fullName);
@@ -87,30 +87,46 @@ const ManageReport = (props) => {
   }, []);
 
   const handlePageChange = useCallback((page) => {
-    setNewBody({ ...newBody, index: (page - 1) * perPage });
-    fetchData();
+    // setNewBody({ ...newBody, index: (page - 1) * perPage });
+    fetchData((page - 1) * perPage, perPage);
   }, []);
 
   const handlePerRowsChange = useCallback((newPerPage, page) => {
     setPerPage(newPerPage);
-    setNewBody({ ...newBody, index: 0, length: newPerPage });
-    fetchData();
+    // setNewBody({ ...newBody, index: 0, length: newPerPage });
+    fetchData(0, newPerPage);
   }, []);
 
-  const fetchData = useCallback(async () => {
+  useEffect(() => {
+    console.log("halo", newBody);
+  }, [newBody]);
+
+  const fetchData = useCallback(async (index, length) => {
+    console.log("new body", newBody);
+
     globalAct.setIsFetch(true);
+    const body = {
+      uri: "report",
+      start: newBody.start,
+      end: newBody.end,
+      method: newBody.method,
+      index: index,
+      length: length,
+    };
     try {
       const res = await fetchJson("/api/prot/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newBody),
+        body: JSON.stringify(body),
       });
       setMode(newBody.method);
+      console.log(res);
       setDataReport(res.data);
       setTotalRows(res.total);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {
+        console.log("error", error.data.message);
         globalAct.setErrorMsg(error.data.message);
       } else {
         globalAct.setErrorMsg("An unexpected error happened");
@@ -128,10 +144,44 @@ const ManageReport = (props) => {
           console.log("form");
           return (
             <FormReport
-              setDataReport={setDataReport}
-              setMode={setMode}
-              setNewBody={setNewBody}
-              setTotalRows={setTotalRows}
+              onSubmit={async (e) => {
+                e.preventDefault();
+                globalAct.setIsFetch(true);
+                const startDate = new Date(e.currentTarget.start.value);
+                const endDate = new Date(e.currentTarget.end.value);
+
+                const body = {
+                  uri: "report",
+                  start: startDate / 1000,
+                  end: endDate / 1000,
+                  method: e.currentTarget.report.value,
+                  index: 0,
+                  length: 10,
+                };
+                console.log(newBody);
+                // console.log(body);
+                try {
+                  const res = await fetchJson("/api/prot/post", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
+                  });
+                  console.log(res);
+                  await setMode(body.method);
+                  await setDataReport(res.data);
+                  await setTotalRows(res.total);
+                } catch (error) {
+                  console.log("error", error);
+                  if (error instanceof FetchError) {
+                    globalAct.setErrorMsg(error.data.message);
+                  } else {
+                    globalAct.setErrorMsg("An unexpected error happened");
+                  }
+                }
+                newBody = body;
+
+                globalAct.setIsFetch(false);
+              }}
             />
           );
         }, [])}

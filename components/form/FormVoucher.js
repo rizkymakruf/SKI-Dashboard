@@ -20,31 +20,40 @@ const FormVOucher = () => {
   const onSubmit = useCallback(async (data) => {
     console.log("disi", data);
 
+    const startDate = new Date(data.start);
+    const endDate = new Date(data.end);
+
     const body = {
-      key: data.key,
       name: data.name,
-      uri: "category/update",
+      uri: "voucher/add",
+      outlet: data.outlet,
+      percentage: parseInt(data.persent),
+      min: parseInt(data.min),
+      started: startDate / 1000,
+      expired: endDate / 1000,
     };
 
-    // try {
-    //   await fetchJson("/api/prot/patch", {
-    //     method: "PATCH",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(body),
-    //   });
+    console.log("add voucher", body);
 
-    //   router.replace("/dashboardSKI/category");
-    //   globalAct.setModal("");
-    //   reset();
-    // } catch (error) {
-    //   console.log("error", error);
-    //   if (error instanceof FetchError) {
-    //     globalAct.setErrorMsg(error.data.message);
-    //   } else {
-    //     globalAct.setErrorMsg("An unexpected error happened");
-    //   }
-    // }
-    // globalAct.setIsFetch(false);
+    try {
+      await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      reset();
+      globalAct.setModal("");
+      await router.replace(`/dashboard/voucher/${globalCtx.currentBrand}`);
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+    globalAct.setIsFetch(false);
   }, []);
 
   return (
@@ -53,6 +62,12 @@ const FormVOucher = () => {
         <div className="w-full h-full select-none">
           <div className="w-full h-full p-3 backdrop-blur bg-white/30 rounded-md border border-gray-300 shadow-md">
             <div className="w-full h-auto relative mb-4">
+              <input
+                name="outlet"
+                type="hidden"
+                defaultValue={globalCtx.currentBrand}
+                {...register("outlet", { required: true })}
+              ></input>
               <p className="text-xs font-bold text-gray-700 pb-1">
                 NAMA VOUCHER
               </p>
@@ -101,8 +116,12 @@ const FormVOucher = () => {
                 placeholder="Minimum belanja"
                 {...register("min", {
                   required: {
-                    value: false,
+                    value: true,
                     message: "Minimum pembelian harus di isi!",
+                  },
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: "Format tidak sesuai!",
                   },
                 })}
                 onKeyUp={() => {
@@ -134,6 +153,10 @@ const FormVOucher = () => {
                     required: {
                       value: true,
                       message: "Jumlah discount harus di isi!",
+                    },
+                    pattern: {
+                      value: /^[0-9]*$/,
+                      message: "Format tidak sesuai!",
                     },
                   })}
                   onKeyUp={() => {
@@ -214,9 +237,7 @@ const FormVOucher = () => {
             <div className="w-full h-12 flex justify-end gap-2">
               <button
                 type="submit"
-                onClick={() => setValue("key", globalCtx.selectedData.key)}
                 className="w-full px-6 h-8 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
-                // disabled={globalCtx.isFetch ? "disabled" : ""}
               >
                 TAMBAH
               </button>
