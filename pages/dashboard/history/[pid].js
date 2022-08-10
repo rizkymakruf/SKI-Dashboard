@@ -116,25 +116,32 @@ const History = (props) => {
 
   return (
     <div className="w-full p-2 flex flex-col gap-y-2">
-      <div>
-        <FormHistory
-          setData={setData}
-          setHistory={setHistory}
-          setNewBody={setNewBody}
-          setTotalRows={setTotalRows}
-          currentBrand={props.adminMode}
-        />
-      </div>
-      {history && (
-        <div>
-          <HistoryTable
-            data={data}
-            totalRows={totalRows}
-            handlePageChange={handlePageChange}
-            handlePerRowsChange={handlePerRowsChange}
-          />
-        </div>
+      {useMemo(
+        () => (
+          <div>
+            <FormHistory
+              setData={setData}
+              setHistory={setHistory}
+              setNewBody={setNewBody}
+              setTotalRows={setTotalRows}
+              currentBrand={props.adminMode}
+            />
+          </div>
+        ),
+        [props.adminMode]
       )}
+      {useMemo(() => {
+        history && (
+          <div>
+            <HistoryTable
+              data={data}
+              totalRows={totalRows}
+              handlePageChange={handlePageChange}
+              handlePerRowsChange={handlePerRowsChange}
+            />
+          </div>
+        );
+      }, [data])}
     </div>
   );
 };

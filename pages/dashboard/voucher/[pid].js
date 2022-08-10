@@ -4,7 +4,7 @@ import VoucherTabel from "components/table/VoucherTabel";
 import AddVoucher from "components/card/AddVoucher";
 import { useRouter } from "next/router";
 import { sessionOptions } from "lib/session";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useMemo } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import {
   checkUid,
@@ -100,28 +100,38 @@ const ManageVoucher = (props) => {
 
   return (
     <div className="w-full p-4 flex flex-col gap-y-2">
-      <div className="w-full border border-gray-300 rounded-md p-4 shadow-sm hover:shadow-md hover:shadow-red-500">
-        <AddVoucher globalAct={globalAct} globalCtx={globalCtx} />
-      </div>
-      <VoucherTabel
-        voc={props.voucher}
-        search={isSearch}
-        data={dataSearch}
-        totalRows={totalRows}
-        handlePageChange={(page) => {
-          router.replace(
-            `/dashboard/voucher/${props.adminMode}?start=${
-              (page - 1) * perPage
-            }&length=${perPage}`
-          );
-        }}
-        handlePerRowsChange={(newpage) => {
-          setPerPage(newpage);
-          router.replace(
-            `/dashboard/voucher/${props.adminMode}?start=0&length=${newpage}`
-          );
-        }}
-      />
+      {useMemo(
+        () => (
+          <div className="w-full border border-gray-300 rounded-md p-4 shadow-sm hover:shadow-md hover:shadow-red-500">
+            <AddVoucher globalAct={globalAct} globalCtx={globalCtx} />
+          </div>
+        ),
+        []
+      )}
+      {useMemo(
+        () => (
+          <VoucherTabel
+            voc={props.voucher}
+            search={isSearch}
+            data={dataSearch}
+            totalRows={totalRows}
+            handlePageChange={(page) => {
+              router.replace(
+                `/dashboard/voucher/${props.adminMode}?start=${
+                  (page - 1) * perPage
+                }&length=${perPage}`
+              );
+            }}
+            handlePerRowsChange={(newpage) => {
+              setPerPage(newpage);
+              router.replace(
+                `/dashboard/voucher/${props.adminMode}?start=0&length=${newpage}`
+              );
+            }}
+          />
+        ),
+        [props.voucher, isSearch, dataSearch]
+      )}
     </div>
   );
 };

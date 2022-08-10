@@ -18,7 +18,7 @@ const FormDiscount = ({ listProduct }) => {
   const router = useRouter();
   const [newData, setNewData] = useState(listProduct);
   const [product, setProduct] = useState([]);
-
+  let a;
   useEffect(() => {
     console.log(product);
     a = product;
@@ -29,7 +29,7 @@ const FormDiscount = ({ listProduct }) => {
 
     const body = {
       key: data.key,
-      name: a,
+      name: product,
       uri: "category/update",
     };
     console.log("body", body);

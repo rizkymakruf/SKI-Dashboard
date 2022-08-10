@@ -28,6 +28,7 @@ import ProductDetail from "components/modal/ProductDetail";
 import SubCategoryUpdate from "components/modal/SubCategoryUpdate";
 import Voucher from "components/modal/Voucher";
 import DeleteVoucher from "components/modal/DeleteVoucher";
+import VoucherUpdate from "components/modal/VoucherUpdate";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
@@ -178,6 +179,16 @@ const Modal = (props) => {
         }`}
       >
         <UserUpdateModal />
+      </div>
+
+      <div
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "editVoucher"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <VoucherUpdate />
       </div>
 
       <div

@@ -5,7 +5,7 @@ import DashboardCard from "components/card/DashboardCard";
 import { useRouter } from "next/router";
 import { sessionOptions } from "lib/session";
 import { GlobalContext } from "context/global";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import {
   checkUid,
@@ -110,57 +110,71 @@ const Dashboard = (props) => {
 
   return (
     <div className="w-full p-4 flex flex-col gap-y-4">
-      <div className="w-full grid grid-cols-2 gap-4">
-        <div className="w-full border border-gray-200 rounded-md hover:shadow-md hover:shadow-red-500 px-3 py-6">
-          <p className="pb-2 text-red-500 font-semibold">Penjualan Perbulan</p>
-          <div className="bg-white w-full h-44 rounded-md flex flex-col justify-between">
-            <Line1 qty={props.qty} />
+      {useMemo(
+        () => (
+          <div className="w-full grid grid-cols-2 gap-4">
+            <div className="w-full border border-gray-200 rounded-md hover:shadow-md hover:shadow-red-500 px-3 py-6">
+              <p className="pb-2 text-red-500 font-semibold">
+                Penjualan Perbulan
+              </p>
+              <div className="bg-white w-full h-44 rounded-md flex flex-col justify-between">
+                <Line1 qty={props.qty} />
+              </div>
+            </div>
+            <div className="w-full border border-gray-200 rounded-md hover:shadow-md hover:shadow-red-500 px-3 py-6">
+              <p className="pb-2 text-red-500 font-semibold">
+                Pendapatan Perbulan
+              </p>
+              <div className="bg-white  w-full h-44 rounded-md flex flex-col justify-between">
+                <Line rp={props.rp} />
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="w-full border border-gray-200 rounded-md hover:shadow-md hover:shadow-red-500 px-3 py-6">
-          <p className="pb-2 text-red-500 font-semibold">Pendapatan Perbulan</p>
-          <div className="bg-white  w-full h-44 rounded-md flex flex-col justify-between">
-            <Line rp={props.rp} />
-          </div>
-        </div>
-      </div>
+        ),
+        [props.qty, props.rp]
+      )}
       <div>
         <hr />
       </div>
-      <div className="w-full flex flex-row items-center gap-x-4">
-        <div className="w-full">
-          <DashboardCard
-            title={"Manage Kategori"}
-            content={"Kategori"}
-            jml={props.cat}
-            routes={`/dashboard/category/${globalCtx.currentBrand}`}
-          />
-        </div>
-        <div className="w-full">
-          <DashboardCard
-            title={"Manage Produk"}
-            content={"Produk"}
-            jml={props.product}
-            routes={`/dashboard/product/${globalCtx.currentBrand}`}
-          />
-        </div>
-        <div className="w-full">
-          <DashboardCard
-            title={"Manage Order"}
-            content={"Order belum dikemas"}
-            jml={props.unpack}
-            routes={`/dashboard/order/${globalCtx.currentBrand}`}
-          />
-        </div>
-        <div className="w-full">
-          <DashboardCard
-            title={"Manage Order"}
-            content={"Order Baru"}
-            jml={props.order}
-            routes={`/dashboard/order/${globalCtx.currentBrand}`}
-          />
-        </div>
-      </div>
+      {useMemo(
+        () => (
+          <div className="w-full flex flex-row items-center gap-x-4">
+            <div className="w-full">
+              <DashboardCard
+                title={"Manage Kategori"}
+                content={"Kategori"}
+                jml={props.cat}
+                routes={`/dashboard/category/${globalCtx.currentBrand}`}
+              />
+            </div>
+            <div className="w-full">
+              <DashboardCard
+                title={"Manage Produk"}
+                content={"Produk"}
+                jml={props.product}
+                routes={`/dashboard/product/${globalCtx.currentBrand}`}
+              />
+            </div>
+            <div className="w-full">
+              <DashboardCard
+                title={"Manage Order"}
+                content={"Order belum dikemas"}
+                jml={props.unpack}
+                routes={`/dashboard/order/${globalCtx.currentBrand}`}
+              />
+            </div>
+            <div className="w-full">
+              <DashboardCard
+                title={"Manage Order"}
+                content={"Order Baru"}
+                jml={props.order}
+                routes={`/dashboard/order/${globalCtx.currentBrand}`}
+              />
+            </div>
+          </div>
+        ),
+        [globalCtx.currentBrand]
+      )}
       <div className="w-full flex flex-row items-center gap-x-4">
         <div>
           <hr />

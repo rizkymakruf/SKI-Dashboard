@@ -87,7 +87,18 @@ const VoucherTable = ({
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button
-            onClick={() => alert("update")}
+            onClick={() => {
+              globalAct.setModal("editVoucher");
+              globalAct.setSelectedData({
+                ...globalCtx.selectedData,
+                key: a.key,
+                name: a.name,
+                percentage: a.percentage,
+                min: a.min,
+                started: a.started,
+                expired: a.expired,
+              });
+            }}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-200 hover:before:content-['Edit'] border border-blue-300"
             }

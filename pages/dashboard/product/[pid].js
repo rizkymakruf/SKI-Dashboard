@@ -109,12 +109,17 @@ const ManageProduct = (props) => {
   }, [globalCtx]);
   return (
     <div className="w-full p-4 flex flex-col gap-y-4">
-      <div className="w-full border border-gray-300 rounded-md p-4 shadow-sm hover:shadow-md hover:shadow-red-500">
-        <AddProduct globalAct={globalAct} globalCtx={globalCtx} />
-      </div>
+      {useMemo(
+        () => (
+          <div className="w-full border border-gray-300 rounded-md p-4 shadow-sm hover:shadow-md hover:shadow-red-500">
+            <AddProduct globalAct={globalAct} globalCtx={globalCtx} />
+          </div>
+        ),
+        []
+      )}
       <div>
         {useMemo(() => {
-          console.log("searchuser");
+          console.log("searchproduct");
           return (
             <div className="w-full p-4 border border-gray-200 rounded-md shadow-sm hover:shadow-md hover:shadow-red-500">
               <SearchProductOutlet
@@ -150,7 +155,7 @@ const ManageProduct = (props) => {
               }}
             />
           );
-        }, [dataProduct, isSearch])}
+        }, [dataProduct, isSearch, dataSearch])}
       </div>
     </div>
   );

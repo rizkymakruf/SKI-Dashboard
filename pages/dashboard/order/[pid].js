@@ -4,7 +4,7 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import Filter from "components/card/Filter";
 import { useRouter } from "next/router";
 import { sessionOptions } from "lib/session";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useMemo } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import {
   checkUid,
@@ -128,26 +128,36 @@ const ManageOrder = (props) => {
 
   return (
     <div className="w-full p-4 flex flex-col gap-y-2">
-      <Filter />
-      <OrderTable
-        data={props.dataOrder}
-        totalRows={totalRows}
-        handlePageChange={(page) => {
-          router.replace(
-            `/dashboard/order/${props.adminMode}?type=${
-              router.query?.type !== undefined ? router.query?.type : "all"
-            }&start=${(page - 1) * perPage}&length=${perPage}`
-          );
-        }}
-        handlePerRowsChange={(newpage) => {
-          setPerPage(newpage);
-          router.replace(
-            `/dashboard/order/${props.adminMode}?type=${
-              router.query?.type !== undefined ? router.query?.type : "all"
-            }&start=0&length=${newpage}`
-          );
-        }}
-      />
+      {useMemo(
+        () => (
+          <Filter />
+        ),
+        []
+      )}
+      {useMemo(
+        () => (
+          <OrderTable
+            data={props.dataOrder}
+            totalRows={totalRows}
+            handlePageChange={(page) => {
+              router.replace(
+                `/dashboard/order/${props.adminMode}?type=${
+                  router.query?.type !== undefined ? router.query?.type : "all"
+                }&start=${(page - 1) * perPage}&length=${perPage}`
+              );
+            }}
+            handlePerRowsChange={(newpage) => {
+              setPerPage(newpage);
+              router.replace(
+                `/dashboard/order/${props.adminMode}?type=${
+                  router.query?.type !== undefined ? router.query?.type : "all"
+                }&start=0&length=${newpage}`
+              );
+            }}
+          />
+        ),
+        [props.dataOrder]
+      )}
     </div>
   );
 };

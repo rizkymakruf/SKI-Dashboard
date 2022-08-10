@@ -48,7 +48,7 @@ const OrderTable = ({
       cell: (a) => (
         <div className="w-full h-full py-1 flex justify-center flex-row gap-1 items-center">
           <p
-            className={`text-xs font-bold px-2 shadow-md py-1 rounded-xl ${
+            className={`text-xs font-bold px-2 shadow-md py-1 rounded-xl uppercase ${
               a.status === "canceled"
                 ? "bg-red-500/30 text-red-500"
                 : a.status == "done" && "bg-green-500/30 text-green-500"

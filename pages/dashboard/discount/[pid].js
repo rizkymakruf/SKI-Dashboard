@@ -1,9 +1,14 @@
 import { getLayout } from "components/layout/Navbar";
 import { useRouter } from "next/router";
 import { sessionOptions } from "lib/session";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { withIronSessionSsr } from "iron-session/next";
-import { checkUid, findOutlet } from "lib/arangoDb";
+import {
+  checkUid,
+  findOutlet,
+  getListProduct,
+  getOutletByShortname,
+} from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
 import { GlobalContext } from "context/global";
 import DiscountTable from "components/table/Discount";
@@ -51,12 +56,16 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     return redirect("/");
   }
 
+  const keyOutlet = await getOutletByShortname(query.pid);
+  const listProduct = await getListProduct(keyOutlet[0].key);
+
   return retObject({
     isLogin: true,
     fullName: checkUids[0].fullname,
     adminMode: outlet.length > 0 ? outlet[0]?.shortname : query.pid,
     ski: checkUids[0].outlet !== "" ? false : true,
     outletPict: "/img/ski.png",
+    listProduct: listProduct,
   });
 },
 sessionOptions);
@@ -81,8 +90,18 @@ const ManageVoucher = (props) => {
 
   return (
     <div className="w-full p-4 flex flex-col gap-y-2">
-      <FormDiscount />
-      <DiscountTable />
+      {useMemo(
+        () => (
+          <FormDiscount listProduct={props.listProduct} />
+        ),
+        []
+      )}
+      {useMemo(
+        () => (
+          <DiscountTable />
+        ),
+        []
+      )}
     </div>
   );
 };

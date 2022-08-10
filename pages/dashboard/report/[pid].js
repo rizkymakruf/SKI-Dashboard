@@ -171,16 +171,18 @@ const Report = (props) => {
           </div>
         );
       }, [])}
-      {report && (
-        <div>
-          <ViewReportByProductOutlet
-            data={dataReport}
-            totalRows={totalRows}
-            handlePageChange={handlePageChange}
-            handlePerRowsChange={handlePerRowsChange}
-          />
-        </div>
-      )}
+      {useMemo(() => {
+        report && (
+          <div>
+            <ViewReportByProductOutlet
+              data={dataReport}
+              totalRows={totalRows}
+              handlePageChange={handlePageChange}
+              handlePerRowsChange={handlePerRowsChange}
+            />
+          </div>
+        );
+      }, [dataReport])}
     </div>
   );
 };

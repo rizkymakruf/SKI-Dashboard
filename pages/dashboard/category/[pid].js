@@ -6,7 +6,7 @@ import SearchSubCategory from "components/search/SubCategory";
 import FormSubCategory from "components/form/FormSubCategory";
 import { useRouter } from "next/router";
 import { sessionOptions } from "lib/session";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useMemo } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import {
   checkUid,
@@ -104,33 +104,51 @@ const ManageCategory = (props) => {
 
   return (
     <div className="w-full p-4 flex flex-col gap-y-4">
-      <div>
-        <FormSubCategory maincategory={props.mainCategory} />
-      </div>
-      <div>
-        <SearchSubCategory setIsSearch={setIsSearch} setData={setDataSearch} />
-      </div>
-      <div>
-        <SubCategoryTable
-          cat={props.subCategory}
-          search={isSearch}
-          data={dataSearch}
-          totalRows={totalRows}
-          handlePageChange={(page) => {
-            router.replace(
-              `/dashboard/category/${props.adminMode}?start=${
-                (page - 1) * perPage
-              }&length=${perPage}`
-            );
-          }}
-          handlePerRowsChange={(newpage) => {
-            setPerPage(newpage);
-            router.replace(
-              `/dashboard/category/${props.adminMode}?start=0&length=${newpage}`
-            );
-          }}
-        />
-      </div>
+      {useMemo(
+        () => (
+          <div>
+            <FormSubCategory maincategory={props.mainCategory} />
+          </div>
+        ),
+        [props.mainCategory]
+      )}
+      {useMemo(
+        () => (
+          <div>
+            <SearchSubCategory
+              setIsSearch={setIsSearch}
+              setData={setDataSearch}
+            />
+          </div>
+        ),
+        []
+      )}
+      {useMemo(
+        () => (
+          <div>
+            <SubCategoryTable
+              cat={props.subCategory}
+              search={isSearch}
+              data={dataSearch}
+              totalRows={totalRows}
+              handlePageChange={(page) => {
+                router.replace(
+                  `/dashboard/category/${props.adminMode}?start=${
+                    (page - 1) * perPage
+                  }&length=${perPage}`
+                );
+              }}
+              handlePerRowsChange={(newpage) => {
+                setPerPage(newpage);
+                router.replace(
+                  `/dashboard/category/${props.adminMode}?start=0&length=${newpage}`
+                );
+              }}
+            />
+          </div>
+        ),
+        [props.subCategory, isSearch, dataSearch]
+      )}
     </div>
   );
 };
