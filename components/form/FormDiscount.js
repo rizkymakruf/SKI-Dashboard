@@ -29,7 +29,7 @@ const FormDiscount = ({ listProduct }) => {
 
     const body = {
       key: data.key,
-      name: product,
+      name: a,
       uri: "category/update",
     };
     console.log("body", body);
