@@ -17,19 +17,13 @@ const FormDiscount = ({ listProduct }) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
   const [newData, setNewData] = useState(listProduct);
-  const [product, setProduct] = useState([]);
-  let a;
-  useEffect(() => {
-    console.log(product);
-    a = product;
-  }, [product]);
 
   const onSubmit = useCallback(async (data) => {
     console.log("disi", data);
 
     const body = {
       key: data.key,
-      name: a,
+      name: data.product,
       uri: "category/update",
     };
     console.log("body", body);
@@ -132,12 +126,10 @@ const FormDiscount = ({ listProduct }) => {
                   {newData.map((x) => (
                     <label className="flex">
                       <input
+                        {...register("product")}
                         value={x.key}
                         type="checkbox"
-                        onClick={(e) =>
-                          // a.push(e.currentTarget.value)
-                          setProduct([...product, e.currentTarget.value])
-                        }
+                        name="product"
                         className="focus:ring-0 mt-1"
                       />
                       <span className="pl-1">{x.name}</span>
