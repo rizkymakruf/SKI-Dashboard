@@ -4,7 +4,7 @@ import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-const FormDiscount = ({ listProduct }) => {
+const FormDiscount = ({ listProduct, currentBrand }) => {
   const {
     reset,
     trigger,
@@ -19,13 +19,18 @@ const FormDiscount = ({ listProduct }) => {
   const [newData, setNewData] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState([]);
 
+  useEffect(() => {
+    console.log("selected product", selectedProduct);
+  }, [selectedProduct]);
+
   const onSubmit = useCallback(async (data) => {
     console.log("disi", data);
 
     const body = {
-      key: data.key,
-      name: data.product,
-      uri: "category/update",
+      outlet: currentBrand,
+      percentage: data.persent,
+      product: data.product,
+      uri: "discount/add",
     };
     console.log("body", body);
 
@@ -187,6 +192,7 @@ const FormDiscount = ({ listProduct }) => {
                           value={x.key}
                           type="checkbox"
                           name="product"
+                          checked={true}
                           className="focus:ring-0 mt-1 hidden"
                         />
                         <span className="pl-1 pr-8">{x.name}</span>

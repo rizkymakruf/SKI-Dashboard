@@ -99,7 +99,10 @@ const ManageVoucher = (props) => {
     <div className="w-full p-4 flex flex-col gap-y-2">
       {useMemo(
         () => (
-          <FormDiscount listProduct={props.listProduct} />
+          <FormDiscount
+            listProduct={props.listProduct}
+            currentBrand={props.adminMode}
+          />
         ),
         []
       )}
