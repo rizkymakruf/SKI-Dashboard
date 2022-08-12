@@ -24,28 +24,32 @@ const FormDiscount = ({ currentBrand }) => {
 
     const body = {
       outlet: currentBrand,
-      percentage: data.persent,
-      product: data.product,
+      percentage: parseInt(data.persent),
+      product:
+        data.product.length > 1
+          ? data.product
+          : data.product !== "" && [data.product],
       uri: "discount/add",
     };
+    console.log(body);
 
-    try {
-      await fetchJson("/api/prot/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+    // try {
+    //   await fetchJson("/api/prot/post", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(body),
+    //   });
 
-      router.replace(`/dashboard/discount/${currentBrand}`);
-      reset();
-    } catch (error) {
-      console.log("error", error);
-      if (error instanceof FetchError) {
-        globalAct.setErrorMsg(error.data.message);
-      } else {
-        globalAct.setErrorMsg("An unexpected error happened");
-      }
-    }
+    //   router.replace(`/dashboard/discount/${currentBrand}`);
+    //   reset();
+    // } catch (error) {
+    //   console.log("error", error);
+    //   if (error instanceof FetchError) {
+    //     globalAct.setErrorMsg(error.data.message);
+    //   } else {
+    //     globalAct.setErrorMsg("An unexpected error happened");
+    //   }
+    // }
     globalAct.setIsFetch(false);
   }, []);
 
