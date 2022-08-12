@@ -38,7 +38,7 @@ const DeleteVoucherModal = (props) => {
                 key: globalCtx.selectedData.key,
               };
 
-              console.log("delete product", body);
+              console.log("delete voucher", body);
 
               try {
                 await fetchJson("/api/prot/patch", {

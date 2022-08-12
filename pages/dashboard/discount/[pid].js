@@ -6,7 +6,8 @@ import { withIronSessionSsr } from "iron-session/next";
 import {
   checkUid,
   findOutlet,
-  getListProduct,
+  getListDiscount,
+  getTotDiscount,
   getOutletByShortname,
 } from "lib/arangoDb";
 import { redirect, retObject, checkerToken } from "lib/listFunct";
@@ -57,7 +58,12 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   }
 
   const keyOutlet = await getOutletByShortname(query.pid);
-  const listProduct = await getListProduct(keyOutlet[0].key);
+  const discount = await getListDiscount(
+    keyOutlet[0].key,
+    query.start ? parseInt(query.start) : 0,
+    query.length ? parseInt(query.length) : 10
+  );
+  const totalDiscount = await getTotDiscount(keyOutlet[0].key);
 
   return retObject({
     isLogin: true,
@@ -65,7 +71,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     adminMode: outlet.length > 0 ? outlet[0]?.shortname : query.pid,
     ski: checkUids[0].outlet !== "" ? false : true,
     outletPict: "/img/ski.png",
-    listProduct: listProduct,
+    discount: discount,
+    totalDiscount: totalDiscount[0].total,
   });
 },
 sessionOptions);
@@ -98,9 +105,27 @@ const ManageVoucher = (props) => {
       )}
       {useMemo(
         () => (
-          <DiscountTable />
+          <DiscountTable
+            disc={props.discount}
+            // search={isSearch}
+            // data={dataSearch}
+            // totalRows={totalRows}
+            // handlePageChange={(page) => {
+            //   router.replace(
+            //     `/dashboard/discount/${props.adminMode}?start=${
+            //       (page - 1) * perPage
+            //     }&length=${perPage}`
+            //   );
+            // }}
+            // handlePerRowsChange={(newpage) => {
+            //   setPerPage(newpage);
+            //   router.replace(
+            //     `/dashboard/discount/${props.adminMode}?start=0&length=${newpage}`
+            //   );
+            // }}
+          />
         ),
-        []
+        [props.discount]
       )}
     </div>
   );

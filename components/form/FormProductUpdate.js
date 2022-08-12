@@ -53,10 +53,10 @@ const FormProductUpdate = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
 
-  // useEffect(() => {
-  //   // setImageFile(globalCtx.selectedData?.pict);
-  //   reset();
-  // }, [globalCtx.selectedData]);
+  useEffect(() => {
+    // setImageFile(globalCtx.selectedData?.pict);
+    reset();
+  }, [globalCtx.selectedData]);
 
   // console.log("sub", globalCtx.listSubCategory);
   // console.log("shorname", globalCtx.currentBrand);

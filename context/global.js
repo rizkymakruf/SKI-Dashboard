@@ -23,6 +23,7 @@ export const GlobalProvider = ({ children }) => {
   const [listCategory, setListCategory] = useState([]);
   const [listSubCategory, setListSubCategory] = useState([]);
   const [listVoucher, setListVoucher] = useState([]);
+  const [listDiscount, setListDiscount] = useState([]);
   const [detailOrder, setDetailOrder] = useState({
     created_at: 0,
     detail_order: [],
@@ -56,6 +57,7 @@ export const GlobalProvider = ({ children }) => {
       listSubCategory,
       detailOrder,
       listVoucher,
+      listDiscount,
     },
     globalAct: {
       setModal,
@@ -76,6 +78,7 @@ export const GlobalProvider = ({ children }) => {
       setListSubCategory,
       setDetailOrder,
       setListVoucher,
+      setListDiscount,
     },
   };
 

@@ -102,6 +102,10 @@ const ManageCategory = (props) => {
     globalAct.setListCategory(props.mainCategory);
   }, []);
 
+  useEffect(() => {
+    console.log("current brand", globalCtx.currentBrand);
+  }, [globalCtx.currentBrand]);
+
   return (
     <div className="w-full p-4 flex flex-col gap-y-4">
       {useMemo(
@@ -131,6 +135,7 @@ const ManageCategory = (props) => {
               search={isSearch}
               data={dataSearch}
               totalRows={totalRows}
+              currentBrand={props.adminMode}
               handlePageChange={(page) => {
                 router.replace(
                   `/dashboard/category/${props.adminMode}?start=${

@@ -1,9 +1,7 @@
 import formatRupiah from "components/FunctionRupiah";
 import { GlobalContext } from "context/global";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { useContext, useState, memo } from "react";
-import { fill } from "tailwindcss/defaulttheme";
 
 const DetailProduct = (props) => {
   // const { globalCtx, globalAct } = useContext(GlobalContext);
@@ -14,12 +12,12 @@ const DetailProduct = (props) => {
   console.log("detail product", props.globalCtx.selectedData);
   return (
     <>
-      <div className="w-full flex items-center p-5">
-        <div className="w-36 h-full flex-col flex items-center">
+      <div className="w-full flex items-center p-5 gap-x-4 mx-4">
+        <div className="w-40 h-full flex-col flex items-center">
           {props.globalCtx.selectedData?.pict === "" ? (
-            <div className="w-32 h-32 rounded-full bg-slate-400 mb-2 relative"></div>
+            <div className="bg-slate-400 mb-2 relative"></div>
           ) : (
-            <div className="w-32 h-32 mb-2 relative">
+            <div className="w-52 h-52 mb-2 relative bg-red-400 rounded-md">
               <Image
                 src={
                   props.globalCtx.selectedData?.pict !== ""
@@ -31,13 +29,11 @@ const DetailProduct = (props) => {
               />
             </div>
           )}
-          {/* <p>{props.globalCtx.selectedData.username}</p> */}
-          {/* <p>Nama Product</p> */}
         </div>
-        <div className="ml-4">
+        <div className="ml-10">
           <div className="space-y-2">
             <div className="flex">
-              <p className="w-32 text-md font-semibold text-red-500">
+              <p className="w-44 text-md font-semibold text-red-500">
                 Nama Produk
               </p>
               <p className={"w-4"}>:</p>
@@ -46,7 +42,7 @@ const DetailProduct = (props) => {
               </p>
             </div>
             <div className="flex">
-              <p className="w-32 text-md font-semibold text-red-500">
+              <p className="w-44 text-md font-semibold text-red-500">
                 Sub Kategori
               </p>
               <p className={"w-4"}>:</p>
@@ -55,7 +51,7 @@ const DetailProduct = (props) => {
               </p>
             </div>
             <div className="flex">
-              <p className="w-32 text-md font-semibold text-red-500">Price</p>
+              <p className="w-44 text-md font-semibold text-red-500">Price</p>
               <p className={"w-4"}>:</p>
               <p className="text-md font-semibold text-gray-500 w-5/6">
                 {formatRupiah(
@@ -67,21 +63,21 @@ const DetailProduct = (props) => {
               </p>
             </div>
             <div className="flex">
-              <p className="w-32 text-md font-semibold text-red-500">Weight</p>
+              <p className="w-44 text-md font-semibold text-red-500">Weight</p>
               <p className={"w-4"}>:</p>
               <p className="text-md font-semibold text-gray-500 w-5/6">
                 {props.globalCtx.selectedData.weight} gr
               </p>
             </div>
             <div className="flex">
-              <p className="w-32 text-md font-semibold text-red-500">Stock</p>
+              <p className="w-44 text-md font-semibold text-red-500">Stock</p>
               <p className={"w-4"}>:</p>
               <p className="text-md font-semibold text-gray-500 w-5/6">
                 {props.globalCtx.selectedData.stock} items
               </p>
             </div>
             <div className="flex">
-              <p className="w-32 text-md font-semibold text-red-500">
+              <p className="w-44 text-md font-semibold text-red-500">
                 Description
               </p>
               <p className={"w-4"}>:</p>
@@ -90,7 +86,7 @@ const DetailProduct = (props) => {
               </p>
             </div>
             <div className="flex">
-              <p className="w-32 text-md font-semibold text-red-500">
+              <p className="w-44 text-md font-semibold text-red-500">
                 Info lengkap
               </p>
               <p className={"w-4"}>:</p>

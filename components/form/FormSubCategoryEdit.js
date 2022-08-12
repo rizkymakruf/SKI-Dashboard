@@ -16,7 +16,8 @@ const FormEditSubCategory = () => {
 
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
-
+  let currentBrand = globalCtx.currentBrand;
+  let listCategory = globalCtx.listCategory;
   const onSubmit = useCallback(async (data) => {
     const body = {
       key: data.key,
@@ -24,6 +25,7 @@ const FormEditSubCategory = () => {
       category: data.mainCategory,
       uri: "subcategory/update",
     };
+    console.log(body);
 
     try {
       await fetchJson("/api/prot/put", {
@@ -32,9 +34,9 @@ const FormEditSubCategory = () => {
         body: JSON.stringify(body),
       });
 
-      router.replace(`/dashboard/category/${globalCtx.currentBrand}`);
       globalAct.setModal("");
       reset();
+      router.replace(`/dashboard/category/${currentBrand}`);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {
@@ -78,10 +80,10 @@ const FormEditSubCategory = () => {
                 }}
               >
                 <option>-- Select Category --</option>
-                {globalCtx.listCategory?.map((x) => {
+                {listCategory?.map((x) => {
                   return (
                     <option
-                      value={x.key}
+                      defaultValue={x.key}
                       selected={globalCtx.selectedData?.category == x.key}
                     >
                       {x.name}

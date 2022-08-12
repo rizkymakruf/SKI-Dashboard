@@ -29,6 +29,8 @@ import SubCategoryUpdate from "components/modal/SubCategoryUpdate";
 import Voucher from "components/modal/Voucher";
 import DeleteVoucher from "components/modal/DeleteVoucher";
 import VoucherUpdate from "components/modal/VoucherUpdate";
+import DiscountDetail from "components/modal/DiscountDetail";
+import DeleteDiscount from "components/modal/DeleteDiscount";
 
 const Modal = (props) => {
   const { modal } = props.globalCtx;
@@ -210,6 +212,15 @@ const Modal = (props) => {
       >
         <UserDetailModal />
       </div>
+      <div
+        className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
+          modal === "detailDiscount"
+            ? "-translate-y-1 bottom-0"
+            : "translate-y-full overflow-hidden bottom-0"
+        }`}
+      >
+        <DiscountDetail />
+      </div>
 
       <div
         className={`duration-700 p-5 fixed z-50 rounded-xl flex items-center justify-center w-full ${
@@ -275,6 +286,13 @@ const Modal = (props) => {
         } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
       >
         <DeleteBrandModal />
+      </div>
+      <div
+        className={`${
+          modal === "deleteDiscount" ? "translate-x-0" : "-translate-x-full"
+        } z-50 fixed bottom-0 duration-500 w-full h-auto p-4`}
+      >
+        <DeleteDiscount />
       </div>
       <div
         className={`${

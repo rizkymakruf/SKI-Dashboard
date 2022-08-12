@@ -24,6 +24,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
+    ],
+    "/dashboard/product/[pid]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboard/product/[pid].js"
     ]
   },
   "ampFirstPages": []

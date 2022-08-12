@@ -16,7 +16,8 @@ const FormDiscount = ({ listProduct }) => {
 
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
-  const [newData, setNewData] = useState(listProduct);
+  const [newData, setNewData] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState([]);
 
   const onSubmit = useCallback(async (data) => {
     console.log("disi", data);
@@ -65,7 +66,6 @@ const FormDiscount = ({ listProduct }) => {
                   uri: "product/searchAll",
                 };
                 console.log(find);
-                const check = e.currentTarget.name.value !== "" ? true : false;
                 try {
                   const res = await fetchJson("/api/prot/post", {
                     method: "POST",
@@ -73,11 +73,7 @@ const FormDiscount = ({ listProduct }) => {
                     body: JSON.stringify(find),
                   });
                   console.log("search", res);
-                  if (!check) {
-                    setNewData(listProduct);
-                  } else {
-                    setNewData(res.data);
-                  }
+                  setNewData(res.data);
                 } catch (error) {
                   console.log("error", error);
                   if (error instanceof FetchError) {
@@ -118,23 +114,85 @@ const FormDiscount = ({ listProduct }) => {
               </div>
             </form>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="w-full h-auto relative my-2">
+              {/* <div className="w-full h-auto relative my-2">
                 <p className="text-sm font-bold text-gray-700">PILIH PRODUK</p>
-              </div>
-              <div className="w-full h-auto relative mb-4 p-1">
-                <div className="grid grid-cols-3 gap-3">
-                  {newData.map((x) => (
-                    <label className="flex">
-                      <input
-                        {...register("product")}
-                        value={x.key}
-                        type="checkbox"
-                        name="product"
-                        className="focus:ring-0 mt-1"
-                      />
-                      <span className="pl-1">{x.name}</span>
-                    </label>
-                  ))}
+              </div> */}
+              <div className="w-full h-auto relative mb-4 p-3">
+                <div className="flex">
+                  {newData.length > 0 ? (
+                    <div className=" w-2/3">
+                      <div className="mb-1 font-semibold">Daftar Produk</div>
+                      <div className="grid grid-cols-2 gap-3">
+                        {newData.map((x) => (
+                          <label className="flex">
+                            <input
+                              value={x.key}
+                              type="checkbox"
+                              name="product"
+                              checked={selectedProduct.indexOf(x) !== -1}
+                              onClick={() => {
+                                var array = [...selectedProduct];
+                                var index = array.indexOf(x);
+                                if (index !== -1) {
+                                  array.splice(index, 1);
+                                  setSelectedProduct(array);
+                                } else {
+                                  setSelectedProduct([...selectedProduct, x]);
+                                }
+                              }}
+                              className="focus:ring-0 mt-1"
+                            />
+                            <span className="pl-1">{x.name}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="w-2/3 flex justify-center">
+                      Cari produk untuk ditambah ke list diskon !
+                    </div>
+                  )}
+                  <div className="w-1/3 rounded-md border border-gray-300 space-y-2">
+                    <div className="mb-2 font-semibold pb-2 bg-red-500 rounded-t-md text-white p-2">
+                      Produk yang dipilih
+                    </div>
+                    {selectedProduct.map((x) => (
+                      <label className="flex pb-2 relative bg-gray-100 ">
+                        <div
+                          onClick={() => {
+                            var array = [...selectedProduct];
+                            var index = array.indexOf(x);
+                            if (index !== -1) {
+                              array.splice(index, 1);
+                              setSelectedProduct(array);
+                            }
+                          }}
+                          className="absolute -top-2 right-0  flex justify-center items-center"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 text-red-500/80"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                        <input
+                          {...register("product")}
+                          value={x.key}
+                          type="checkbox"
+                          name="product"
+                          className="focus:ring-0 mt-1 hidden"
+                        />
+                        <span className="pl-1 pr-8">{x.name}</span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
               </div>
               <p className="text-sm font-bold text-gray-700 py-2">
@@ -148,7 +206,7 @@ const FormDiscount = ({ listProduct }) => {
                     ? "focus:outline-red-500 border-2 border-red-500"
                     : null
                 }`}
-                placeholder="Nilai persent (50%)"
+                placeholder="Nilai persent e.g: 50"
                 {...register("persent", {
                   required: {
                     value: true,
