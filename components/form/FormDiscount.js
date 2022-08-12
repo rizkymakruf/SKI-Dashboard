@@ -4,7 +4,7 @@ import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-const FormDiscount = ({ listProduct, currentBrand }) => {
+const FormDiscount = ({ currentBrand }) => {
   const {
     reset,
     trigger,
@@ -19,10 +19,6 @@ const FormDiscount = ({ listProduct, currentBrand }) => {
   const [newData, setNewData] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState([]);
 
-  useEffect(() => {
-    console.log("selected product", selectedProduct);
-  }, [selectedProduct]);
-
   const onSubmit = useCallback(async (data) => {
     console.log("disi", data);
 
@@ -32,27 +28,25 @@ const FormDiscount = ({ listProduct, currentBrand }) => {
       product: data.product,
       uri: "discount/add",
     };
-    console.log("body", body);
 
-    // try {
-    //   await fetchJson("/api/prot/patch", {
-    //     method: "PATCH",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(body),
-    //   });
+    try {
+      await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
 
-    //   router.replace("/dashboardSKI/category");
-    //   globalAct.setModal("");
-    //   reset();
-    // } catch (error) {
-    //   console.log("error", error);
-    //   if (error instanceof FetchError) {
-    //     globalAct.setErrorMsg(error.data.message);
-    //   } else {
-    //     globalAct.setErrorMsg("An unexpected error happened");
-    //   }
-    // }
-    // globalAct.setIsFetch(false);
+      router.replace(`/dashboard/discount/${currentBrand}`);
+      reset();
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
+    globalAct.setIsFetch(false);
   }, []);
 
   return (
