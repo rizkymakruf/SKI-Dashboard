@@ -29,11 +29,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/dashboard/discount/[pid].js"
-    ],
-    "/dashboard/voucher/[pid]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboard/voucher/[pid].js"
     ]
   },
   "ampFirstPages": []
