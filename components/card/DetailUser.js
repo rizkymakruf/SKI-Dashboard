@@ -2,7 +2,7 @@ import { GlobalContext } from "context/global";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useContext, useState, memo } from "react";
-import { fill } from "tailwindcss/defaulttheme";
+// import { fill } from "tailwindcss/defaulttheme";
 
 const DetailUser = (props) => {
   // const { globalCtx, globalAct } = useContext(GlobalContext);
