@@ -12,12 +12,19 @@ const FormDiscount = ({ currentBrand }) => {
     setValue,
     handleSubmit,
     formState: { errors },
+    isUpdate,
+    setIsUpdate,
   } = useForm();
 
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
-  const [newData, setNewData] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState([]);
+  console.log("selected Data", globalCtx.selectedData);
+  const [newData, setNewData] = useState(
+    isUpdate ? globalCtx.selectedData?.products : []
+  );
+  const [selectedProduct, setSelectedProduct] = useState(
+    isUpdate ? globalCtx.selectedData?.products : []
+  );
 
   const onSubmit = useCallback(async (data) => {
     console.log("disi", data);
@@ -25,31 +32,29 @@ const FormDiscount = ({ currentBrand }) => {
     const body = {
       outlet: currentBrand,
       percentage: parseInt(data.persent),
-      product:
-        data.product.length > 1
-          ? data.product
-          : data.product !== "" && [data.product],
+      product: typeof data.product == "string" ? [data.product] : data.product,
       uri: "discount/add",
     };
-    console.log(body);
 
-    // try {
-    //   await fetchJson("/api/prot/post", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(body),
-    //   });
+    try {
+      await fetchJson("/api/prot/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
 
-    //   router.replace(`/dashboard/discount/${currentBrand}`);
-    //   reset();
-    // } catch (error) {
-    //   console.log("error", error);
-    //   if (error instanceof FetchError) {
-    //     globalAct.setErrorMsg(error.data.message);
-    //   } else {
-    //     globalAct.setErrorMsg("An unexpected error happened");
-    //   }
-    // }
+      reset();
+      setNewData([]);
+      setSelectedProduct([]);
+      router.replace(`/dashboard/discount/${currentBrand}`);
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
     globalAct.setIsFetch(false);
   }, []);
 
@@ -117,9 +122,6 @@ const FormDiscount = ({ currentBrand }) => {
               </div>
             </form>
             <form onSubmit={handleSubmit(onSubmit)}>
-              {/* <div className="w-full h-auto relative my-2">
-                <p className="text-sm font-bold text-gray-700">PILIH PRODUK</p>
-              </div> */}
               <div className="w-full h-auto relative mb-4 p-3">
                 <div className="flex">
                   {newData.length > 0 ? (
@@ -151,52 +153,58 @@ const FormDiscount = ({ currentBrand }) => {
                       </div>
                     </div>
                   ) : (
-                    <div className="w-2/3 flex justify-center">
+                    <div
+                      className={`${
+                        selectedProduct.length !== 0 ? "w-auto" : "w-2/3"
+                      } flex justify-center`}
+                    >
                       Cari produk untuk ditambah ke list diskon !
                     </div>
                   )}
-                  <div className="w-1/3 rounded-md border border-gray-300 space-y-2">
-                    <div className="mb-2 font-semibold pb-2 bg-red-500 rounded-t-md text-white p-2">
-                      Produk yang dipilih
-                    </div>
-                    {selectedProduct.map((x) => (
-                      <label className="flex pb-2 relative bg-gray-100 ">
-                        <div
-                          onClick={() => {
-                            var array = [...selectedProduct];
-                            var index = array.indexOf(x);
-                            if (index !== -1) {
-                              array.splice(index, 1);
-                              setSelectedProduct(array);
-                            }
-                          }}
-                          className="absolute -top-2 right-0  flex justify-center items-center"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 text-red-500/80"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
+                  {selectedProduct.length !== 0 && (
+                    <div className="w-1/3 rounded-md border border-gray-300 space-y-2">
+                      <div className="mb-2 font-semibold pb-2 bg-red-500 rounded-t-md text-white p-2">
+                        Produk yang dipilih
+                      </div>
+                      {selectedProduct.map((x) => (
+                        <label className="flex pb-2 relative bg-gray-100 ">
+                          <div
+                            onClick={() => {
+                              var array = [...selectedProduct];
+                              var index = array.indexOf(x);
+                              if (index !== -1) {
+                                array.splice(index, 1);
+                                setSelectedProduct(array);
+                              }
+                            }}
+                            className="absolute -top-2 right-0  flex justify-center items-center"
                           >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                        </div>
-                        <input
-                          {...register("product")}
-                          value={x.key}
-                          type="checkbox"
-                          name="product"
-                          checked={true}
-                          className="focus:ring-0 mt-1 hidden"
-                        />
-                        <span className="pl-1 pr-8">{x.name}</span>
-                      </label>
-                    ))}
-                  </div>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-5 w-5 text-red-500/80"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </div>
+                          <input
+                            {...register("product")}
+                            value={x.key}
+                            type="checkbox"
+                            name="product"
+                            checked={true}
+                            className="focus:ring-0 mt-1 hidden"
+                          />
+                          <span className="pl-1 pr-8">{x.name}</span>
+                        </label>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
               <p className="text-sm font-bold text-gray-700 py-2">
