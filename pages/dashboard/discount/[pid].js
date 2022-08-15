@@ -1,7 +1,7 @@
 import { getLayout } from "components/layout/Navbar";
 import { useRouter } from "next/router";
 import { sessionOptions } from "lib/session";
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import {
   checkUid,
@@ -43,6 +43,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     await req.session.save();
   }
 
+  global.atob = require("atob");
+
   const uid = JSON.parse(atob(user.access_token.split(".")[1]));
   const checkUids = await checkUid(uid.user_id);
   let outlet = [];
@@ -80,6 +82,7 @@ sessionOptions);
 const ManageVoucher = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
+  const [isUpdate, setIsUpdate] = useState(false);
 
   useEffect(() => {
     globalAct.setAdminMode("outlet");
@@ -99,7 +102,11 @@ const ManageVoucher = (props) => {
     <div className="w-full p-4 flex flex-col gap-y-2">
       {useMemo(
         () => (
-          <FormDiscount currentBrand={props.adminMode} />
+          <FormDiscount
+            currentBrand={props.adminMode}
+            isUpdate={isUpdate}
+            setIsUpdate={setIsUpdate}
+          />
         ),
         []
       )}
@@ -107,6 +114,7 @@ const ManageVoucher = (props) => {
         () => (
           <DiscountTable
             disc={props.discount}
+            setIsUpdate={setIsUpdate}
             // search={isSearch}
             // data={dataSearch}
             // totalRows={totalRows}

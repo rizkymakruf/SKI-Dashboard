@@ -38,6 +38,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
     await req.session.save();
   }
 
+  global.atob = require("atob");
+
   const uid = JSON.parse(atob(user.access_token.split(".")[1]));
   const checkUids = await checkUid(uid.user_id);
   let outlet = [];

@@ -2,9 +2,7 @@ import { useContext, useCallback, memo, useEffect } from "react";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
-const FormReportOutlet = ({
-  onSubmit,
-}) => {
+const FormReportOutlet = ({ onSubmit }) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
 
   return (
@@ -19,7 +17,7 @@ const FormReportOutlet = ({
                   name="start"
                   id="start"
                   type={"date"}
-                  className="w-full rounded-md border-2 border-orange-500/50 bg-orange-300"
+                  className="w-full rounded-md border-2"
                 ></input>
               </div>
               <div className="w-full">
@@ -28,7 +26,7 @@ const FormReportOutlet = ({
                   name="end"
                   id="end"
                   type={"date"}
-                  className="w-full rounded-md border-2 border-orange-500/50 bg-orange-300"
+                  className="w-full rounded-md border-2"
                 ></input>
               </div>
               <div className="w-full h-auto pt-2">

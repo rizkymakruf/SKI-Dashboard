@@ -15,7 +15,7 @@ const DeleteDiscountModal = (props) => {
         <div className="flex gap-1">
           <p className="text-md font-semibold">Apakah anda yakin hapus</p>
           <p className="text-md font-semibold text-red-500">
-            {globalCtx.selectedData.percentage}
+            {globalCtx.selectedData.percentage} %
           </p>
           <p className="text-md font-semibold"> dari list discount ?</p>
         </div>
@@ -34,29 +34,29 @@ const DeleteDiscountModal = (props) => {
               globalAct.setIsFetch(true);
 
               const body = {
-                uri: "voucher/status",
+                uri: "discount/delete",
                 key: globalCtx.selectedData.key,
               };
 
               console.log("delete discount", body);
 
-              // try {
-              //   await fetchJson("/api/prot/patch", {
-              //     method: "PATCH",
-              //     headers: { "Content-Type": "application/json" },
-              //     body: JSON.stringify(body),
-              //   });
-              //   globalAct.setModal("");
-              //   router.replace(`/dashboard/voucher/${globalCtx.currentBrand}`);
-              // } catch (error) {
-              //   console.log("error", error);
-              //   if (error instanceof FetchError) {
-              //     globalAct.setErrorMsg(error.data.message);
-              //   } else {
-              //     globalAct.setErrorMsg("An unexpected error happened");
-              //   }
-              // }
-              // globalAct.setIsFetch(false);
+              try {
+                await fetchJson("/api/prot/delete", {
+                  method: "DELETE",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                });
+                globalAct.setModal("");
+                router.replace(`/dashboard/discount/${globalCtx.currentBrand}`);
+              } catch (error) {
+                console.log("error", error);
+                if (error instanceof FetchError) {
+                  globalAct.setErrorMsg(error.data.message);
+                } else {
+                  globalAct.setErrorMsg("An unexpected error happened");
+                }
+              }
+              globalAct.setIsFetch(false);
             }}
             className="px-6 h-8 bg-red-500/30 text-red-500 border-2 shadow-md hover:bg-red-500/50 border-red-300 font-semibold rounded overflow-hidden"
           >

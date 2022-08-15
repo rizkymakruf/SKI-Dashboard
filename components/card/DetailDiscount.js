@@ -4,19 +4,14 @@ import Image from "next/image";
 import { useContext, useState, memo } from "react";
 
 const DetailDiscount = (props) => {
-  // const { globalCtx, globalAct } = useContext(GlobalContext);
-  // const router = useRouter();
-  // const [selectedData, setSelectedData] = useState(props.users);
-  // const { modal } = props.globalCtx;
-  // const { setModal } = props.globalAct;
-  // console.log("detail product", props.globalCtx.selectedData);
+  const { globalCtx, globalAct } = useContext(GlobalContext);
   return (
     <>
       <div className="w-full flex items-center p-5 gap-x-4 mx-4">
         <div className="w-64 h-full flex-col flex items-center">
           <div className="w-full h-32 bg-red-500 rounded-sm relative flex justify-center">
             <div className="absolute w-20 h-20 bg-yellow-400 -right-6 -top-6 rounded-full justify-center items-center flex text-white font-bold text-3xl rotate-12">
-              70%
+              {globalCtx.selectedData?.discount}%
             </div>
             <p className="text-5xl font-bold text-white absolute bottom-3">
               DISCOUNT
@@ -31,24 +26,14 @@ const DetailDiscount = (props) => {
               </p>
             </div>
             <div className="">
-              <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.name} */}- kopi 1
-              </p>
-              <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.name} */}- kopi 1
-              </p>
-              <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.name} */}- kopi 1
-              </p>
-              <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.name} */}- kopi 1
-              </p>
-              <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.name} */}- kopi 1
-              </p>
-              <p className="text-md font-semibold text-gray-500 w-5/6">
-                {/* {props.globalCtx.selectedData.name} */}- kopi 1
-              </p>
+              {globalCtx.selectedData?.products?.map((item) => (
+                <div className="flex ">
+                  <div className="w-4">-</div>
+                  <p className="text-md font-semibold text-gray-500 w-full">
+                    {item.name}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

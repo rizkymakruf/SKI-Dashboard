@@ -10,6 +10,7 @@ const DiscountTable = ({
   totalRows,
   handlePageChange,
   handlePerRowsChange,
+  setIsUpdate,
 }) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
@@ -59,9 +60,40 @@ const DiscountTable = ({
       cell: (a) => (
         <div className="flex flex-row items-center justify-center gap-x-2 w-full">
           <button
-            onClick={() => {
-              globalAct.setModal("detailDiscount");
-              // globalAct.setSelectedData(a);
+            onClick={async function handleSubmit(e) {
+              e.preventDefault();
+              globalAct.setIsFetch(true);
+
+              const body = {
+                uri: "discount/detail",
+                key: a.key,
+              };
+
+              try {
+                const res = await fetchJson("/api/prot/post", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                });
+                console.log(res.data);
+                globalAct.setSelectedData({
+                  ...globalCtx.selectedData,
+                  key: a.key,
+                  discount: a.percentage,
+                  products: res.data,
+                });
+                globalAct.setModal("detailDiscount");
+              } catch (error) {
+                console.log("error", error);
+                alert(globalCtx.errorMsg);
+                if (error instanceof FetchError) {
+                  globalAct.setErrorMsg(error.data.message);
+                } else {
+                  globalAct.setErrorMsg("An unexpected error happened");
+                }
+              }
+
+              globalAct.setIsFetch(false);
             }}
             className={
               "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-orange-500/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:before:content-['View'] border border-orange-300"
@@ -82,7 +114,41 @@ const DiscountTable = ({
             </svg>
           </button>
           <button
-            onClick={() => alert("update")}
+            onClick={async function handleSubmit(e) {
+              e.preventDefault();
+              globalAct.setIsFetch(true);
+
+              const body = {
+                uri: "discount/detail",
+                key: a.key,
+              };
+
+              try {
+                const res = await fetchJson("/api/prot/post", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                });
+                console.log(res.data);
+                globalAct.setSelectedData({
+                  ...globalCtx.selectedData,
+                  key: a.key,
+                  discount: a.percentage,
+                  products: res.data,
+                });
+                setIsUpdate(true);
+              } catch (error) {
+                console.log("error", error);
+                alert(globalCtx.errorMsg);
+                if (error instanceof FetchError) {
+                  globalAct.setErrorMsg(error.data.message);
+                } else {
+                  globalAct.setErrorMsg("An unexpected error happened");
+                }
+              }
+
+              globalAct.setIsFetch(false);
+            }}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-200 hover:before:content-['Edit'] border border-blue-300"
             }
