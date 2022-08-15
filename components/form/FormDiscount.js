@@ -4,7 +4,15 @@ import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-const FormDiscount = ({ currentBrand }) => {
+const FormDiscount = ({
+  currentBrand,
+  isUpdate,
+  setIsUpdate,
+  newData,
+  setNewData,
+  selectedProduct,
+  setSelectedProduct,
+}) => {
   const {
     reset,
     trigger,
@@ -12,19 +20,12 @@ const FormDiscount = ({ currentBrand }) => {
     setValue,
     handleSubmit,
     formState: { errors },
-    isUpdate,
-    setIsUpdate,
   } = useForm();
 
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
-  console.log("selected Data", globalCtx.selectedData);
-  const [newData, setNewData] = useState(
-    isUpdate ? globalCtx.selectedData?.products : []
-  );
-  const [selectedProduct, setSelectedProduct] = useState(
-    isUpdate ? globalCtx.selectedData?.products : []
-  );
+
+  console.log("selected product", selectedProduct);
 
   const onSubmit = useCallback(async (data) => {
     console.log("disi", data);
@@ -35,6 +36,8 @@ const FormDiscount = ({ currentBrand }) => {
       product: typeof data.product == "string" ? [data.product] : data.product,
       uri: "discount/add",
     };
+
+    console.log(body);
 
     try {
       await fetchJson("/api/prot/post", {
@@ -55,6 +58,41 @@ const FormDiscount = ({ currentBrand }) => {
         globalAct.setErrorMsg("An unexpected error happened");
       }
     }
+    globalAct.setIsFetch(false);
+  }, []);
+
+  const onUpdate = useCallback(async (data) => {
+    console.log("disi", data);
+
+    const body = {
+      key: data.key,
+      percentage: parseInt(data.persent),
+      product: typeof data.product == "string" ? [data.product] : data.product,
+      uri: "discount/update",
+    };
+
+    console.log(body);
+
+    // try {
+    //   await fetchJson("/api/prot/put", {
+    //     method: "PUT",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(body),
+    //   });
+
+    //   reset();
+    //   setNewData([]);
+    //   setSelectedProduct([]);
+    //   setIsUpdate(false);
+    //   router.replace(`/dashboard/discount/${currentBrand}`);
+    // } catch (error) {
+    //   console.log("error", error);
+    //   if (error instanceof FetchError) {
+    //     globalAct.setErrorMsg(error.data.message);
+    //   } else {
+    //     globalAct.setErrorMsg("An unexpected error happened");
+    //   }
+    // }
     globalAct.setIsFetch(false);
   }, []);
 
@@ -121,8 +159,17 @@ const FormDiscount = ({ currentBrand }) => {
                 </button>
               </div>
             </form>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+              onSubmit={
+                isUpdate ? handleSubmit(onUpdate) : handleSubmit(onSubmit)
+              }
+            >
               <div className="w-full h-auto relative mb-4 p-3">
+                <input
+                  {...register("key")}
+                  value={isUpdate ? globalCtx.selectedData.key : null}
+                  className="hidden"
+                />
                 <div className="flex">
                   {newData.length > 0 ? (
                     <div className=" w-2/3">
@@ -213,6 +260,7 @@ const FormDiscount = ({ currentBrand }) => {
               <input
                 name="persent"
                 autoComplete="off"
+                defaultValue={isUpdate ? globalCtx.selectedData.discount : null}
                 className={`rounded-md p-1 border-2  border-orange-500/50 w-full focus:outline-blue-500 ${
                   errors.persent
                     ? "focus:outline-red-500 border-2 border-red-500"
@@ -242,11 +290,11 @@ const FormDiscount = ({ currentBrand }) => {
               <div className="w-full h-12 flex justify-end gap-2">
                 <button
                   type="submit"
-                  // onClick={() => setValue("key", globalCtx.selectedData.key)}
+                  onClick={() => setValue("key", globalCtx.selectedData.key)}
                   className="w-full px-6 h-8 mt-4 bg-green-500/30 text-green-500 border-2 shadow-md hover:bg-green-500/50 border-green-300 font-semibold rounded overflow-hidden"
                   // disabled={globalCtx.isFetch ? "disabled" : ""}
                 >
-                  TAMBAH
+                  {isUpdate ? "SIMPAN" : "TAMBAH"}
                 </button>
               </div>
             </form>

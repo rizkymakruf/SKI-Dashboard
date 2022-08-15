@@ -83,6 +83,8 @@ const ManageVoucher = (props) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
   const [isUpdate, setIsUpdate] = useState(false);
+  const [newData, setNewData] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState([]);
 
   useEffect(() => {
     globalAct.setAdminMode("outlet");
@@ -106,15 +108,21 @@ const ManageVoucher = (props) => {
             currentBrand={props.adminMode}
             isUpdate={isUpdate}
             setIsUpdate={setIsUpdate}
+            newData={newData}
+            setNewData={setNewData}
+            selectedProduct={selectedProduct}
+            setSelectedProduct={setSelectedProduct}
           />
         ),
-        []
+        [isUpdate, props.adminMode, newData, selectedProduct]
       )}
       {useMemo(
         () => (
           <DiscountTable
             disc={props.discount}
             setIsUpdate={setIsUpdate}
+            setNewData={setNewData}
+            setSelectedProduct={setSelectedProduct}
             // search={isSearch}
             // data={dataSearch}
             // totalRows={totalRows}

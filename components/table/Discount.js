@@ -11,6 +11,8 @@ const DiscountTable = ({
   handlePageChange,
   handlePerRowsChange,
   setIsUpdate,
+  setNewData,
+  setSelectedProduct,
 }) => {
   const { globalCtx, globalAct } = useContext(GlobalContext);
   const router = useRouter();
@@ -136,7 +138,8 @@ const DiscountTable = ({
                   discount: a.percentage,
                   products: res.data,
                 });
-                setIsUpdate(true);
+                setNewData(res.data);
+                setSelectedProduct(res.data);
               } catch (error) {
                 console.log("error", error);
                 alert(globalCtx.errorMsg);
@@ -147,6 +150,7 @@ const DiscountTable = ({
                 }
               }
 
+              setIsUpdate(true);
               globalAct.setIsFetch(false);
             }}
             className={

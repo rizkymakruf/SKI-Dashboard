@@ -30,10 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/dashboard/discount/[pid].js"
     ],
-    "/dashboard/product/[pid]": [
+    "/dashboard/outlet/[pid]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/product/[pid].js"
+      "static/chunks/pages/dashboard/outlet/[pid].js"
     ]
   },
   "ampFirstPages": []
