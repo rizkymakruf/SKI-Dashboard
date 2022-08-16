@@ -25,15 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboard/outlet/[pid]": [
+    "/dashboard/discount/[pid]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/outlet/[pid].js"
+      "static/chunks/pages/dashboard/discount/[pid].js"
     ],
-    "/dashboard/product/[pid]": [
+    "/dashboardSKI": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/product/[pid].js"
+      "static/chunks/pages/dashboardSKI.js"
     ]
   },
   "ampFirstPages": []

@@ -10,6 +10,7 @@ export const GlobalProvider = ({ children }) => {
   const [fullname, setFullname] = useState("");
   const [selectedData, setSelectedData] = useState({
     pict: "/img/user-default.png",
+    products: [],
   });
   const [listOutlet, setListOutlet] = useState([]);
   const [listUser, setListUser] = useState([]);

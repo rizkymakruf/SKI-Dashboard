@@ -121,6 +121,10 @@ const DashboardCardSKI = (props) => {
               onClick={() => {
                 setModal("editOtlet");
                 props.globalAct.setSelectedData(props.otlet);
+                props.globalAct.setSelectedData({
+                  ...globalCtx.selectedData,
+                  products: [],
+                });
               }}
               className={
                 "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-blue/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:after:content-['Update'] "
