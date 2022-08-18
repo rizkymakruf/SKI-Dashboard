@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useContext, memo, useCallback, useState, useEffect } from "react";
+import { useContext, memo, useCallback, useState } from "react";
 import { GlobalContext } from "context/global";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
@@ -26,6 +26,7 @@ const FormDiscount = ({
   const router = useRouter();
 
   console.log("selected product", selectedProduct);
+  console.log("new product", newData);
 
   const onSubmit = useCallback(async (data) => {
     console.log("disi", data);
@@ -73,26 +74,26 @@ const FormDiscount = ({
 
     console.log(body);
 
-    // try {
-    //   await fetchJson("/api/prot/put", {
-    //     method: "PUT",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(body),
-    //   });
+    try {
+      await fetchJson("/api/prot/put", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
 
-    //   reset();
-    //   setNewData([]);
-    //   setSelectedProduct([]);
-    //   setIsUpdate(false);
-    //   router.replace(`/dashboard/discount/${currentBrand}`);
-    // } catch (error) {
-    //   console.log("error", error);
-    //   if (error instanceof FetchError) {
-    //     globalAct.setErrorMsg(error.data.message);
-    //   } else {
-    //     globalAct.setErrorMsg("An unexpected error happened");
-    //   }
-    // }
+      reset();
+      setNewData([]);
+      setSelectedProduct([]);
+      setIsUpdate(false);
+      router.replace(`/dashboard/discount/${currentBrand}`);
+    } catch (error) {
+      console.log("error", error);
+      if (error instanceof FetchError) {
+        globalAct.setErrorMsg(error.data.message);
+      } else {
+        globalAct.setErrorMsg("An unexpected error happened");
+      }
+    }
     globalAct.setIsFetch(false);
   }, []);
 
@@ -107,6 +108,7 @@ const FormDiscount = ({
                 globalAct.setIsFetch(true);
 
                 const find = {
+                  key: globalCtx.selectedData.key,
                   name: "%" + e.currentTarget.name.value + "%",
                   outlet: globalCtx.currentBrand,
                   uri: "product/searchAll",
@@ -181,15 +183,24 @@ const FormDiscount = ({
                               value={x.key}
                               type="checkbox"
                               name="product"
-                              checked={selectedProduct.indexOf(x) !== -1}
-                              onClick={() => {
+                              checked={
+                                selectedProduct.findIndex(
+                                  (a) => a.key === x.key
+                                ) !== -1
+                              }
+                              onClick={async () => {
                                 var array = [...selectedProduct];
-                                var index = array.indexOf(x);
+                                var index = selectedProduct.findIndex(
+                                  (a) => a.key === x.key
+                                );
                                 if (index !== -1) {
                                   array.splice(index, 1);
-                                  setSelectedProduct(array);
+                                  await setSelectedProduct(array);
                                 } else {
-                                  setSelectedProduct([...selectedProduct, x]);
+                                  await setSelectedProduct([
+                                    ...selectedProduct,
+                                    x,
+                                  ]);
                                 }
                               }}
                               className="focus:ring-0 mt-1"
@@ -216,12 +227,12 @@ const FormDiscount = ({
                       {selectedProduct.map((x) => (
                         <label className="flex pb-2 relative bg-gray-100 ">
                           <div
-                            onClick={() => {
+                            onClick={async () => {
                               var array = [...selectedProduct];
                               var index = array.indexOf(x);
                               if (index !== -1) {
                                 array.splice(index, 1);
-                                setSelectedProduct(array);
+                                await setSelectedProduct(array);
                               }
                             }}
                             className="absolute -top-2 right-0  flex justify-center items-center"

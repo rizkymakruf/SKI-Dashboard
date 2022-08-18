@@ -8,11 +8,8 @@ import { GlobalContext } from "context/global";
 const DashboardCardSKI = (props) => {
   const { globalAct, globalCtx } = useContext(GlobalContext);
   const router = useRouter();
-  const { modal } = props.globalCtx;
   const { setModal } = props.globalAct;
-  const { setSelectedData } = props.globalAct;
   const [active, setActive] = useState(props.otlet.active);
-  const [toggle, setToggle] = useState(props.otlet.active);
 
   return (
     <>
@@ -118,12 +115,15 @@ const DashboardCardSKI = (props) => {
 
             {/* btn update  */}
             <button
-              onClick={() => {
+              onClick={async () => {
                 setModal("editOtlet");
-                props.globalAct.setSelectedData(props.otlet);
                 props.globalAct.setSelectedData({
                   ...globalCtx.selectedData,
-                  products: [],
+                  key: props.otlet.key,
+                  name: props.otlet.name,
+                  description: props.otlet.description,
+                  pict: props.otlet.pict,
+                  shortname: props.otlet.shortname,
                 });
               }}
               className={
