@@ -14,21 +14,18 @@ const DetailProduct = (props) => {
     <>
       <div className="w-full flex items-center p-5 gap-x-4 mx-4">
         <div className="w-40 h-full flex-col flex items-center">
-          {props.globalCtx.selectedData?.pict === "" ? (
-            <div className="bg-slate-400 mb-2 relative"></div>
-          ) : (
-            <div className="w-52 h-52 mb-2 relative bg-red-400 rounded-md">
-              <Image
-                src={
-                  props.globalCtx.selectedData?.pict !== ""
-                    ? props.globalCtx.selectedData.pict
-                    : "/img/content-default.png"
-                }
-                layout="fill"
-                className="rounded-md"
-              />
-            </div>
-          )}
+          <div className="w-52 h-52 mb-2 relative rounded-md">
+            <Image
+              src={
+                props.globalCtx.selectedData?.pict !== ""
+                  ? props.globalCtx.selectedData.pict
+                  : "/img/content-default.png"
+              }
+              layout="fill"
+              unoptimized={true}
+              className="rounded-md"
+            />
+          </div>
         </div>
         <div className="ml-10">
           <div className="space-y-2">
