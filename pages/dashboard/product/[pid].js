@@ -1,6 +1,5 @@
 import { getLayout } from "components/layout/Navbar";
 import ProductTable from "components/table/Product";
-import AddCard from "components/card/AddProduct";
 import SearchProductOutlet from "components/search/ProductOutlet";
 
 import { useRouter } from "next/router";

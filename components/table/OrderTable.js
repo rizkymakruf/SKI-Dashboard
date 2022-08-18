@@ -44,7 +44,7 @@ const OrderTable = ({
       ),
       grow: 1,
       cell: (a) => (
-        <div className="flex justify-center w-full">
+        <div className="flex justify-center items-center w-full">
           <label class="chck">
             <input
               type="checkbox"
@@ -208,9 +208,9 @@ const OrderTable = ({
       ),
       grow: 1,
       cell: (a) => (
-        <div className="flex justify-center gap-x-2 w-full">
+        <div className="flex justify-center items-center gap-x-2 w-full">
           <p
-            className={`text-xs w-24 flex items-center justify-center font-bold shadow-md py-1 rounded-xl uppercase ${
+            className={`text-xs w-24 flex items-center justify-center font-bold py-1 rounded-xl uppercase ${
               a.status === "unpaid"
                 ? "bg-yellow-500/30 text-yellow-500"
                 : a.status === "paid"
