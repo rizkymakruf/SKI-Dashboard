@@ -69,7 +69,7 @@ const Profile = () => {
                 layout="fill"
                 className="rounded-md"
                 src={globalCtx.userPict}
-                priority
+                unoptimized={true}
               />
             </div>
           )}

@@ -378,7 +378,11 @@ const FormUser = () => {
                   >
                     <div className="w-36 h-36 relative z-40 flex justify-center items-center">
                       {imageFile !== "" ? (
-                        <Image layout="fill" src={imageFile} />
+                        <Image
+                          layout="fill"
+                          src={imageFile}
+                          unoptimized={true}
+                        />
                       ) : globalCtx.isFetch ? (
                         <svg
                           className="animate-spin h-5 w-5 text-blue-300"

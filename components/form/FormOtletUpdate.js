@@ -236,7 +236,11 @@ const FormOtletUpdate = () => {
                         </p>
                       </>
                     ) : (
-                      <Image layout="fill" src={globalCtx.selectedData?.pict} />
+                      <Image
+                        layout="fill"
+                        src={globalCtx.selectedData?.pict}
+                        unoptimized={true}
+                      />
                     )}
                   </div>
                 </div>

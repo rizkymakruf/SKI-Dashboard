@@ -401,7 +401,11 @@ const SideNav = ({ children, props }) => {
                 {globalCtx.outletPict === "" ? (
                   <div className="bg-grey-300 h-full w-full"></div>
                 ) : (
-                  <Image layout="fill" src={globalCtx.outletPict} priority />
+                  <Image
+                    layout="fill"
+                    src={globalCtx.outletPict}
+                    unoptimized={true}
+                  />
                 )}
               </div>
             </div>

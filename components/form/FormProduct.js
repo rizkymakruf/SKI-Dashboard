@@ -34,6 +34,7 @@ const FormProduct = (props) => {
     const typeFile = file.type.split("/")[1];
     const a = await uploadFile(file, `product.${typeFile}`, "product");
     await setImageFile(a.url);
+    console.log(imageFile);
     globalAct.setIsFetch(false);
   });
 
@@ -71,7 +72,7 @@ const FormProduct = (props) => {
         price: parseInt(data.price),
         weight: parseInt(data.weight),
         stock: parseInt(data.stock),
-        pict: imageFile,
+        pict: data.pict,
         add_info: data.add_info,
       };
 
@@ -96,7 +97,7 @@ const FormProduct = (props) => {
         }
       }
 
-      // globalAct.setIsFetch(false);
+      globalAct.setIsFetch(false);
     },
     [globalCtx.currentBrand]
   );
@@ -398,8 +399,9 @@ const FormProduct = (props) => {
                       <div className="w-36 h-36 relative z-40 flex justify-center items-center">
                         {imageFile !== "" ? (
                           <Image
+                            unoptimized={true}
                             layout="fill"
-                            src={imageFile || DefaultOutlet}
+                            src={imageFile}
                           />
                         ) : globalCtx.isFetch ? (
                           <svg
