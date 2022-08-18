@@ -33,7 +33,7 @@ const FormProduct = (props) => {
     const file = e.target.files[0];
     const typeFile = file.type.split("/")[1];
     const a = await uploadFile(file, `product.${typeFile}`, "product");
-    setImageFile(a.url);
+    await setImageFile(a.url);
     globalAct.setIsFetch(false);
   });
 
@@ -60,44 +60,46 @@ const FormProduct = (props) => {
   // console.log("sub", globalCtx.listSubCategory);
   // console.log("shorname", globalCtx.currentBrand);
 
-  const onSubmit = useCallback(async (data) => {
-    const body = {
-      uri: "product/add",
-      outlet: data.outlet,
-      category: data.subCategory,
-      name: data.name,
-      description: data.description,
-      price: parseInt(data.price),
-      weight: parseInt(data.weight),
-      stock: parseInt(data.stock),
-      pict: imageFile,
-      add_info: data.add_info,
-    };
+  const onSubmit = useCallback(
+    async (data) => {
+      const body = {
+        uri: "product/add",
+        outlet: data.outlet,
+        category: data.subCategory,
+        name: data.name,
+        description: data.description,
+        price: parseInt(data.price),
+        weight: parseInt(data.weight),
+        stock: parseInt(data.stock),
+        pict: imageFile,
+        add_info: data.add_info,
+      };
 
-    console.log("add admin", body);
+      console.log("add admin", body);
 
-    try {
-      const res = await fetchJson("/api/prot/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-
-      await reset();
-      await setImageFile("");
-      await globalAct.setModal("");
-      await router.replace(`/dashboard/product/${globalCtx.currentBrand}`);
-    } catch (error) {
-      console.log("error", error);
-      if (error instanceof FetchError) {
-        globalAct.setErrorMsg(error.data.message);
-      } else {
-        globalAct.setErrorMsg("An unexpected error happened");
+      try {
+        const res = await fetchJson("/api/prot/post", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        await reset();
+        await setImageFile("");
+        await globalAct.setModal("");
+        await router.replace(`/dashboard/product/${globalCtx.currentBrand}`);
+      } catch (error) {
+        console.log("error", error);
+        if (error instanceof FetchError) {
+          globalAct.setErrorMsg(error.data.message);
+        } else {
+          globalAct.setErrorMsg("An unexpected error happened");
+        }
       }
-    }
 
-    globalAct.setIsFetch(false);
-  }, []);
+      // globalAct.setIsFetch(false);
+    },
+    [globalCtx.currentBrand]
+  );
 
   useEffect(() => {
     globalCtx.modal === "" && setImageFile("");
