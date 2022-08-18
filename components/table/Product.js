@@ -78,6 +78,7 @@ const ProductTable = ({
             onClick={() => {
               globalAct.setModal("detailProduct");
               globalAct.setSelectedData({
+                ...globalCtx.selectedData,
                 active: a.active,
                 add_info: a.add_info,
                 category: a.category,
