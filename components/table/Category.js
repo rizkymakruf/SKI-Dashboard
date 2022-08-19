@@ -97,9 +97,9 @@ const OrderTable = ({
             onClick={() => {
               globalAct.setModal("editCategory");
               globalAct.setSelectedData({
+                ...globalCtx.selectedData,
                 key: a.key,
                 name: a.name,
-                pict: "/img/user-default.png",
                 active: a.active,
                 created_at: a.created_at,
               });

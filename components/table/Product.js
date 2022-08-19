@@ -114,7 +114,22 @@ const ProductTable = ({
           <button
             onClick={() => {
               globalAct.setModal("editProduct");
-              globalAct.setSelectedData(a);
+              globalAct.setSelectedData({
+                ...globalCtx.selectedData,
+                key: a.key,
+                active: a.active,
+                add_info: a.add_info,
+                category: a.category,
+                created_at: a.created_at,
+                description: a.description,
+                key: a.key,
+                main: a.main,
+                name: a.name,
+                pict: a.pict,
+                price: a.price,
+                stock: a.stock,
+                weight: a.weight,
+              });
             }}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:before:content-['Edit'] border border-blue-300"
@@ -137,7 +152,11 @@ const ProductTable = ({
           <button
             onClick={() => {
               globalAct.setModal("deleteProduct");
-              globalAct.setSelectedData(a);
+              globalAct.setSelectedData({
+                ...globalCtx.selectedData,
+                key: a.key,
+                name: a.name,
+              });
             }}
             className={
               "bg-red-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-red-500/50 shadow-md flex gap-x-2 text-xs text-red-500 hover:w-24 duration-150 hover:before:content-['Remove'] border border-red-300"

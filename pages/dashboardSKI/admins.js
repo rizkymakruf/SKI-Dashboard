@@ -101,6 +101,7 @@ const ManageUsers = (props) => {
     });
     globalAct.setAdminMode("ski");
   }, []);
+  console.log(props.users);
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">

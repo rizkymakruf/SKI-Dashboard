@@ -71,7 +71,14 @@ const Report = (props) => {
   const [perPage, setPerPage] = useState(10);
   const router = useRouter();
   const [report, setReport] = useState(false);
-  let newBody;
+  let newBody = {
+    uri: "report/outlet",
+    outlet: props.adminMode,
+    start: 0,
+    end: 0,
+    index: 0,
+    length: 0,
+  };
 
   useEffect(() => {
     globalAct.setAdminMode("outlet");
@@ -114,8 +121,8 @@ const Report = (props) => {
         body: JSON.stringify(body),
       });
       console.log("report", res);
-      setDataReport(res.data);
-      setTotalRows(res.total);
+      await setDataReport(res.data);
+      await setTotalRows(res.total);
     } catch (error) {
       console.log("error", error);
       if (error instanceof FetchError) {
@@ -149,15 +156,15 @@ const Report = (props) => {
                   index: 0,
                   length: 10,
                 };
-                newBody = body;
                 try {
                   const res = await fetchJson("/api/prot/post", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                   });
-                  await setDataReport(res.data);
-                  await setTotalRows(res.total);
+                  console.log(res);
+                  setDataReport(res.data);
+                  setTotalRows(res.total);
                   setReport(true);
                 } catch (error) {
                   console.log("error", error);
@@ -167,6 +174,7 @@ const Report = (props) => {
                     globalAct.setErrorMsg("An unexpected error happened");
                   }
                 }
+                newBody = body;
                 globalAct.setIsFetch(false);
               }}
             />
@@ -174,17 +182,19 @@ const Report = (props) => {
         );
       }, [])}
       {useMemo(() => {
-        report && (
-          <div>
-            <ViewReportByProductOutlet
-              data={dataReport}
-              totalRows={totalRows}
-              handlePageChange={handlePageChange}
-              handlePerRowsChange={handlePerRowsChange}
-            />
-          </div>
+        return (
+          report && (
+            <div>
+              <ViewReportByProductOutlet
+                data={dataReport}
+                totalRows={totalRows}
+                handlePageChange={handlePageChange}
+                handlePerRowsChange={handlePerRowsChange}
+              />
+            </div>
+          )
         );
-      }, [dataReport])}
+      }, [dataReport, report])}
     </div>
   );
 };

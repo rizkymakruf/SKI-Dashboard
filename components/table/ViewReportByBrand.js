@@ -1,5 +1,6 @@
 import { memo } from "react";
 import DataTable from "react-data-table-component";
+import formatRupiah from "components/FunctionRupiah";
 
 const ViewReportByBrandTable = ({
   data,
@@ -22,7 +23,9 @@ const ViewReportByBrandTable = ({
       grow: 10,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1">
-          <p className="text-xs font-bold">{a.money ? a.money : 0}</p>
+          <p className="text-xs font-bold">
+            {formatRupiah(a.money ? a.money : 0, "Rp")}
+          </p>
         </div>
       ),
     },

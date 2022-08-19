@@ -2,6 +2,7 @@ import DataTable from "react-data-table-component";
 import { GlobalContext } from "context/global";
 import { useContext, memo, useEffect, useState } from "react";
 import Loading from "components/card/Loading";
+import formatRupiah from "components/FunctionRupiah";
 
 const VoucherTable = ({
   data,
@@ -55,7 +56,7 @@ const VoucherTable = ({
       grow: 10,
       cell: (a) => (
         <div className="w-full h-full py-1 flex flex-row gap-1 items-center">
-          <p className="text-xs font-bold">Rp {a.min}</p>
+          <p className="text-xs font-bold">{formatRupiah(a.min, "Rp")}</p>
         </div>
       ),
     },

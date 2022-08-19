@@ -95,6 +95,7 @@ const ManageContent = (props) => {
     globalAct.setOutletPict(props.outletPict);
     globalAct.setAdminMode("ski");
   }, []);
+  console.log(props.content);
 
   return (
     <div className="w-full p-3 flex flex-col gap-y-2">

@@ -160,18 +160,18 @@ const ManageReport = (props) => {
                   index: 0,
                   length: 10,
                 };
-                console.log(newBody);
-                // console.log(body);
+                // console.log(newBody);
+                console.log(body);
                 try {
                   const res = await fetchJson("/api/prot/post", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                   });
-                  console.log(res);
-                  await setMode(body.method);
-                  await setDataReport(res.data);
-                  await setTotalRows(res.total);
+                  console.log("res", res);
+                  // await setMode(body.method);
+                  // await setDataReport(res.data);
+                  // await setTotalRows(res.total);
                 } catch (error) {
                   console.log("error", error);
                   if (error instanceof FetchError) {

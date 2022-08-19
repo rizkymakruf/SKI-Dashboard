@@ -97,8 +97,17 @@ const ContentTable = ({
           <button
             onClick={() => {
               globalAct.setModal("detailContent");
-              globalAct.setSelectedData(a);
-              // console.log(globalAct.setSelectedData(a));
+              globalAct.setSelectedData({
+                ...globalCtx.selectedData,
+                active: a.active,
+                created_at: a.created_at,
+                description: a.description,
+                key: a.key,
+                label: a.label,
+                pict: a.pict,
+                title: a.title,
+                type: a.type,
+              });
             }}
             className={
               "bg-orange-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-orange-500/50 shadow-md flex gap-x-2 text-xs text-orange-500 hover:w-24 duration-150 hover:before:content-['View'] border border-orange-300"
@@ -121,7 +130,17 @@ const ContentTable = ({
           <button
             onClick={() => {
               globalAct.setModal("editContent");
-              globalAct.setSelectedData(a);
+              globalAct.setSelectedData({
+                ...globalCtx.selectedData,
+                active: a.active,
+                created_at: a.created_at,
+                description: a.description,
+                key: a.key,
+                label: a.label,
+                pict: a.pict,
+                title: a.title,
+                type: a.type,
+              });
             }}
             className={
               "bg-blue-500/30 items-center justify-center h-8 w-8 rounded-md hover:bg-blue-500/50 shadow-md flex gap-x-2 text-xs text-blue-500 hover:w-24 duration-150 hover:before:content-['Edit'] border border-blue-300"
