@@ -19,6 +19,7 @@
     "cloudinary": "^1.29.1",
     "cors": "^2.8.5",
     "express": "^4.18.1",
+    "fetch-json": "^2.6.6",
     "formik": "^2.2.9",
     "got": "^12.0.4",
     "imagekit": "^4.1.0",
