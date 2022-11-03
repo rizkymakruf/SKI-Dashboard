@@ -30,15 +30,20 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboardSKI/admins": [
+    "/dashboard/outlet/[pid]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/admins.js"
+      "static/chunks/pages/dashboard/outlet/[pid].js"
     ],
-    "/dashboardSKI/customers": [
+    "/dashboardSKI": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboardSKI/customers.js"
+      "static/chunks/pages/dashboardSKI.js"
+    ],
+    "/dashboardSKI/outlet": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboardSKI/outlet.js"
     ]
   },
   "ampFirstPages": []

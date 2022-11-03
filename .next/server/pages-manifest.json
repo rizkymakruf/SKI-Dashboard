@@ -2,7 +2,6 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/api/prot/post": "pages/api/prot/post.js",
-  "/": "pages/index.js",
-  "/dashboardSKI/customers": "pages/dashboardSKI/customers.js"
+  "/dashboard/outlet/[pid]": "pages/dashboard/outlet/[pid].js",
+  "/dashboardSKI/outlet": "pages/dashboardSKI/outlet.js"
 }
